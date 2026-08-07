@@ -1,0 +1,299 @@
+@import "tailwindcss";
+
+/* ================================================= */
+/* BASE */
+/* ================================================= */
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #050505;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  overflow-x: hidden;
+  color: white;
+  font-family: Inter, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ================================================= */
+/* SELECTION */
+/* ================================================= */
+
+::selection {
+  background: rgba(34, 211, 238, 0.2);
+  color: white;
+}
+
+/* ================================================= */
+/* SCROLLBAR */
+/* ================================================= */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(227, 193, 75, 0.35);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(227, 193, 75, 0.6);
+}
+
+/* ================================================= */
+/* SLIDER */
+/* ================================================= */
+
+.slider {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 100%;
+  height: 4px;
+
+  border-radius: 9999px;
+
+  background: rgba(255, 255, 255, 0.1);
+
+  outline: none;
+
+  cursor: pointer;
+}
+
+/* Chrome / Edge / Opera */
+
+.slider::-webkit-slider-runnable-track {
+  height: 4px;
+
+  border-radius: 9999px;
+
+  background: linear-gradient(
+    to right,
+    #22d3ee 0%,
+    #22d3ee var(--progress, 50%),
+    rgba(255, 255, 255, 0.1) var(--progress, 50%),
+    rgba(255, 255, 255, 0.1) 100%
+  );
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 18px;
+  height: 18px;
+
+  margin-top: -7px;
+
+  border-radius: 50%;
+
+  border: 2px solid rgba(103, 232, 249, 0.9);
+
+  background: #22d3ee;
+
+  box-shadow:
+    0 0 0 4px rgba(34, 211, 238, 0.08),
+    0 0 18px rgba(34, 211, 238, 0.45);
+
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.slider:hover::-webkit-slider-thumb {
+  transform: scale(1.12);
+
+  box-shadow:
+    0 0 0 5px rgba(34, 211, 238, 0.08),
+    0 0 24px rgba(34, 211, 238, 0.55);
+}
+
+/* Firefox */
+
+.slider::-moz-range-track {
+  height: 4px;
+
+  border-radius: 9999px;
+
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.slider::-moz-range-progress {
+  height: 4px;
+
+  border-radius: 9999px;
+
+  background: #22d3ee;
+}
+
+.slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+
+  border-radius: 50%;
+
+  border: 2px solid rgba(103, 232, 249, 0.9);
+
+  background: #22d3ee;
+
+  box-shadow:
+    0 0 0 4px rgba(34, 211, 238, 0.08),
+    0 0 18px rgba(34, 211, 238, 0.45);
+}
+
+/* ================================================= */
+/* ABOUT — DECORATIVE SCAN */
+/* ================================================= */
+
+@keyframes statement-scan {
+  0% {
+    transform: translateX(-120px);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(900px);
+    opacity: 0;
+  }
+}
+
+/* ================================================= */
+/* STORY — SCAN */
+/* ================================================= */
+
+@keyframes story-scan {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(650px);
+    opacity: 0;
+  }
+}
+
+/* ================================================= */
+/* STORY — OUTER ORBIT */
+/* ================================================= */
+
+@keyframes story-orbit {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ================================================= */
+/* STORY — INNER ORBIT */
+/* ================================================= */
+
+@keyframes story-orbit-reverse {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* ================================================= */
+/* FUTURE UTILITY — SOFT PULSE */
+/* ================================================= */
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: scale(1.04);
+  }
+}
+
+/* ================================================= */
+/* FUTURE UTILITY — GLOW PULSE */
+/* ================================================= */
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(1.15);
+  }
+}
+
+/* ================================================= */
+/* REDUCED MOTION */
+/* ================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ================================================= */
+/* MOBILE PERFORMANCE */
+/* ================================================= */
+
+@media (max-width: 768px) {
+  .story-heavy-effect {
+    display: none;
+  }
+}
