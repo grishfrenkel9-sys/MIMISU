@@ -85,10 +85,10 @@ export default function Particles() {
       };
     }, []);
 
-  useFrame(({ clock }) => {
+  useFrame((state) => {
     if (!points.current) return;
 
-    const t = clock.elapsedTime;
+    const t = state.clock.elapsedTime;
 
     const positionAttribute =
       points.current.geometry.attributes.position;
