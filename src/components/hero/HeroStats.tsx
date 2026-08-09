@@ -32,124 +32,148 @@ function StatCard({
     <motion.div
       initial={{
         opacity: 0,
-        y: 30,
+        y: 24,
       }}
       animate={{
         opacity: 1,
         y: 0,
       }}
       transition={{
-        duration: .7,
-        delay: index * 0.05,
-        ease: [0.16,1,0.3,1],
+        duration: 0.65,
+        delay: 0.85 + index * 0.07,
+        ease: [0.22, 1, 0.36, 1],
       }}
-    whileHover={{
-  y: -2,
-  scale: 1.01,
-}}
+      whileHover={{
+        y: -3,
+      }}
       className="
         group
-
         relative
-
         overflow-hidden
-
-        rounded-[28px]
-
+        rounded-[24px]
         border
-        border-white/8
-
-        bg-white/[0.03]
-
-        p-7
-
-        backdrop-blur-xl
-
-        transition-all
-
-        duration-300
-
-        hover:border-cyan-400/30
+        border-white/70
+        bg-white/45
+        p-5
+        shadow-[0_14px_45px_rgba(7,59,76,.07)]
+        backdrop-blur-[8px]
       "
     >
-      {/* Moving glow */}
-
-      <motion.div
+      {/* Glass highlight */}
+      <div
         className="
+          pointer-events-none
           absolute
-
-          inset-0
-
+          inset-x-5
+          top-0
+          h-px
           bg-gradient-to-r
           from-transparent
-          via-cyan-400/8
+          via-white
           to-transparent
         "
-        animate={{
-          x: ["-100%", "200%"],
-        }}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          ease: "linear",
-        }}
       />
 
-      {/* Cyan glow */}
+      {/* Water glow */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -right-8
+          -top-8
+          h-24
+          w-24
+          rounded-full
+          bg-cyan-300/20
+          blur-2xl
+          transition-opacity
+          duration-300
+          group-hover:opacity-90
+        "
+      />
 
-      <motion.div
-className="
-absolute
-right-0
-top-0
-h-16
-w-16
-rounded-full
-bg-cyan-400/10
-blur-2xl
-"
-/>
       <div className="relative z-10">
 
+        {/* Small water indicator */}
+        <div className="flex items-center justify-between">
+          <span
+            className="
+              h-1.5
+              w-1.5
+              rounded-full
+              bg-[#0ea5a8]
+              shadow-[0_0_10px_rgba(14,165,168,.45)]
+            "
+          />
+
+          <span
+            className="
+              text-[8px]
+              font-semibold
+              uppercase
+              tracking-[0.25em]
+              text-[#0e7490]/35
+            "
+          >
+            DATA
+          </span>
+        </div>
+
+        {/* Number */}
         <motion.div
-          className="
-            text-[42px]
-
-            font-light
-
-            tracking-[-0.05em]
-
-            text-white
-          "
-          animate={{
-            opacity:[.85,1,.85],
-          }}
+          initial={{ opacity: 0.4 }}
+          animate={{ opacity: 1 }}
           transition={{
-            duration:3,
-            repeat:Infinity,
+            duration: 0.8,
+            delay: 1 + index * 0.07,
           }}
+          className="
+            mt-5
+            text-[clamp(2rem,3.5vw,2.8rem)]
+            font-black
+            leading-none
+            tracking-[-0.055em]
+            text-[#073b4c]
+          "
         >
           {value}
         </motion.div>
 
+        {/* Label */}
         <div
           className="
             mt-3
-
-            text-xs
-
+            max-w-[150px]
+            text-[9px]
+            font-semibold
             uppercase
-
-            tracking-[0.22em]
-
-            text-white/40
+            leading-[1.5]
+            tracking-[0.2em]
+            text-[#0e7490]/55
           "
         >
           {title}
-        </div>        {/* Accent line */}
+        </div>
 
-        {/* Hover glow */}
-      
+        {/* Water line */}
+        <div className="mt-5 h-px w-full overflow-hidden bg-[#073b4c]/[0.07]">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${45 + index * 13}%` }}
+            transition={{
+              duration: 0.9,
+              delay: 1.05 + index * 0.08,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="
+              h-full
+              rounded-full
+              bg-gradient-to-r
+              from-[#0ea5a8]
+              to-[#38bdf8]
+            "
+          />
+        </div>
 
       </div>
     </motion.div>
@@ -160,24 +184,21 @@ export default function HeroStats() {
   return (
     <motion.div
       initial={{
-        opacity:0,
+        opacity: 0,
       }}
       animate={{
-        opacity:1,
+        opacity: 1,
       }}
       transition={{
-        delay:1,
+        duration: 0.6,
+        delay: 0.8,
       }}
       className="
-        mt-600
-
-
+        mt-10
         grid
-
         grid-cols-2
-
-        gap-4
-
+        gap-3
+        sm:gap-4
         lg:gap-5
       "
     >

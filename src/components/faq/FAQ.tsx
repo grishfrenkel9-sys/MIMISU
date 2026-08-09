@@ -35,6 +35,8 @@ const faqItems = [
   },
 ];
 
+const ease = [0.16, 1, 0.3, 1] as const;
+
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -43,7 +45,8 @@ export default function FAQ() {
       id="faq"
       className="
         relative
-        bg-[#040404]/85
+        overflow-hidden
+        bg-[#031A21]
         py-28
         text-white
 
@@ -51,21 +54,35 @@ export default function FAQ() {
         lg:py-44
       "
     >
-      {/* =========================================
-          AMBIENT LIGHT
-      ========================================= */}
+      {/* =====================================================
+          DEEP OCEAN ATMOSPHERE
+      ===================================================== */}
 
       <div
         className="
           pointer-events-none
           absolute
-          right-[-10%]
-          top-[20%]
+          -right-[220px]
+          top-[8%]
+          h-[600px]
+          w-[600px]
+          rounded-full
+          bg-cyan-400/[0.055]
+          blur-[180px]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -left-[240px]
+          bottom-[5%]
           h-[500px]
           w-[500px]
           rounded-full
-          bg-cyan-400/[0.018]
-          blur-[160px]
+          bg-teal-500/[0.035]
+          blur-[170px]
         "
       />
 
@@ -73,46 +90,193 @@ export default function FAQ() {
         className="
           pointer-events-none
           absolute
-          left-[-15%]
-          bottom-[10%]
-          h-[420px]
-          w-[420px]
+          left-1/2
+          top-[45%]
+          h-[700px]
+          w-[700px]
+          -translate-x-1/2
           rounded-full
-          bg-red-500/[0.015]
-          blur-[150px]
+          bg-sky-500/[0.018]
+          blur-[220px]
         "
       />
 
-      {/* =========================================
-          GRID
-      ========================================= */}
+      {/* =====================================================
+          DEEP GRID
+      ===================================================== */}
 
       <div
         className="
           pointer-events-none
           absolute
           inset-0
-          opacity-[0.012]
+          opacity-[0.022]
         "
         style={{
           backgroundImage: `
             linear-gradient(
-              rgba(255,255,255,.08) 1px,
+              rgba(120,230,240,.12) 1px,
               transparent 1px
             ),
             linear-gradient(
               90deg,
-              rgba(255,255,255,.08) 1px,
+              rgba(120,230,240,.12) 1px,
               transparent 1px
             )
           `,
-          backgroundSize: "100px 100px",
+          backgroundSize: "120px 120px",
+          maskImage:
+            "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
         }}
       />
 
-      {/* =========================================
+      {/* =====================================================
+          HORIZONTAL DEPTH LINES
+      ===================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-x-0
+          top-[18%]
+          h-px
+          bg-gradient-to-r
+          from-transparent
+          via-cyan-200/[0.07]
+          to-transparent
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-x-0
+          top-[55%]
+          h-px
+          bg-gradient-to-r
+          from-transparent
+          via-cyan-200/[0.035]
+          to-transparent
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-x-0
+          bottom-[16%]
+          h-px
+          bg-gradient-to-r
+          from-transparent
+          via-cyan-200/[0.055]
+          to-transparent
+        "
+      />
+
+      {/* =====================================================
+          ORBIT / WATER DETAIL
+      ===================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[5%]
+          top-[12%]
+          hidden
+          h-[260px]
+          w-[260px]
+          rounded-full
+          border
+          border-cyan-200/[0.055]
+          lg:block
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[8%]
+          top-[16%]
+          hidden
+          h-[190px]
+          w-[190px]
+          rounded-full
+          border
+          border-cyan-200/[0.035]
+          lg:block
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[18%]
+          top-[29%]
+          hidden
+          h-2
+          w-2
+          rounded-full
+          bg-cyan-300/45
+          shadow-[0_0_18px_rgba(103,232,249,.45)]
+          lg:block
+        "
+      />
+
+      {/* =====================================================
+          SMALL WATER PARTICLES
+      ===================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-[11%]
+          top-[31%]
+          h-1
+          w-1
+          rounded-full
+          bg-cyan-300/30
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-[19%]
+          bottom-[27%]
+          h-1.5
+          w-1.5
+          rounded-full
+          bg-cyan-300/25
+          shadow-[0_0_12px_rgba(103,232,249,.25)]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[12%]
+          bottom-[24%]
+          h-1
+          w-1
+          rounded-full
+          bg-cyan-200/25
+        "
+      />
+
+      {/* =====================================================
           TOP TRANSITION
-      ========================================= */}
+      ===================================================== */}
 
       <div
         className="
@@ -120,16 +284,17 @@ export default function FAQ() {
           absolute
           inset-x-0
           top-0
-          h-32
+          h-40
           bg-gradient-to-b
-          from-[#040404]
+          from-[#052830]
+          via-[#031F27]
           to-transparent
         "
       />
 
-      {/* =========================================
+      {/* =====================================================
           CONTENT
-      ========================================= */}
+      ===================================================== */}
 
       <div
         className="
@@ -144,15 +309,15 @@ export default function FAQ() {
           xl:px-14
         "
       >
-        {/* =========================================
+        {/* =================================================
             HEADER
-        ========================================= */}
+        ================================================= */}
 
         <motion.div
           initial={{
             opacity: 0,
-            y: 35,
-            filter: "blur(8px)",
+            y: 45,
+            filter: "blur(10px)",
           }}
           whileInView={{
             opacity: 1,
@@ -164,11 +329,13 @@ export default function FAQ() {
             amount: 0.3,
           }}
           transition={{
-            duration: 0.8,
-            ease: [0.16, 1, 0.3, 1],
+            duration: 0.9,
+            ease,
           }}
           className="mb-16 md:mb-20"
         >
+          {/* LABEL */}
+
           <div
             className="
               flex
@@ -178,7 +345,7 @@ export default function FAQ() {
               font-medium
               uppercase
               tracking-[0.35em]
-              text-red-400/70
+              text-cyan-200/70
             "
           >
             <span
@@ -186,15 +353,23 @@ export default function FAQ() {
                 h-1.5
                 w-1.5
                 rounded-full
-                bg-red-400
-                shadow-[0_0_12px_rgba(248,113,113,.7)]
+                bg-cyan-300
+                shadow-[0_0_14px_rgba(103,232,249,.7)]
               "
             />
 
             FAQ
 
-            <span className="h-px w-10 bg-red-400/25" />
+            <span
+              className="
+                h-px
+                w-12
+                bg-cyan-300/30
+              "
+            />
           </div>
+
+          {/* HEADING */}
 
           <h2
             className="
@@ -204,12 +379,13 @@ export default function FAQ() {
               font-light
               leading-[0.9]
               tracking-[-0.055em]
+              text-white
             "
           >
             Частые
             <br />
 
-            <span className="text-white/30">
+            <span className="text-cyan-100/30">
               вопросы
             </span>
           </h2>
@@ -220,7 +396,7 @@ export default function FAQ() {
               max-w-xl
               text-sm
               leading-7
-              text-white/35
+              text-cyan-50/45
 
               md:text-base
               md:leading-8
@@ -231,11 +407,16 @@ export default function FAQ() {
           </p>
         </motion.div>
 
-        {/* =========================================
+        {/* =================================================
             FAQ LIST
-        ========================================= */}
+        ================================================= */}
 
-        <div className="border-t border-white/[0.08]">
+        <div
+          className="
+            border-t
+            border-cyan-100/[0.10]
+          "
+        >
           {faqItems.map((item, index) => {
             const isOpen = openIndex === index;
 
@@ -244,7 +425,7 @@ export default function FAQ() {
                 key={item.question}
                 initial={{
                   opacity: 0,
-                  y: 25,
+                  y: 30,
                 }}
                 whileInView={{
                   opacity: 1,
@@ -255,21 +436,49 @@ export default function FAQ() {
                   amount: 0.15,
                 }}
                 transition={{
-                  duration: 0.6,
-                  delay: index * 0.04,
-                  ease: [0.16, 1, 0.3, 1],
+                  duration: 0.65,
+                  delay: index * 0.05,
+                  ease,
                 }}
-                className="border-b border-white/[0.08]"
+                className="
+                  group
+                  relative
+                  border-b
+                  border-cyan-100/[0.09]
+                "
               >
+                {/* ACTIVE SIDE LIGHT */}
+
+                <span
+                  className={`
+                    pointer-events-none
+                    absolute
+                    left-0
+                    top-1/2
+                    h-10
+                    w-px
+                    -translate-y-1/2
+                    bg-gradient-to-b
+                    from-transparent
+                    via-cyan-300/0
+                    to-transparent
+                    transition-all
+                    duration-500
+
+                    ${
+                      isOpen
+                        ? "via-cyan-300/70"
+                        : "group-hover:via-cyan-300/35"
+                    }
+                  `}
+                />
+
                 <button
                   type="button"
                   onClick={() =>
-                    setOpenIndex(
-                      isOpen ? null : index
-                    )
+                    setOpenIndex(isOpen ? null : index)
                   }
                   className="
-                    group
                     flex
                     w-full
                     items-center
@@ -277,11 +486,10 @@ export default function FAQ() {
                     gap-6
                     py-7
                     text-left
-
-                    md:py-8
-
                     transition-all
                     duration-300
+
+                    md:py-8
                   "
                 >
                   <div className="flex items-center gap-5">
@@ -291,7 +499,7 @@ export default function FAQ() {
                         font-mono
                         text-[10px]
                         tracking-[0.2em]
-                        text-white/20
+                        text-cyan-200/25
 
                         sm:block
                       "
@@ -311,7 +519,7 @@ export default function FAQ() {
                         ${
                           isOpen
                             ? "text-white"
-                            : "text-white/65 group-hover:text-white"
+                            : "text-white/65 group-hover:text-cyan-50/90"
                         }
                       `}
                     >
@@ -322,8 +530,8 @@ export default function FAQ() {
                   <span
                     className={`
                       flex
-                      h-10
-                      w-10
+                      h-11
+                      w-11
                       shrink-0
                       items-center
                       justify-center
@@ -334,16 +542,19 @@ export default function FAQ() {
 
                       ${
                         isOpen
-                          ? "rotate-45 border-red-400/30 bg-red-400/[0.08] text-red-300"
-                          : "border-white/[0.08] bg-white/[0.02] text-white/35 group-hover:border-white/20 group-hover:text-white"
+                          ? "rotate-45 border-cyan-300/40 bg-cyan-300/[0.10] text-cyan-200 shadow-[0_0_30px_rgba(34,211,238,.10)]"
+                          : "border-cyan-100/[0.10] bg-cyan-100/[0.025] text-white/35 group-hover:border-cyan-200/30 group-hover:bg-cyan-200/[0.05] group-hover:text-cyan-200"
                       }
                     `}
                   >
-                    <Plus size={17} strokeWidth={1.5} />
+                    <Plus
+                      size={17}
+                      strokeWidth={1.5}
+                    />
                   </span>
                 </button>
 
-                {/* Answer */}
+                {/* ANSWER */}
 
                 <motion.div
                   initial={false}
@@ -353,7 +564,7 @@ export default function FAQ() {
                   }}
                   transition={{
                     duration: 0.45,
-                    ease: [0.16, 1, 0.3, 1],
+                    ease,
                   }}
                   className="overflow-hidden"
                 >
@@ -364,7 +575,7 @@ export default function FAQ() {
                       pl-0
                       text-sm
                       leading-7
-                      text-white/35
+                      text-cyan-50/40
 
                       sm:pl-9
                       md:text-base
@@ -380,9 +591,9 @@ export default function FAQ() {
         </div>
       </div>
 
-      {/* =========================================
+      {/* =====================================================
           BOTTOM TRANSITION
-      ========================================= */}
+      ===================================================== */}
 
       <div
         className="
@@ -390,9 +601,11 @@ export default function FAQ() {
           absolute
           inset-x-0
           bottom-0
-          h-32
+          z-20
+          h-44
           bg-gradient-to-t
-          from-[#040404]
+          from-[#020F15]
+          via-[#031A21]/80
           to-transparent
         "
       />

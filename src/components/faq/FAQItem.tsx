@@ -7,6 +7,8 @@ interface Props {
   index: number;
 }
 
+const ease = [0.16, 1, 0.3, 1] as const;
+
 export default function FAQItem({
   question,
   answer,
@@ -31,10 +33,34 @@ export default function FAQItem({
       transition={{
         duration: 0.7,
         delay: index * 0.05,
-        ease: [0.16, 1, 0.3, 1],
+        ease,
       }}
-      className="group border-b border-white/[0.07]"
+      className="
+        group
+        relative
+        border-b
+        border-cyan-100/[0.07]
+      "
     >
+      <span
+        className="
+          pointer-events-none
+          absolute
+          left-0
+          top-1/2
+          h-8
+          w-px
+          -translate-y-1/2
+          bg-gradient-to-b
+          from-transparent
+          via-cyan-300/0
+          to-transparent
+          transition-all
+          duration-500
+          group-hover:via-cyan-300/35
+        "
+      />
+
       <button
         type="button"
         onClick={() => setOpen((value) => !value)}
@@ -48,14 +74,13 @@ export default function FAQItem({
           text-left
         "
       >
-        <div className="flex items-start gap-6">
+        <div className="flex items-center gap-5">
           <span
             className="
-              pt-1
               font-mono
               text-[10px]
               tracking-[0.2em]
-              text-red-500/60
+              text-cyan-200/20
             "
           >
             {String(index + 1).padStart(2, "0")}
@@ -69,6 +94,7 @@ export default function FAQItem({
               transition-colors
               duration-300
               md:text-xl
+
               ${
                 open
                   ? "text-white"
@@ -86,7 +112,7 @@ export default function FAQItem({
           }}
           transition={{
             duration: 0.3,
-            ease: [0.16, 1, 0.3, 1],
+            ease,
           }}
           className="
             flex
@@ -103,8 +129,8 @@ export default function FAQItem({
             text-white/40
             transition-colors
             duration-300
-            group-hover:border-red-400/30
-            group-hover:text-red-400
+            group-hover:border-cyan-300/30
+            group-hover:text-cyan-300
           "
         >
           +
@@ -128,7 +154,7 @@ export default function FAQItem({
             }}
             transition={{
               duration: 0.4,
-              ease: [0.16, 1, 0.3, 1],
+              ease,
             }}
             className="overflow-hidden"
           >
@@ -138,7 +164,8 @@ export default function FAQItem({
                   max-w-3xl
                   text-sm
                   leading-7
-                  text-white/35
+                  text-white/40
+
                   md:text-base
                   md:leading-8
                 "

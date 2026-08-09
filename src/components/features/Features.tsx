@@ -12,81 +12,275 @@ export default function Features() {
       className="
         relative
         overflow-hidden
-        bg-TRANSPARENT
-        py-32
+        bg-[#052830]
         text-white
-
-        md:py-40
-        lg:py-48
       "
     >
-      {/* =========================================
-          AMBIENT FIELD
-      ========================================= */}
+      {/* =====================================================
+          TOP TRANSITION FROM ABOUT
+      ===================================================== */}
 
-      <motion.div
-        initial={{
-          opacity: 0,
-          scale: 0.8,
-        }}
-        whileInView={{
-          opacity: 1,
-          scale: 1,
-        }}
-        viewport={{
-          once: false,
-          amount: 0.2,
-        }}
-        transition={{
-          duration: 1.5,
-          ease,
-        }}
+      <div
         className="
           pointer-events-none
           absolute
-          right-[-200px]
-          top-[18%]
-          h-[500px]
-          w-[500px]
-          rounded-full
-          bg-red-500/[0.035]
-          blur-[160px]
+          inset-x-0
+          top-0
+          z-0
+          h-[180px]
+          bg-gradient-to-b
+          from-[#04242C]
+          via-[#04242C]/55
+          to-[#052830]
         "
       />
 
-      {/* Secondary light */}
+      {/* =====================================================
+          OCEAN ATMOSPHERE
+      ===================================================== */}
 
-      <motion.div
-        initial={{
-          opacity: 0,
-        }}
-        whileInView={{
-          opacity: 1,
-        }}
-        viewport={{
-          once: false,
-          amount: 0.25,
-        }}
-        transition={{
-          duration: 1.2,
-          ease,
-        }}
+      <div
         className="
           pointer-events-none
           absolute
-          left-[-180px]
-          bottom-[10%]
-          h-[360px]
-          w-[360px]
+          -right-[180px]
+          top-[10%]
+          h-[520px]
+          w-[520px]
           rounded-full
-          bg-cyan-400/[0.018]
-          blur-[140px]
+          bg-cyan-300/[0.055]
+          blur-[150px]
         "
       />
 
-      {/* =========================================
-          CONTAINER
-      ========================================= */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -left-[180px]
+          bottom-[8%]
+          h-[460px]
+          w-[460px]
+          rounded-full
+          bg-teal-300/[0.04]
+          blur-[150px]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-1/2
+          top-[35%]
+          h-[400px]
+          w-[700px]
+          -translate-x-1/2
+          rounded-full
+          bg-cyan-400/[0.025]
+          blur-[150px]
+        "
+      />
+
+      {/* =====================================================
+          VERTICAL GRID
+      ===================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-[24%]
+          top-0
+          h-full
+          w-px
+          bg-cyan-100/[0.025]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-1/2
+          top-0
+          h-full
+          w-px
+          bg-cyan-100/[0.018]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[24%]
+          top-0
+          h-full
+          w-px
+          bg-cyan-100/[0.025]
+        "
+      />
+
+      {/* =====================================================
+          HORIZONTAL LINES
+      ===================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-0
+          top-[16%]
+          h-px
+          w-full
+          bg-gradient-to-r
+          from-transparent
+          via-cyan-100/[0.045]
+          to-transparent
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-0
+          top-[52%]
+          h-px
+          w-full
+          bg-gradient-to-r
+          from-transparent
+          via-cyan-100/[0.025]
+          to-transparent
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          bottom-[15%]
+          left-0
+          h-px
+          w-full
+          bg-gradient-to-r
+          from-transparent
+          via-cyan-100/[0.04]
+          to-transparent
+        "
+      />
+
+      {/* =====================================================
+          WATER ARCS
+      ===================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -right-[18%]
+          top-[28%]
+          h-[520px]
+          w-[900px]
+          rounded-[50%]
+          border
+          border-cyan-200/[0.035]
+          rotate-[-7deg]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -right-[10%]
+          top-[35%]
+          h-[420px]
+          w-[760px]
+          rounded-[50%]
+          border
+          border-cyan-200/[0.022]
+          rotate-[-7deg]
+        "
+      />
+
+      {/* =====================================================
+          MICRO DETAILS
+      ===================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-[18%]
+          top-[24%]
+          h-1.5
+          w-1.5
+          rounded-full
+          bg-cyan-300/35
+          shadow-[0_0_14px_rgba(103,232,249,0.3)]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[17%]
+          top-[20%]
+          h-2
+          w-2
+          rounded-full
+          border
+          border-cyan-200/20
+          bg-cyan-200/[0.05]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[31%]
+          bottom-[24%]
+          h-1
+          w-1
+          rounded-full
+          bg-cyan-300/25
+        "
+      />
+
+      {/* =====================================================
+          GRID
+      ===================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-0
+          opacity-[0.018]
+        "
+        style={{
+          backgroundImage: `
+            linear-gradient(
+              rgba(180,240,245,.08) 1px,
+              transparent 1px
+            ),
+            linear-gradient(
+              90deg,
+              rgba(180,240,245,.08) 1px,
+              transparent 1px
+            )
+          `,
+          backgroundSize: "120px 120px",
+        }}
+      />
+
+      {/* =====================================================
+          CONTENT
+      ===================================================== */}
 
       <div
         className="
@@ -96,14 +290,21 @@ export default function Features() {
           w-full
           max-w-[1500px]
           px-6
+          pb-32
+          pt-28
 
           md:px-10
+          md:pb-36
+          md:pt-36
+
           xl:px-16
+          xl:pb-44
+          xl:pt-44
         "
       >
-        {/* =====================================
+        {/* =================================================
             LABEL
-        ===================================== */}
+        ================================================= */}
 
         <motion.div
           initial={{
@@ -132,7 +333,7 @@ export default function Features() {
             font-medium
             uppercase
             tracking-[0.35em]
-            text-neutral-500
+            text-cyan-200/65
           "
         >
           <motion.span
@@ -154,16 +355,16 @@ export default function Features() {
               h-px
               w-8
               origin-left
-              bg-red-400/50
+              bg-cyan-300/60
             "
           />
 
           Глава 02 // Как это работает
         </motion.div>
 
-        {/* =====================================
+        {/* =================================================
             HEADING
-        ===================================== */}
+        ================================================= */}
 
         <div className="mt-7 overflow-hidden">
           <motion.h2
@@ -191,6 +392,7 @@ export default function Features() {
               font-light
               leading-[0.95]
               tracking-[-0.045em]
+              text-white
             "
           >
             От идеи до реального контакта
@@ -198,7 +400,7 @@ export default function Features() {
 
             <motion.span
               initial={{
-                opacity: 0.25,
+                opacity: 0.3,
               }}
               whileInView={{
                 opacity: 1,
@@ -212,16 +414,16 @@ export default function Features() {
                 delay: 0.2,
                 ease,
               }}
-              className="text-white/45"
+              className="text-cyan-100/40"
             >
               с вашей аудиторией.
             </motion.span>
           </motion.h2>
         </div>
 
-        {/* =====================================
+        {/* =================================================
             DESCRIPTION
-        ===================================== */}
+        ================================================= */}
 
         <motion.p
           initial={{
@@ -248,8 +450,7 @@ export default function Features() {
             max-w-2xl
             text-base
             leading-[1.8]
-            text-white/40
-
+            text-cyan-50/55
             md:text-lg
           "
         >
@@ -258,9 +459,9 @@ export default function Features() {
           результатов рекламной кампании.
         </motion.p>
 
-        {/* =====================================
+        {/* =================================================
             DIVIDER
-        ===================================== */}
+        ================================================= */}
 
         <motion.div
           initial={{
@@ -286,15 +487,15 @@ export default function Features() {
             w-full
             origin-left
             bg-gradient-to-r
-            from-red-400/20
-            via-white/[0.07]
+            from-cyan-300/25
+            via-cyan-100/[0.09]
             to-transparent
           "
         />
 
-        {/* =====================================
+        {/* =================================================
             TIMELINE
-        ===================================== */}
+        ================================================= */}
 
         <motion.div
           initial={{
@@ -319,40 +520,33 @@ export default function Features() {
         </motion.div>
       </div>
 
-      {/* =========================================
-          EDGE LINES
-      ========================================= */}
+      {/* =====================================================
+          BOTTOM TRANSITION
+      ===================================================== */}
 
-      <motion.div
-        initial={{
-          opacity: 0,
-        }}
-        whileInView={{
-          opacity: 1,
-        }}
-        viewport={{
-          once: false,
-        }}
-        transition={{
-          duration: 1,
-        }}
+      <div
         className="
           pointer-events-none
           absolute
           inset-x-0
           bottom-0
-          h-px
-          bg-gradient-to-r
+          z-20
+          h-[220px]
+          bg-gradient-to-b
           from-transparent
-          via-white/[0.07]
-          to-transparent
+          via-[#052830]/80
+          to-[#031A22]
         "
       />
+
+      {/* =====================================================
+          BOTTOM LIGHT
+      ===================================================== */}
 
       {!reduceMotion && (
         <motion.div
           animate={{
-            opacity: [0.15, 0.3, 0.15],
+            opacity: [0.12, 0.2, 0.12],
           }}
           transition={{
             duration: 5,
@@ -362,13 +556,13 @@ export default function Features() {
           className="
             pointer-events-none
             absolute
-            left-1/2
             bottom-[-120px]
+            left-1/2
             h-[240px]
             w-[600px]
             -translate-x-1/2
             rounded-full
-            bg-red-400/[0.025]
+            bg-cyan-300/[0.035]
             blur-[100px]
           "
         />

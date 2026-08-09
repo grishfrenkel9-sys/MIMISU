@@ -1,103 +1,153 @@
-import ScrollReveal from "../animations/ScrollReveal";
-import ScrollReactive from "../animations/ScrollReactive";
-import useScrollVelocity from "../../hooks/useScrollVelocity";
+import { motion } from "framer-motion";
 
 export default function Statement() {
-  const {
-    movement,
-    rotation,
-  } = useScrollVelocity();
-
   return (
-    <div
-      className="
-        mt-24
-        grid
-        grid-cols-1
-        gap-12
-        lg:mt-32
-        lg:grid-cols-12
-        lg:gap-8
-      "
-    >
-      {/* LABEL */}
-
-      <ScrollReveal
-        direction="left"
-        distance={30}
-        duration={0.8}
-      >
-        <div className="lg:col-span-3">
-          <span
-            className="
-              text-[10px]
-              uppercase
-              tracking-[0.28em]
-              text-neutral-600
-            "
-          >
-            Что мы делаем
-          </span>
-        </div>
-      </ScrollReveal>
-
-      {/* STATEMENT */}
+    <section className="relative py-20 md:py-28">
+      {/* Soft ambient glow */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-[20%]
+          top-[20%]
+          h-[420px]
+          w-[420px]
+          -translate-x-1/2
+          rounded-full
+          bg-cyan-300/[0.08]
+          blur-[130px]
+        "
+      />
 
       <div
         className="
-          lg:col-span-8
-          lg:col-start-5
+          pointer-events-none
+          absolute
+          right-[10%]
+          bottom-[10%]
+          h-[300px]
+          w-[300px]
+          rounded-full
+          bg-sky-300/[0.07]
+          blur-[120px]
         "
-      >
-        <ScrollReveal
-          direction="up"
-          distance={55}
-          duration={1}
-        >
-          <ScrollReactive
-            movement={movement}
-            rotation={rotation}
-          >
-            <p
-              className="
-                text-[clamp(1.5rem,3vw,2.7rem)]
-                font-light
-                leading-[1.35]
-                tracking-[-0.025em]
-                text-white/70
-              "
-            >
-              MiMiSU превращает обычную бутылку
-              воды в{" "}
-              <span className="text-white">
-                физический рекламный носитель
-              </span>
-              , который человек берет в руки,
-              рассматривает, сканирует{" "}
-              <span className="text-cyan-300/90">
-                QR-код
-              </span>{" "}
-              и взаимодействует с брендом.
-            </p>
-          </ScrollReactive>
-        </ScrollReveal>
+      />
 
-        <ScrollReveal
-          direction="right"
-          distance={80}
-          delay={0.15}
-          duration={1.1}
+      <div className="relative z-10 grid gap-12 lg:grid-cols-[0.35fr_1fr] lg:gap-20">
+        {/* Label */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7 }}
+          className="
+            flex
+            items-start
+            gap-3
+            text-[10px]
+            font-semibold
+            uppercase
+            tracking-[0.3em]
+            text-[#0E7490]/60
+          "
         >
-          <div
+          <span
             className="
-              mt-12
-              h-px
-              w-full
-              bg-white/[0.08]
+              mt-1
+              h-2
+              w-2
+              rounded-full
+              bg-[#0EA5A8]
+              shadow-[0_0_16px_rgba(14,165,168,0.35)]
             "
           />
-        </ScrollReveal>
+
+          <span>
+            MiMiSU
+            <br />
+            / Water Media
+          </span>
+        </motion.div>
+
+        {/* Main statement */}
+        <motion.div
+          initial={{ opacity: 0, y: 35 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{
+            duration: 0.9,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="max-w-[1000px]"
+        >
+          <h2
+            className="
+              text-[clamp(2.2rem,4.5vw,5rem)]
+              font-black
+              leading-[0.98]
+              tracking-[-0.045em]
+              text-[#073B4C]
+            "
+          >
+            Мы превращаем
+            <span className="text-[#0E7490]"> воду </span>
+            в точку контакта
+            <span className="text-[#4B8D99]"> между брендом и человеком.</span>
+          </h2>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.25, duration: 0.7 }}
+            className="
+              mt-8
+              max-w-[720px]
+              text-[15px]
+              leading-7
+              text-[#073B4C]/60
+              md:text-[17px]
+              md:leading-8
+            "
+          >
+            Каждая бутылка становится физическим носителем бренда,
+            который находится рядом с аудиторией в момент реального
+            потребления. Мы соединяем дистрибуцию, дизайн и цифровую
+            аналитику в одной рекламной системе.
+          </motion.p>
+
+          {/* Small data line */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4, duration: 0.7 }}
+            className="
+              mt-10
+              flex
+              items-center
+              gap-4
+              text-[9px]
+              font-semibold
+              uppercase
+              tracking-[0.25em]
+              text-[#0E7490]/45
+            "
+          >
+            <span className="h-px w-12 bg-[#0E7490]/25" />
+
+            Physical media
+
+            <span className="text-[#0E7490]/20">•</span>
+
+            Digital data
+
+            <span className="text-[#0E7490]/20">•</span>
+
+            Real audience
+          </motion.div>
+        </motion.div>
       </div>
-    </div>
+    </section>
   );
 }

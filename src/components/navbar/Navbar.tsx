@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
@@ -13,11 +14,29 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      if (ticking) return;
+
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        const nextScrolled = window.scrollY > 30;
+
+        setScrolled((prev) =>
+          prev === nextScrolled ? prev : nextScrolled
+        );
+
+        ticking = false;
+      });
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+
+    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -25,29 +44,29 @@ export default function Navbar() {
   }, []);
 
   const scrollToSection = (href: string) => {
-    const id = href.replace("#", "");
+    const id = href.slice(1);
     const element = document.getElementById(id);
 
     if (!element) return;
 
-    const navbarOffset = 90;
-
-    const elementPosition =
-      element.getBoundingClientRect().top + window.scrollY;
+    const offset = 90;
 
     window.scrollTo({
-      top: elementPosition - navbarOffset,
+      top:
+        element.getBoundingClientRect().top +
+        window.scrollY -
+        offset,
       behavior: "smooth",
     });
-
-    window.history.pushState(null, "", href);
 
     setOpen(false);
   };
 
   return (
     <>
-      {/* ================= NAVBAR ================= */}
+      {/* =====================================================
+          NAVBAR
+      ===================================================== */}
 
       <header
         className={`
@@ -55,13 +74,24 @@ export default function Navbar() {
           inset-x-0
           top-0
           z-50
-          transition-all
+          h-20
+          transition-[background-color,border-color,box-shadow]
           duration-500
-
+          ease-out
           ${
             scrolled
-              ? "border-b border-white/10 bg-black/35 backdrop-blur-3xl"
-              : "bg-transparent"
+              ? `
+                border-b
+                border-white/[0.08]
+                bg-[#173F49]/85
+                shadow-[0_4px_24px_rgba(0,0,0,0.08)]
+                backdrop-blur-xl
+              `
+              : `
+                border-b
+                border-transparent
+                bg-transparent
+              `
           }
         `}
       >
@@ -69,7 +99,7 @@ export default function Navbar() {
           className="
             mx-auto
             flex
-            h-20
+            h-full
             max-w-[1700px]
             items-center
             justify-between
@@ -77,179 +107,212 @@ export default function Navbar() {
             lg:px-12
           "
         >
-          {/* ================= DESKTOP ================= */}
+          {/* =================================================
+              DESKTOP
+          ================================================= */}
 
           <div className="hidden items-center gap-8 lg:flex">
-            {/* Logo */}
+            {/* =================================================
+                LOGO
+            ================================================= */}
 
             <button
               type="button"
               onClick={() => scrollToSection("#hero")}
               className="
+                group
+                relative
                 text-[28px]
                 font-light
                 uppercase
                 tracking-[0.45em]
-                text-white
-
+                text-[#F0FEFF]
                 transition-all
-                duration-300
-
-                hover:text-cyan-300
+                duration-500
+                ease-out
+                hover:text-[#D5FBFC]
+                hover:[text-shadow:0_0_12px_rgba(213,251,252,0.35),0_0_28px_rgba(213,251,252,0.18)]
               "
             >
-              MIMISU
+              <span
+                className="
+                  pointer-events-none
+                  absolute
+                  -inset-x-4
+                  -inset-y-3
+                  -z-10
+                  rounded-full
+                  bg-[#D5FBFC]/0
+                  opacity-0
+                  blur-xl
+                  transition-all
+                  duration-500
+                  ease-out
+                  group-hover:bg-[#D5FBFC]/10
+                  group-hover:opacity-100
+                "
+              />
+
+              <span className="relative">
+                MIMISU
+              </span>
             </button>
 
-            {/* Divider */}
+            {/* DIVIDER */}
 
-            <div className="h-5 w-px bg-white/10" />
+            <div className="h-5 w-px bg-white/[0.12]" />
 
-            {/* Navigation */}
+            {/* =================================================
+                LINKS
+            ================================================= */}
 
             <nav className="flex items-center gap-7">
               {links.map((link) => (
                 <button
-                  key={link.label}
+                  key={link.href}
                   type="button"
-                  onClick={() => scrollToSection(link.href)}
+                  onClick={() =>
+                    scrollToSection(link.href)
+                  }
                   className="
                     group
                     relative
-
+                    py-2
                     text-[13px]
+                    font-medium
                     uppercase
                     tracking-[0.22em]
-                    text-white/55
-
-                    transition-all
+                    text-[#D8F3F5]/75
+                    transition-colors
                     duration-300
-
+                    ease-out
                     hover:text-white
                   "
                 >
                   {link.label}
 
-                  {/* underline */}
-
                   <span
                     className="
                       absolute
-                      -bottom-2
+                      bottom-0
                       left-0
                       h-px
                       w-0
-
-                      bg-cyan-300
-
-                      transition-all
+                      bg-[#D5FBFC]
+                      shadow-[0_0_8px_rgba(213,251,252,0.35)]
+                      transition-[width]
                       duration-300
-
+                      ease-out
                       group-hover:w-full
-                    "
-                  />
-
-                  {/* glow */}
-
-                  <span
-                    className="
-                      pointer-events-none
-                      absolute
-                      -inset-x-3
-                      -inset-y-2
-                      -z-10
-
-                      rounded-full
-
-                      bg-cyan-300/0
-                      blur-xl
-
-                      transition-all
-                      duration-500
-
-                      group-hover:bg-cyan-300/10
                     "
                   />
                 </button>
               ))}
             </nav>
 
-            {/* Divider */}
+            {/* DIVIDER */}
 
-            <div className="h-5 w-px bg-white/10" />
+            <div className="h-5 w-px bg-white/[0.12]" />
 
-            {/* CTA */}
+            {/* =================================================
+                DESKTOP CTA
+            ================================================= */}
 
             <button
               type="button"
-              onClick={() => scrollToSection("#calculator")}
+              onClick={() =>
+                scrollToSection("#calculator")
+              }
               className="
                 group
                 relative
-
-                flex
                 h-11
-                items-center
-                justify-center
                 overflow-hidden
-
                 rounded-full
-
                 border
-                border-white/10
-
-                bg-white/[0.03]
-
+                border-[#D5FBFC]/30
+                bg-white/[0.06]
                 px-7
-
                 text-[13px]
                 font-medium
                 uppercase
                 tracking-[0.18em]
-                text-white
-
-                backdrop-blur-xl
+                text-[#E9FCFD]
 
                 transition-all
                 duration-500
+                ease-[cubic-bezier(0.16,1,0.3,1)]
 
-                hover:border-cyan-400/40
-                hover:bg-white/[0.06]
-                hover:shadow-[0_0_30px_rgba(34,211,238,.18)]
+                hover:-translate-y-1
+                hover:border-[#D5FBFC]/60
+                hover:bg-[#D5FBFC]/[0.10]
+                hover:text-white
+                hover:shadow-[0_10px_35px_rgba(213,251,252,0.14)]
+
+                active:translate-y-0
+                active:scale-[0.98]
               "
             >
-              {/* Shine */}
+              {/* INNER GLOW */}
 
               <span
                 className="
+                  pointer-events-none
                   absolute
                   inset-0
-                  -translate-x-full
-
-                  bg-gradient-to-r
-                  from-transparent
-                  via-white/10
-                  to-transparent
-
-                  transition-transform
-                  duration-700
-
-                  group-hover:translate-x-full
+                  rounded-full
+                  bg-[#D5FBFC]/0
+                  transition-colors
+                  duration-500
+                  group-hover:bg-[#D5FBFC]/[0.04]
                 "
               />
 
-              <span className="relative z-10">
+              {/* SHINE */}
+
+              <span
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-y-0
+                  -left-[60%]
+                  w-[35%]
+                  -skew-x-[20deg]
+                  bg-gradient-to-r
+                  from-transparent
+                  via-white/20
+                  to-transparent
+                  transition-[left]
+                  duration-[900ms]
+                  ease-out
+                  group-hover:left-[130%]
+                "
+              />
+
+              <span
+                className="
+                  relative
+                  z-10
+                  transition-[letter-spacing]
+                  duration-500
+                  ease-out
+                  group-hover:tracking-[0.21em]
+                "
+              >
                 Запустить кампанию
               </span>
             </button>
           </div>
 
-          {/* ================= MOBILE BUTTON ================= */}
+          {/* =================================================
+              MOBILE BUTTON
+          ================================================= */}
 
           <button
             type="button"
-            onClick={() => setOpen(!open)}
+            onClick={() => setOpen((prev) => !prev)}
             className="
+              group
               ml-auto
               flex
               h-11
@@ -258,161 +321,257 @@ export default function Navbar() {
               justify-center
               rounded-full
               border
-              border-white/10
-              bg-white/[0.03]
-              text-white
-              backdrop-blur-xl
-
+              border-[#D5FBFC]/25
+              bg-white/[0.06]
+              text-[#D5FBFC]
+              backdrop-blur-md
               transition-all
               duration-300
-
-              hover:border-cyan-400/40
-              hover:text-cyan-300
-
+              ease-out
+              hover:-translate-y-0.5
+              hover:border-[#D5FBFC]/50
+              hover:bg-[#D5FBFC]/[0.09]
+              hover:text-white
+              hover:shadow-[0_6px_24px_rgba(213,251,252,0.10)]
               lg:hidden
             "
-            aria-label="Открыть меню"
+            aria-label={
+              open ? "Закрыть меню" : "Открыть меню"
+            }
           >
-            {open ? <X size={22} /> : <Menu size={22} />}
+            {open ? (
+              <X
+                size={20}
+                strokeWidth={1.7}
+                className="
+                  transition-transform
+                  duration-300
+                "
+              />
+            ) : (
+              <Menu
+                size={20}
+                strokeWidth={1.7}
+                className="
+                  transition-transform
+                  duration-300
+                "
+              />
+            )}
           </button>
         </div>
       </header>
 
-      {/* ================= MOBILE MENU ================= */}
+      {/* =====================================================
+          MOBILE MENU
+      ===================================================== */}
 
       <div
         className={`
           fixed
           inset-0
           z-40
-          flex
-          flex-col
-
-          bg-black/95
-          pt-24
-
-          backdrop-blur-3xl
-
-          transition-all
-          duration-500
           lg:hidden
-
+          transition-[opacity,visibility]
+          duration-300
           ${
             open
-              ? "visible opacity-100"
-              : "invisible pointer-events-none opacity-0"
+              ? "pointer-events-auto visible opacity-100"
+              : "pointer-events-none invisible opacity-0"
           }
         `}
       >
-        {/* Links */}
+        {/* BACKDROP */}
 
-        <nav className="flex flex-col">
-          {links.map((link, index) => (
+        <div
+          className="
+            absolute
+            inset-0
+            bg-[#173F49]/95
+            backdrop-blur-xl
+          "
+          onClick={() => setOpen(false)}
+        />
+
+        {/* MENU */}
+
+        <div
+          className={`
+            absolute
+            inset-x-0
+            top-20
+            overflow-hidden
+            border-t
+            border-white/[0.08]
+            bg-[#173F49]
+            transition-transform
+            duration-500
+            ease-[cubic-bezier(0.16,1,0.3,1)]
+            ${
+              open
+                ? "translate-y-0"
+                : "-translate-y-4"
+            }
+          `}
+        >
+          <nav>
+            {links.map((link, index) => (
+              <button
+                key={link.href}
+                type="button"
+                onClick={() =>
+                  scrollToSection(link.href)
+                }
+                className="
+                  group
+                  flex
+                  w-full
+                  items-center
+                  justify-between
+                  border-b
+                  border-white/[0.07]
+                  px-8
+                  py-5
+                  text-left
+                  text-xl
+                  font-light
+                  text-[#D8F3F5]
+                  transition-all
+                  duration-300
+                  hover:bg-white/[0.04]
+                  hover:pl-10
+                  hover:text-white
+                "
+              >
+                <span>{link.label}</span>
+
+                <span
+                  className="
+                    font-mono
+                    text-[9px]
+                    tracking-[0.3em]
+                    text-[#A9DDE1]/40
+                    transition-colors
+                    duration-300
+                    group-hover:text-[#D5FBFC]/70
+                  "
+                >
+                  0{index + 1}
+                </span>
+              </button>
+            ))}
+          </nav>
+
+          {/* =================================================
+              MOBILE CTA
+          ================================================= */}
+
+          <div className="p-8">
             <button
-              key={link.label}
               type="button"
-              onClick={() => scrollToSection(link.href)}
-              className={`
-                border-b
-                border-white/10
-
-                px-10
-                py-6
-
-                text-left
-                text-3xl
-                font-light
-                text-white
+              onClick={() =>
+                scrollToSection("#calculator")
+              }
+              className="
+                group
+                relative
+                w-full
+                overflow-hidden
+                rounded-full
+                border
+                border-[#D5FBFC]/30
+                bg-white/[0.06]
+                py-4
+                text-sm
+                font-medium
+                uppercase
+                tracking-[0.18em]
+                text-[#E9FCFD]
 
                 transition-all
                 duration-500
+                ease-[cubic-bezier(0.16,1,0.3,1)]
 
-                hover:bg-white/[0.03]
-                hover:pl-12
-                hover:text-cyan-300
+                hover:-translate-y-1
+                hover:border-[#D5FBFC]/60
+                hover:bg-[#D5FBFC]/[0.10]
+                hover:text-white
+                hover:shadow-[0_10px_35px_rgba(213,251,252,0.14)]
 
-                ${
-                  open
-                    ? "translate-x-0 opacity-100"
-                    : "translate-x-8 opacity-0"
-                }
-              `}
-              style={{
-                transitionDelay: open
-                  ? `${index * 70}ms`
-                  : "0ms",
-              }}
-            >
-              <span className="flex items-center justify-between">
-                {link.label}
-
-                <span className="text-xs tracking-[0.3em] text-white/20">
-                  0{index + 1}
-                </span>
-              </span>
-            </button>
-          ))}
-        </nav>
-
-        {/* Mobile CTA */}
-
-        <div className="mt-auto p-10 pb-12">
-          <button
-            type="button"
-            onClick={() => scrollToSection("#calculator")}
-            className="
-              group
-              relative
-
-              block
-              w-full
-              overflow-hidden
-
-              rounded-full
-
-              border
-              border-cyan-400/30
-
-              bg-cyan-300/[0.06]
-
-              py-5
-
-              text-center
-              text-sm
-              font-medium
-              uppercase
-              tracking-[0.18em]
-              text-white
-
-              transition-all
-              duration-500
-
-              hover:bg-cyan-300/10
-              hover:shadow-[0_0_40px_rgba(34,211,238,.15)]
-            "
-          >
-            <span
-              className="
-                absolute
-                inset-0
-                -translate-x-full
-
-                bg-gradient-to-r
-                from-transparent
-                via-white/10
-                to-transparent
-
-                transition-transform
-                duration-700
-
-                group-hover:translate-x-full
+                active:translate-y-0
+                active:scale-[0.98]
               "
-            />
+            >
+              {/* INNER GLOW */}
 
-            <span className="relative z-10">
-              Запустить кампанию
-            </span>
-          </button>
+              <span
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-0
+                  rounded-full
+                  bg-[#D5FBFC]/0
+                  transition-colors
+                  duration-500
+                  group-hover:bg-[#D5FBFC]/[0.04]
+                "
+              />
+
+              {/* SHINE */}
+
+              <span
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-y-0
+                  -left-[60%]
+                  w-[35%]
+                  -skew-x-[20deg]
+                  bg-gradient-to-r
+                  from-transparent
+                  via-white/20
+                  to-transparent
+                  transition-[left]
+                  duration-[900ms]
+                  ease-out
+                  group-hover:left-[130%]
+                "
+              />
+
+              <span
+                className="
+                  relative
+                  z-10
+                  transition-[letter-spacing]
+                  duration-500
+                  ease-out
+                  group-hover:tracking-[0.22em]
+                "
+              >
+                Запустить кампанию
+              </span>
+
+              <span
+                className="
+                  relative
+                  z-10
+                  ml-3
+                  inline-block
+                  h-1.5
+                  w-1.5
+                  rounded-full
+                  bg-[#D5FBFC]/60
+                  align-middle
+                  transition-all
+                  duration-500
+                  ease-out
+                  group-hover:scale-125
+                  group-hover:bg-[#D5FBFC]
+                  group-hover:shadow-[0_0_12px_rgba(213,251,252,0.9)]
+                "
+              />
+            </button>
+          </div>
         </div>
       </div>
     </>

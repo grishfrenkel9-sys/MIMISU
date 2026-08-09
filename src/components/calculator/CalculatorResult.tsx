@@ -1,3 +1,4 @@
+
 import {
   AnimatePresence,
   motion,
@@ -58,7 +59,6 @@ export default function CalculatorResult({
 
   return (
     <motion.div
-      layout
       className="
         group
         relative
@@ -68,12 +68,12 @@ export default function CalculatorResult({
         border-white/[0.08]
         bg-white/[0.025]
         p-7
-        backdrop-blur-2xl
 
         md:p-9
 
-        transition-colors
-        duration-500
+        transition-[border-color]
+        duration-300
+
         hover:border-white/[0.12]
       "
     >
@@ -81,20 +81,7 @@ export default function CalculatorResult({
           AMBIENT GLOW
       ========================================= */}
 
-      <motion.div
-        animate={
-          reduceMotion
-            ? undefined
-            : {
-                opacity: [0.25, 0.45, 0.25],
-                scale: [1, 1.06, 1],
-              }
-        }
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+      <div
         className="
           pointer-events-none
           absolute
@@ -103,8 +90,12 @@ export default function CalculatorResult({
           h-80
           w-80
           rounded-full
-          bg-cyan-400/[0.07]
-          blur-[100px]
+          bg-cyan-400/[0.06]
+          blur-[80px]
+
+          max-md:h-56
+          max-md:w-56
+          max-md:blur-[55px]
         "
       />
 
@@ -117,8 +108,12 @@ export default function CalculatorResult({
           h-80
           w-80
           rounded-full
-          bg-[#E3C14B]/[0.035]
-          blur-[110px]
+          bg-[#E3C14B]/[0.025]
+          blur-[90px]
+
+          max-md:h-56
+          max-md:w-56
+          max-md:blur-[60px]
         "
       />
 
@@ -168,25 +163,13 @@ export default function CalculatorResult({
               text-white/25
             "
           >
-            <motion.span
-              animate={
-                reduceMotion
-                  ? undefined
-                  : {
-                      opacity: [0.35, 1, 0.35],
-                      scale: [0.8, 1, 0.8],
-                    }
-              }
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-              }}
+            <span
               className="
                 h-1.5
                 w-1.5
                 rounded-full
                 bg-cyan-300
-                shadow-[0_0_10px_rgba(103,232,249,.8)]
+                shadow-[0_0_8px_rgba(103,232,249,.65)]
               "
             />
 
@@ -210,7 +193,14 @@ export default function CalculatorResult({
             Стоимость участия
           </p>
 
-          <div className="relative mt-3 min-h-[72px] overflow-hidden">
+          <div
+            className="
+              relative
+              mt-3
+              min-h-[72px]
+              overflow-hidden
+            "
+          >
             <AnimatePresence
               mode="popLayout"
               initial={false}
@@ -219,25 +209,18 @@ export default function CalculatorResult({
                 key={result.advertiserBudget}
                 initial={{
                   opacity: 0,
-                  y: reduceMotion ? 0 : 28,
-                  filter: reduceMotion
-                    ? "blur(0px)"
-                    : "blur(8px)",
+                  y: reduceMotion ? 0 : 18,
                 }}
                 animate={{
                   opacity: 1,
                   y: 0,
-                  filter: "blur(0px)",
                 }}
                 exit={{
                   opacity: 0,
-                  y: reduceMotion ? 0 : -20,
-                  filter: reduceMotion
-                    ? "blur(0px)"
-                    : "blur(6px)",
+                  y: reduceMotion ? 0 : -14,
                 }}
                 transition={{
-                  duration: 0.4,
+                  duration: 0.3,
                   ease,
                 }}
                 className="
@@ -274,25 +257,10 @@ export default function CalculatorResult({
             DIVIDER
         ========================================= */}
 
-        <motion.div
-          initial={{
-            scaleX: 0,
-          }}
-          whileInView={{
-            scaleX: 1,
-          }}
-          viewport={{
-            once: false,
-            amount: 0.3,
-          }}
-          transition={{
-            duration: 0.9,
-            ease,
-          }}
+        <div
           className="
             my-8
             h-px
-            origin-left
             bg-white/[0.07]
           "
         />
@@ -304,23 +272,33 @@ export default function CalculatorResult({
         <div className="space-y-2">
           {stats.map((item, index) => (
             <motion.div
-              layout
               key={item.label}
-              initial={{
-                opacity: 0,
-                x: 20,
-              }}
-              animate={{
-                opacity: 1,
-                x: 0,
+              initial={
+                reduceMotion
+                  ? false
+                  : {
+                      opacity: 0,
+                      x: 12,
+                    }
+              }
+              whileInView={
+                reduceMotion
+                  ? undefined
+                  : {
+                      opacity: 1,
+                      x: 0,
+                    }
+              }
+              viewport={{
+                once: true,
+                amount: 0.2,
               }}
               transition={{
-                duration: 0.45,
-                delay: index * 0.05,
+                duration: 0.4,
+                delay: index * 0.04,
                 ease,
               }}
               className={`
-                group/stat
                 relative
                 flex
                 items-center
@@ -332,8 +310,8 @@ export default function CalculatorResult({
                 px-5
                 py-4
 
-                transition-all
-                duration-300
+                transition-[border-color,background-color]
+                duration-200
 
                 ${
                   item.accent
@@ -344,38 +322,16 @@ export default function CalculatorResult({
                     : `
                       border-white/[0.05]
                       bg-white/[0.012]
+
                       hover:border-white/[0.1]
                       hover:bg-white/[0.025]
                     `
                 }
               `}
             >
-              {/* Row glow */}
-
-              <div
-                className="
-                  pointer-events-none
-                  absolute
-                  inset-y-0
-                  left-0
-                  w-24
-                  -translate-x-full
-                  bg-gradient-to-r
-                  from-transparent
-                  via-white/[0.035]
-                  to-transparent
-                  transition-transform
-                  duration-700
-                  group-hover/stat:translate-x-[500%]
-                "
-              />
-
               <span
                 className={`
-                  relative
                   text-sm
-                  transition-colors
-                  duration-300
 
                   ${
                     item.accent
@@ -395,7 +351,7 @@ export default function CalculatorResult({
                   key={item.value}
                   initial={{
                     opacity: 0,
-                    y: reduceMotion ? 0 : 8,
+                    y: reduceMotion ? 0 : 6,
                   }}
                   animate={{
                     opacity: 1,
@@ -403,14 +359,13 @@ export default function CalculatorResult({
                   }}
                   exit={{
                     opacity: 0,
-                    y: reduceMotion ? 0 : -8,
+                    y: reduceMotion ? 0 : -6,
                   }}
                   transition={{
-                    duration: 0.25,
+                    duration: 0.2,
                     ease,
                   }}
                   className={`
-                    relative
                     shrink-0
                     text-sm
                     font-medium
@@ -430,7 +385,7 @@ export default function CalculatorResult({
         </div>
 
         {/* =========================================
-            CTA — WHATSAPP BUSINESS
+            CTA — WHATSAPP
         ========================================= */}
 
         <motion.button
@@ -440,7 +395,7 @@ export default function CalculatorResult({
             reduceMotion
               ? undefined
               : {
-                  y: -3,
+                  y: -2,
                 }
           }
           whileTap={
@@ -451,7 +406,7 @@ export default function CalculatorResult({
                 }
           }
           transition={{
-            duration: 0.25,
+            duration: 0.2,
             ease,
           }}
           className="
@@ -469,39 +424,36 @@ export default function CalculatorResult({
             font-medium
             text-black
 
-            transition-all
-            duration-300
+            transition-[background-color,box-shadow]
+            duration-200
 
             hover:bg-cyan-200
-            hover:shadow-[0_15px_50px_rgba(103,232,249,.18)]
+            hover:shadow-[0_15px_40px_rgba(103,232,249,.15)]
           "
         >
           <span className="relative z-10">
             Получить коммерческое предложение
           </span>
 
-          {/* Shine */}
+          {/* Shine только для desktop */}
 
-          <motion.span
-            initial={{
-              x: "-130%",
-            }}
-            whileHover={{
-              x: "500%",
-            }}
-            transition={{
-              duration: 0.8,
-              ease: "easeInOut",
-            }}
+          <span
             className="
               pointer-events-none
               absolute
               inset-y-0
               left-0
+              hidden
               w-20
               skew-x-[-20deg]
               bg-white/40
               blur-md
+
+              lg:block
+              lg:-translate-x-[130%]
+              lg:transition-transform
+              lg:duration-700
+              lg:group-hover/btn:translate-x-[500%]
             "
           />
         </motion.button>

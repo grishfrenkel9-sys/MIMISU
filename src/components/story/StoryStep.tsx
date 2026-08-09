@@ -73,8 +73,8 @@ export default function StoryStep({
 
           rounded-full
           border
-          border-red-400/10
-          bg-red-400/[0.025]
+          border-cyan-300/[0.10]
+          bg-cyan-300/[0.025]
 
           px-4
           py-2
@@ -113,7 +113,7 @@ export default function StoryStep({
         "
       >
         {/* =======================================
-            RED ORBIT
+            CYAN ORBIT
         ======================================= */}
 
         <div className="relative flex items-center justify-center">
@@ -145,7 +145,7 @@ export default function StoryStep({
                 inset-0
                 rounded-full
                 border
-                border-red-400/20
+                border-cyan-300/[0.20]
               "
             />
 
@@ -157,7 +157,7 @@ export default function StoryStep({
                 inset-6
                 rounded-full
                 border
-                border-red-400/15
+                border-cyan-300/[0.15]
               "
             />
 
@@ -169,7 +169,7 @@ export default function StoryStep({
                 inset-12
                 rounded-full
                 border
-                border-red-400/20
+                border-cyan-300/[0.20]
               "
             />
 
@@ -181,7 +181,7 @@ export default function StoryStep({
                 h-20
                 w-20
                 rounded-full
-                bg-red-500/[0.08]
+                bg-cyan-300/[0.07]
                 blur-2xl
               "
             />
@@ -199,17 +199,17 @@ export default function StoryStep({
                 rounded-full
 
                 border
-                border-red-400/20
+                border-cyan-300/[0.20]
 
-                bg-red-500/[0.04]
+                bg-cyan-300/[0.035]
 
-                shadow-[0_0_35px_rgba(248,113,113,.12)]
+                shadow-[0_0_35px_rgba(103,232,249,.10)]
               "
             >
               <Icon
                 size={17}
                 strokeWidth={1.4}
-                className="text-red-400"
+                className="text-cyan-300/80"
               />
             </div>
 
@@ -236,9 +236,9 @@ export default function StoryStep({
                   w-1.5
                   -translate-x-1/2
                   rounded-full
-                  bg-red-400
+                  bg-cyan-300
 
-                  shadow-[0_0_10px_rgba(248,113,113,.8)]
+                  shadow-[0_0_10px_rgba(103,232,249,.65)]
                 "
               />
             </motion.div>
@@ -258,7 +258,7 @@ export default function StoryStep({
               font-mono
               text-[10px]
               tracking-[0.35em]
-              text-red-400/50
+              text-cyan-300/40
             "
           >
             {number}
@@ -288,7 +288,7 @@ export default function StoryStep({
               mt-7
               h-px
               w-14
-              bg-red-400/50
+              bg-cyan-300/40
             "
           />
 
@@ -320,8 +320,8 @@ export default function StoryStep({
 
               rounded-full
               border
-              border-red-400/10
-              bg-red-400/[0.025]
+              border-cyan-300/[0.10]
+              bg-cyan-300/[0.025]
 
               px-4
               py-2
@@ -329,7 +329,7 @@ export default function StoryStep({
               text-[9px]
               uppercase
               tracking-[0.25em]
-              text-red-300/45
+              text-cyan-200/40
             "
           >
             <span
@@ -337,9 +337,9 @@ export default function StoryStep({
                 h-1.5
                 w-1.5
                 rounded-full
-                bg-red-400
+                bg-cyan-300
 
-                shadow-[0_0_8px_rgba(248,113,113,.8)]
+                shadow-[0_0_8px_rgba(103,232,249,.65)]
               "
             />
 

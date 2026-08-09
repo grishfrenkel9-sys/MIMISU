@@ -1,7 +1,4 @@
-import {
-  motion,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 interface Props {
   number: string;
@@ -54,41 +51,23 @@ export default function FeatureCard({
         overflow-hidden
         rounded-2xl
         border
-        border-white/[0.06]
+        border-cyan-100/[0.06]
         bg-white/[0.015]
         px-7
         py-8
         transition-[border-color,background-color]
         duration-500
-
         md:px-10
         md:py-10
-
-        hover:border-white/[0.12]
-        hover:bg-white/[0.025]
+        hover:border-cyan-200/[0.13]
+        hover:bg-cyan-100/[0.018]
       "
     >
-      {/* =========================================
-          RED AMBIENT GLOW
-      ========================================= */}
+      {/* =================================================
+          AMBIENT GLOW
+      ================================================= */}
 
-      <motion.div
-        initial={{
-          opacity: 0,
-          scale: 0.7,
-        }}
-        whileInView={{
-          opacity: 1,
-          scale: 1,
-        }}
-        viewport={{
-          once: false,
-          amount: 0.25,
-        }}
-        transition={{
-          duration: 1.1,
-          ease,
-        }}
+      <div
         className="
           pointer-events-none
           absolute
@@ -98,17 +77,17 @@ export default function FeatureCard({
           w-48
           -translate-y-1/2
           rounded-full
-          bg-red-500/[0.035]
+          bg-cyan-400/[0.025]
           blur-[90px]
           transition-all
           duration-700
-          group-hover:bg-red-500/[0.1]
+          group-hover:bg-cyan-400/[0.07]
         "
       />
 
-      {/* =========================================
+      {/* =================================================
           TOP LIGHT
-      ========================================= */}
+      ================================================= */}
 
       <div
         className="
@@ -119,7 +98,7 @@ export default function FeatureCard({
           h-px
           bg-gradient-to-r
           from-transparent
-          via-white/[0.1]
+          via-cyan-100/[0.12]
           to-transparent
           opacity-60
           transition-opacity
@@ -128,9 +107,9 @@ export default function FeatureCard({
         "
       />
 
-      {/* =========================================
+      {/* =================================================
           VERTICAL ACCENT
-      ========================================= */}
+      ================================================= */}
 
       <motion.div
         initial={{
@@ -158,22 +137,21 @@ export default function FeatureCard({
           w-px
           origin-top
           bg-gradient-to-b
-          from-red-400/80
-          via-red-500/30
+          from-cyan-300/70
+          via-cyan-400/25
           to-transparent
         "
       />
 
-      {/* =========================================
+      {/* =================================================
           CONTENT
-      ========================================= */}
+      ================================================= */}
 
       <div
         className="
           relative
           flex
           gap-8
-
           md:gap-12
         "
       >
@@ -185,7 +163,7 @@ export default function FeatureCard({
               reduceMotion
                 ? undefined
                 : {
-                    color: "rgba(248,113,113,1)",
+                    color: "rgba(103,232,249,1)",
                     x: 2,
                   }
             }
@@ -196,7 +174,7 @@ export default function FeatureCard({
               font-mono
               text-xs
               tracking-[0.25em]
-              text-red-500/70
+              text-cyan-300/65
               transition-colors
               duration-500
             "
@@ -215,11 +193,11 @@ export default function FeatureCard({
               -translate-x-1/2
               -translate-y-1/2
               rounded-full
-              bg-red-500/0
+              bg-cyan-400/0
               blur-xl
               transition-all
               duration-500
-              group-hover:bg-red-500/20
+              group-hover:bg-cyan-400/15
             "
           />
         </div>
@@ -234,7 +212,6 @@ export default function FeatureCard({
                 font-light
                 tracking-tight
                 text-white
-
                 md:text-3xl
               "
               whileHover={
@@ -252,8 +229,6 @@ export default function FeatureCard({
               {title}
             </motion.h3>
 
-            {/* Arrow */}
-
             <motion.span
               initial={{
                 opacity: 0,
@@ -269,8 +244,7 @@ export default function FeatureCard({
               className="
                 hidden
                 text-sm
-                text-red-400
-
+                text-cyan-300/70
                 md:block
               "
             >
@@ -288,7 +262,6 @@ export default function FeatureCard({
               transition-colors
               duration-500
               group-hover:text-white/50
-
               md:text-base
               md:leading-8
             "
@@ -298,9 +271,9 @@ export default function FeatureCard({
         </div>
       </div>
 
-      {/* =========================================
+      {/* =================================================
           BOTTOM SHINE
-      ========================================= */}
+      ================================================= */}
 
       <motion.div
         initial={{
@@ -323,14 +296,14 @@ export default function FeatureCard({
           origin-left
           bg-gradient-to-r
           from-transparent
-          via-red-400/60
+          via-cyan-300/45
           to-transparent
         "
       />
 
-      {/* =========================================
+      {/* =================================================
           CORNER LIGHT
-      ========================================= */}
+      ================================================= */}
 
       <div
         className="
@@ -341,7 +314,7 @@ export default function FeatureCard({
           h-24
           w-24
           rounded-bl-full
-          bg-red-400/[0.015]
+          bg-cyan-300/[0.018]
           opacity-0
           blur-2xl
           transition-opacity

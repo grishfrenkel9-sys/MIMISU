@@ -1,5 +1,4 @@
 import { Canvas } from "@react-three/fiber";
-import Particles from "../../background/Particles";
 
 export default function HeroParticlesCanvas() {
   return (
@@ -31,7 +30,7 @@ export default function HeroParticlesCanvas() {
 
         <ambientLight intensity={0.4} />
 
-        <Particles />
+      
       </Canvas>
     </div>
   );

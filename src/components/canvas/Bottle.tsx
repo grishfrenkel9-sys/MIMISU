@@ -1,3 +1,4 @@
+
 import {
   forwardRef,
   useImperativeHandle,
@@ -29,6 +30,24 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
     useBottleAnimation(group, reduceMotion);
 
     // =========================================
+    // MOBILE DETECTION
+    // =========================================
+
+    const isMobile =
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 768px)").matches;
+
+    // =========================================
+    // GEOMETRY QUALITY
+    // =========================================
+
+    const bondSegments = isMobile ? 12 : 20;
+
+    const oxygenSegments = isMobile ? 28 : 48;
+
+    const hydrogenSegments = isMobile ? 20 : 32;
+
+    // =========================================
     // MOLECULE GEOMETRY
     // =========================================
 
@@ -37,95 +56,89 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
         0.055,
         0.055,
         1,
-        24
+        bondSegments
       );
-    }, []);
+    }, [bondSegments]);
 
     const oxygenGeometry = useMemo(() => {
       return new THREE.SphereGeometry(
         0.34,
-        64,
-        64
+        oxygenSegments,
+        oxygenSegments
       );
-    }, []);
+    }, [oxygenSegments]);
 
     const hydrogenGeometry = useMemo(() => {
       return new THREE.SphereGeometry(
         0.21,
-        48,
-        48
+        hydrogenSegments,
+        hydrogenSegments
       );
-    }, []);
+    }, [hydrogenSegments]);
 
     // =========================================
     // MATERIALS
     // =========================================
 
-    // OXYGEN
-    // Глубокий ледяной голубой
     const oxygenMaterial = useMemo(
       () =>
         new THREE.MeshPhysicalMaterial({
           color: "#7ddcff",
 
-          roughness: 0.12,
-          metalness: 0.08,
+          roughness: 0.16,
+          metalness: 0.06,
 
-          clearcoat: 1,
-          clearcoatRoughness: 0.04,
+          clearcoat: isMobile ? 0.6 : 1,
+          clearcoatRoughness: 0.06,
 
-          transmission: 0.12,
+          transmission: isMobile ? 0.05 : 0.12,
           thickness: 0.28,
 
-          envMapIntensity: 2.2,
+          envMapIntensity: isMobile ? 1.5 : 2.2,
         }),
-      []
+      [isMobile]
     );
 
-    // HYDROGEN
-    // Чистый холодный белый
     const hydrogenMaterial = useMemo(
       () =>
         new THREE.MeshPhysicalMaterial({
           color: "#f4fbff",
 
-          roughness: 0.08,
-          metalness: 0.04,
+          roughness: 0.12,
+          metalness: 0.03,
 
-          clearcoat: 1,
-          clearcoatRoughness: 0.035,
+          clearcoat: isMobile ? 0.55 : 1,
+          clearcoatRoughness: 0.05,
 
-          transmission: 0.16,
+          transmission: isMobile ? 0.06 : 0.16,
           thickness: 0.18,
 
-          envMapIntensity: 2.1,
+          envMapIntensity: isMobile ? 1.4 : 2.1,
         }),
-      []
+      [isMobile]
     );
 
-    // BONDS
-    // Полупрозрачный голубой стеклянный материал
     const bondMaterial = useMemo(
       () =>
         new THREE.MeshPhysicalMaterial({
           color: "#9be7ff",
 
-          roughness: 0.10,
-          metalness: 0.06,
+          roughness: 0.14,
+          metalness: 0.04,
 
-          clearcoat: 1,
-          clearcoatRoughness: 0.035,
+          clearcoat: isMobile ? 0.5 : 1,
+          clearcoatRoughness: 0.05,
 
-          transmission: 0.22,
+          transmission: isMobile ? 0.08 : 0.22,
 
           transparent: true,
           opacity: 0.88,
 
           thickness: 0.12,
 
-          envMapIntensity: 2,
+          envMapIntensity: isMobile ? 1.3 : 2,
         }),
-      []
+      [isMobile]
     );
 
     // =========================================
@@ -161,8 +174,6 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
           position={midpoint}
           quaternion={quaternion}
           scale={[1, length, 1]}
-          castShadow
-          receiveShadow
         />
       );
     };
@@ -172,12 +183,7 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
     // =========================================
 
     const oxygenPosition = useMemo(
-      () =>
-        new THREE.Vector3(
-          0,
-          0,
-          0
-        ),
+      () => new THREE.Vector3(0, 0, 0),
       []
     );
 
@@ -232,8 +238,8 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
             oxygenPosition.y,
             oxygenPosition.z,
           ]}
-          castShadow
-          receiveShadow
+          castShadow={!isMobile}
+          receiveShadow={!isMobile}
         />
 
         {/* =====================================
@@ -248,8 +254,8 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
             hydrogenLeft.y,
             hydrogenLeft.z,
           ]}
-          castShadow
-          receiveShadow
+          castShadow={!isMobile}
+          receiveShadow={!isMobile}
         />
 
         {/* =====================================
@@ -264,8 +270,8 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
             hydrogenRight.y,
             hydrogenRight.z,
           ]}
-          castShadow
-          receiveShadow
+          castShadow={!isMobile}
+          receiveShadow={!isMobile}
         />
 
         {/* =====================================
@@ -277,14 +283,19 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
           scale={1.08}
         >
           <sphereGeometry
-            args={[0.34, 48, 48]}
+            args={[
+              0.34,
+              isMobile ? 20 : 32,
+              isMobile ? 20 : 32,
+            ]}
           />
 
           <meshBasicMaterial
             color="#8ee8ff"
             transparent
-            opacity={0.045}
+            opacity={isMobile ? 0.025 : 0.045}
             side={THREE.BackSide}
+            depthWrite={false}
           />
         </mesh>
       </group>

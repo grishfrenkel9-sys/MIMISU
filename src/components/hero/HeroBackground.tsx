@@ -1,220 +1,191 @@
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-} from "framer-motion";
-import { useEffect } from "react";
-
-import Aurora from "../../background/Aurora";
-import MouseGlow from "../../background/MouseGlow";
+import { motion } from "framer-motion";
 
 export default function HeroBackground() {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // Smooth spring animations for mouse tracking
-  const smoothMouseX = useSpring(mouseX, { stiffness: 50, damping: 20 });
-  const smoothMouseY = useSpring(mouseY, { stiffness: 50, damping: 20 });
-
-  // Mouse tracking
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 2;
-      const y = (e.clientY / window.innerHeight - 0.5) * 2;
-      mouseX.set(x * 100);
-      mouseY.set(y * 100);
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
-
   return (
-    <>
-      {/* Animated base with gradient shift */}
-      <motion.div
-        className="absolute inset-0"
-        animate={{
-          background: [
-            "linear-gradient(180deg, #040506 0%, #050a0f 50%, #040506 100%)",
-            "linear-gradient(180deg, #040506 0%, #0a0515 50%, #040506 100%)",
-            "linear-gradient(180deg, #040506 0%, #050a0f 50%, #040506 100%)",
-          ],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-
-      {/* Primary cyan blob - follows mouse smoothly */}
-      <motion.div
+    <div className="absolute inset-0 overflow-hidden bg-[#dff8f8]">
+      {/* Base water gradient */}
+      <div
         className="
-          absolute
-          right-[-10%]
-          top-1/2
-          h-[900px]
-          w-[900px]
-          -translate-y-1/2
-          rounded-full
-          bg-cyan-400/15
-          blur-[180px]
+          absolute inset-0
+          bg-[linear-gradient(135deg,#e9ffff_0%,#d9f5f7_42%,#b9e8ec_100%)]
         "
-        style={{
-          x: useTransform(smoothMouseX, (v) => v * 0.4),
-          y: useTransform(smoothMouseY, (v) => v * 0.4),
-        }}
-        animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.15, 0.2, 0.15],
-        }}
-        transition={{
-          scale: {
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          },
-          opacity: {
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          },
-        }}
       />
 
-      {/* Secondary sky glow - moves opposite direction */}
-      <motion.div
+      {/* Deep water area */}
+      <div
         className="
           absolute
-          right-[20%]
-          top-[40%]
-          h-[500px]
-          w-[500px]
+          -right-[15%]
+          top-[8%]
+          h-[80%]
+          w-[65%]
           rounded-full
-          bg-sky-500/10
-          blur-[140px]
+          bg-[radial-gradient(circle,#6bd3df_0%,#3bb8c8_35%,transparent_72%)]
+          opacity-30
+          blur-[90px]
         "
-        style={{
-          x: useTransform(smoothMouseX, (v) => v * -0.25),
-          y: useTransform(smoothMouseY, (v) => v * -0.25),
-        }}
-        animate={{
-          scale: [1, 1.15, 1],
-          opacity: [0.1, 0.15, 0.1],
-        }}
-        transition={{
-          scale: {
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut",
-          },
-          opacity: {
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          },
-        }}
       />
 
-      {/* Tertiary accent blob - subtle pulse */}
-      <motion.div
+      {/* Soft aqua light */}
+      <div
         className="
           absolute
-          left-[15%]
-          top-[60%]
+          -left-[15%]
+          top-[5%]
           h-[600px]
           w-[600px]
           rounded-full
-          bg-cyan-500/8
-          blur-[160px]
+          bg-cyan-200/70
+          blur-[100px]
         "
-        style={{
-          x: useTransform(smoothMouseX, (v) => v * 0.3),
-          y: useTransform(smoothMouseY, (v) => v * 0.3),
-        }}
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.08, 0.12, 0.08],
-        }}
-        transition={{
-          scale: {
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          },
-          opacity: {
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut",
-          },
-        }}
       />
 
-      {/* Animated light vignette */}
+      {/* Water reflection */}
       <motion.div
         className="
           absolute
-          inset-0
-          bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,.25)_70%,rgba(0,0,0,.65)_100%)]
+          left-[-10%]
+          top-[20%]
+          h-[420px]
+          w-[120%]
+          rounded-[50%]
+          border
+          border-white/70
         "
         animate={{
-          opacity: [0.7, 0.85, 0.7],
+          x: ["-3%", "3%", "-3%"],
+          scaleY: [0.8, 1, 0.8],
+          opacity: [0.25, 0.5, 0.25],
         }}
         transition={{
-          duration: 4,
+          duration: 12,
           repeat: Infinity,
           ease: "easeInOut",
         }}
       />
 
-      {/* Top fade with subtle animation */}
       <motion.div
         className="
           absolute
-          inset-x-0
-          top-0
-          h-40
-          bg-gradient-to-b
-          from-black
-          to-transparent
+          left-[-15%]
+          top-[28%]
+          h-[500px]
+          w-[130%]
+          rounded-[50%]
+          border
+          border-white/40
         "
         animate={{
-          opacity: [0.9, 1, 0.9],
+          x: ["2%", "-2%", "2%"],
+          scaleY: [0.75, 1, 0.75],
+          opacity: [0.15, 0.35, 0.15],
         }}
         transition={{
-          duration: 5,
+          duration: 16,
           repeat: Infinity,
           ease: "easeInOut",
         }}
       />
 
-      {/* Bottom fade with animated gradient */}
+      {/* Glass / water circles */}
       <motion.div
+        className="
+          absolute
+          right-[8%]
+          top-[15%]
+          h-[380px]
+          w-[380px]
+          rounded-full
+          border
+          border-white/50
+          bg-white/10
+          backdrop-blur-[2px]
+        "
+        animate={{
+          y: [-10, 15, -10],
+          scale: [1, 1.04, 1],
+        }}
+        transition={{
+          duration: 9,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      <motion.div
+        className="
+          absolute
+          right-[18%]
+          top-[27%]
+          h-[170px]
+          w-[170px]
+          rounded-full
+          border
+          border-white/60
+          bg-white/20
+        "
+        animate={{
+          y: [10, -12, 10],
+          x: [-5, 8, -5],
+        }}
+        transition={{
+          duration: 7,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      {/* Tiny water highlights */}
+      <div className="absolute left-[12%] top-[20%] h-2 w-2 rounded-full bg-white/70" />
+      <div className="absolute left-[22%] top-[38%] h-1.5 w-1.5 rounded-full bg-white/80" />
+      <div className="absolute right-[32%] top-[18%] h-2 w-2 rounded-full bg-white/70" />
+      <div className="absolute right-[15%] bottom-[25%] h-1.5 w-1.5 rounded-full bg-white/60" />
+
+      {/* Water line */}
+      <div
         className="
           absolute
           inset-x-0
           bottom-0
-          h-64
-          bg-gradient-to-t
-          from-black
-          via-black/70
-          to-transparent
+          h-[35%]
+          bg-[linear-gradient(to_top,rgba(21,112,128,.16),transparent)]
         "
-        animate={{
-          opacity: [0.95, 1, 0.95],
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
       />
 
-      {/* Aurora background with mouse interaction */}
-      <Aurora />
-<MouseGlow />
-    </>
+      {/* Bottom readability */}
+      <div
+        className="
+          absolute
+          inset-x-0
+          bottom-0
+          h-40
+          bg-gradient-to-t
+          from-[#d9f5f7]
+          to-transparent
+        "
+      />
+
+      {/* Very subtle animated shine */}
+      <motion.div
+        className="
+          absolute
+          -left-[30%]
+          top-0
+          h-full
+          w-[30%]
+          rotate-[12deg]
+          bg-white/20
+          blur-[80px]
+        "
+        animate={{
+          x: ["0%", "500%"],
+        }}
+        transition={{
+          duration: 18,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
+    </div>
   );
 }

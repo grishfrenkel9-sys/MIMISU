@@ -13,7 +13,6 @@ import { FAQ } from "./components/faq";
 import Footer from "./components/footer/Footer";
 
 import BottleCanvas from "./components/canvas/BottleCanvas";
-import LiveWaterBackground from "./background/LiveWaterBackground";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -37,7 +36,7 @@ export default function App() {
           LIVE BACKGROUND
       ========================================= */}
 
-      <LiveWaterBackground />
+    
 
       {/* =========================================
           LOADER

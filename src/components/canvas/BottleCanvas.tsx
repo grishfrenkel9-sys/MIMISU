@@ -1,3 +1,4 @@
+
 import { Canvas } from "@react-three/fiber";
 import Scene from "./Scene";
 
@@ -10,15 +11,15 @@ export default function BottleCanvas({
 }: BottleCanvasProps) {
   return (
     <div
+      aria-hidden="true"
       className="
         pointer-events-none
         fixed
         inset-0
-        z-0
+        z-30
         h-screen
         w-screen
       "
-      aria-hidden="true"
     >
       <Canvas
         camera={{
@@ -27,18 +28,26 @@ export default function BottleCanvas({
           near: 0.1,
           far: 100,
         }}
-        dpr={[1, 1.35]}
+        dpr={[1, 1.15]}
+        frameloop="always"
         gl={{
           antialias: false,
           alpha: true,
           powerPreference: "high-performance",
           stencil: false,
-          depth: true,
+          depth: false,
+          preserveDrawingBuffer: false,
+        }}
+        performance={{
+          min: 0.5,
+          max: 1,
+          debounce: 200,
+        }}
+        style={{
+          pointerEvents: "none",
         }}
       >
-        <Scene
-          reduceMotion={reduceMotion}
-        />
+        <Scene reduceMotion={reduceMotion} />
       </Canvas>
     </div>
   );

@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -16,8 +17,8 @@ interface BottleState {
 const states: BottleState[] = [
   // HERO
   {
-    x: 1.8,
-    y: 0,
+    x: 3.0,
+    y: -0.7,
     z: -1.3,
     rotationX: 0.12,
     rotationY: -0.45,
@@ -102,6 +103,11 @@ const sectionSelectors = [
   "footer",
 ];
 
+const clamp = THREE.MathUtils.clamp;
+const lerp = THREE.MathUtils.lerp;
+const damp = THREE.MathUtils.damp;
+const smootherstep = THREE.MathUtils.smootherstep;
+
 export default function useBottleAnimation(
   ref: RefObject<THREE.Group | null>,
   reduceMotion = false
@@ -109,19 +115,37 @@ export default function useBottleAnimation(
   const progress = useRef(0);
   const targetProgress = useRef(0);
 
-  // Дополнительное состояние анимации
   const jumpVelocity = useRef(0);
   const jumpOffset = useRef(0);
 
   const lastSection = useRef(0);
+
+  const sectionsRef = useRef<HTMLElement[]>([]);
+
+  // =========================================
+  // DEVICE
+  // =========================================
+
+  const isMobileRef = useRef(
+    typeof window !== "undefined" &&
+      window.matchMedia(
+        "(max-width: 768px)"
+      ).matches
+  );
+
+  // =========================================
+  // MOBILE FRAME LIMIT
+  // =========================================
+
+  const frameAccumulator = useRef(0);
 
   // =========================================
   // SCROLL
   // =========================================
 
   useEffect(() => {
-    const updateScroll = () => {
-      const sections = sectionSelectors
+    const collectSections = () => {
+      sectionsRef.current = sectionSelectors
         .map((selector) =>
           document.querySelector(selector)
         )
@@ -129,10 +153,12 @@ export default function useBottleAnimation(
           (section): section is HTMLElement =>
             section instanceof HTMLElement
         );
+    };
 
-      if (!sections.length) {
-        return;
-      }
+    const updateScroll = () => {
+      const sections = sectionsRef.current;
+
+      if (!sections.length) return;
 
       const viewportCenter =
         window.scrollY +
@@ -150,6 +176,8 @@ export default function useBottleAnimation(
           sections[i].offsetTop
         ) {
           currentIndex = i;
+        } else {
+          break;
         }
       }
 
@@ -160,9 +188,10 @@ export default function useBottleAnimation(
         lastSection.current =
           currentIndex;
 
-        // Маленький импульс
-        // при переходе между секциями.
-        jumpVelocity.current = 0.8;
+        jumpVelocity.current =
+          isMobileRef.current
+            ? 0.45
+            : 0.8;
       }
 
       if (
@@ -185,27 +214,23 @@ export default function useBottleAnimation(
         next.offsetTop -
         current.offsetTop;
 
-      let localProgress = 0;
+      if (distance <= 0) return;
 
-      if (distance > 0) {
-        localProgress =
-          (viewportCenter -
-            current.offsetTop) /
-          distance;
-      }
-
-      localProgress =
-        THREE.MathUtils.clamp(
-          localProgress,
-          0,
-          1
-        );
+      const localProgress = clamp(
+        (
+          viewportCenter -
+          current.offsetTop
+        ) / distance,
+        0,
+        1
+      );
 
       targetProgress.current =
         currentIndex +
         localProgress;
     };
 
+    collectSections();
     updateScroll();
 
     window.addEventListener(
@@ -216,13 +241,25 @@ export default function useBottleAnimation(
 
     window.addEventListener(
       "resize",
-      updateScroll
+      collectSections,
+      { passive: true }
+    );
+
+    window.addEventListener(
+      "resize",
+      updateScroll,
+      { passive: true }
     );
 
     return () => {
       window.removeEventListener(
         "scroll",
         updateScroll
+      );
+
+      window.removeEventListener(
+        "resize",
+        collectSections
       );
 
       window.removeEventListener(
@@ -237,12 +274,9 @@ export default function useBottleAnimation(
   // =========================================
 
   useFrame((state, delta) => {
-    if (!ref.current) {
-      return;
-    }
+    const object = ref.current;
 
-    const time =
-      state.clock.elapsedTime;
+    if (!object) return;
 
     // =======================================
     // REDUCE MOTION
@@ -251,19 +285,19 @@ export default function useBottleAnimation(
     if (reduceMotion) {
       const first = states[0];
 
-      ref.current.position.set(
+      object.position.set(
         first.x,
         first.y,
         first.z
       );
 
-      ref.current.rotation.set(
+      object.rotation.set(
         first.rotationX,
         first.rotationY,
         first.rotationZ
       );
 
-      ref.current.scale.setScalar(
+      object.scale.setScalar(
         first.scale
       );
 
@@ -271,23 +305,49 @@ export default function useBottleAnimation(
     }
 
     // =======================================
-    // SMOOTH SECTION PROGRESS
+    // MOBILE — 30 FPS
     // =======================================
 
-    progress.current =
-      THREE.MathUtils.damp(
-        progress.current,
-        targetProgress.current,
-        5,
-        delta
-      );
+    if (isMobileRef.current) {
+      frameAccumulator.current += delta;
 
-    const safeProgress =
-      THREE.MathUtils.clamp(
-        progress.current,
-        0,
-        states.length - 1
-      );
+      if (
+        frameAccumulator.current <
+        1 / 30
+      ) {
+        return;
+      }
+
+      frameAccumulator.current = 0;
+    }
+
+    const dt = Math.min(delta, 0.05);
+
+    const time =
+      state.clock.elapsedTime;
+
+    // =======================================
+    // PROGRESS
+    // =======================================
+
+    progress.current = damp(
+      progress.current,
+      targetProgress.current,
+      isMobileRef.current
+        ? 4
+        : 5,
+      dt
+    );
+
+    const safeProgress = clamp(
+      progress.current,
+      0,
+      states.length - 1
+    );
+
+    // =======================================
+    // SECTION
+    // =======================================
 
     const currentIndex = Math.min(
       Math.floor(safeProgress),
@@ -298,12 +358,11 @@ export default function useBottleAnimation(
       safeProgress -
       currentIndex;
 
-    const eased =
-      THREE.MathUtils.smootherstep(
-        localProgress,
-        0,
-        1
-      );
+    const eased = smootherstep(
+      localProgress,
+      0,
+      1
+    );
 
     const from =
       states[currentIndex];
@@ -312,72 +371,159 @@ export default function useBottleAnimation(
       states[currentIndex + 1];
 
     // =======================================
-    // BASE POSITION
+    // POSITION
     // =======================================
 
-    const baseX =
-      THREE.MathUtils.lerp(
-        from.x,
-        to.x,
-        eased
-      );
+    const baseX = lerp(
+      from.x,
+      to.x,
+      eased
+    );
 
-    const baseY =
-      THREE.MathUtils.lerp(
-        from.y,
-        to.y,
-        eased
-      );
+    const baseY = lerp(
+      from.y,
+      to.y,
+      eased
+    );
 
-    const baseZ =
-      THREE.MathUtils.lerp(
-        from.z,
-        to.z,
-        eased
-      );
+    const baseZ = lerp(
+      from.z,
+      to.z,
+      eased
+    );
 
     // =======================================
-    // FLOATING
+    // SCALE
     // =======================================
+
+    let targetScale = 0;
+
+    if (safeProgress < 3) {
+      const index =
+        Math.floor(safeProgress);
+
+      const local =
+        safeProgress - index;
+
+      targetScale = lerp(
+        states[index].scale,
+        states[
+          Math.min(
+            index + 1,
+            states.length - 1
+          )
+        ].scale,
+        smootherstep(
+          local,
+          0,
+          1
+        )
+      );
+    } else if (
+      safeProgress < 4
+    ) {
+      const disappear =
+        safeProgress - 3;
+
+      targetScale = lerp(
+        0.68,
+        0,
+        smootherstep(
+          disappear,
+          0,
+          1
+        )
+      );
+    } else if (
+      safeProgress < 5
+    ) {
+      targetScale = 0;
+    } else if (
+      safeProgress < 6
+    ) {
+      const appear =
+        safeProgress - 5;
+
+      targetScale = lerp(
+        0,
+        0.67,
+        smootherstep(
+          appear,
+          0,
+          1
+        )
+      );
+    } else {
+      targetScale = 0.65;
+    }
+
+    // =======================================
+    // HIDDEN
+    // =======================================
+
+    if (
+      targetScale < 0.001 &&
+      object.scale.x < 0.001
+    ) {
+      object.scale.setScalar(0);
+
+      object.position.x = baseX;
+      object.position.y = baseY;
+      object.position.z = baseZ;
+
+      return;
+    }
+
+    // =======================================
+    // FLOAT
+    // =======================================
+
+    const floatSpeed =
+      isMobileRef.current
+        ? 1.1
+        : 1.45;
 
     const floatY =
-      Math.sin(time * 1.45) *
-      0.055;
+      Math.sin(
+        time * floatSpeed
+      ) * 0.055;
 
     const floatX =
-      Math.sin(time * 0.72) *
-      0.035;
+      Math.sin(
+        time * 0.72
+      ) * 0.035;
 
     const floatZ =
-      Math.cos(time * 0.9) *
-      0.025;
+      Math.cos(
+        time * 0.9
+      ) * 0.025;
 
     // =======================================
     // JUMP
     // =======================================
 
     jumpVelocity.current =
-      THREE.MathUtils.damp(
+      damp(
         jumpVelocity.current,
         0,
         4,
-        delta
+        dt
       );
 
     jumpOffset.current +=
       jumpVelocity.current *
-      delta;
+      dt;
 
     jumpOffset.current =
-      THREE.MathUtils.damp(
+      damp(
         jumpOffset.current,
         0,
         5,
-        delta
+        dt
       );
 
     // =======================================
-    // SMALL ORBITAL MOVEMENT
+    // ORBIT
     // =======================================
 
     const orbitX =
@@ -407,224 +553,130 @@ export default function useBottleAnimation(
       floatZ +
       orbitZ;
 
-    ref.current.position.x =
-      THREE.MathUtils.damp(
-        ref.current.position.x,
+    object.position.x =
+      damp(
+        object.position.x,
         targetX,
         6,
-        delta
+        dt
       );
 
-    ref.current.position.y =
-      THREE.MathUtils.damp(
-        ref.current.position.y,
+    object.position.y =
+      damp(
+        object.position.y,
         targetY,
         6,
-        delta
+        dt
       );
 
-    ref.current.position.z =
-      THREE.MathUtils.damp(
-        ref.current.position.z,
+    object.position.z =
+      damp(
+        object.position.z,
         targetZ,
         6,
-        delta
+        dt
       );
 
     // =======================================
-    // BASE ROTATION
+    // ROTATION
     // =======================================
 
     const baseRotationX =
-      THREE.MathUtils.lerp(
+      lerp(
         from.rotationX,
         to.rotationX,
         eased
       );
 
     const baseRotationY =
-      THREE.MathUtils.lerp(
+      lerp(
         from.rotationY,
         to.rotationY,
         eased
       );
 
     const baseRotationZ =
-      THREE.MathUtils.lerp(
+      lerp(
         from.rotationZ,
         to.rotationZ,
         eased
       );
 
-    // =======================================
-    // CONTINUOUS ROTATION
-    // =======================================
-
     const spinY =
       time * 0.42;
 
     const spinX =
-      Math.sin(time * 0.8) *
-      0.10;
+      Math.sin(
+        time * 0.8
+      ) * 0.10;
 
     const spinZ =
-      Math.sin(time * 0.62) *
-      0.07;
-
-    // =======================================
-    // EXTRA WOBBLE
-    // =======================================
+      Math.sin(
+        time * 0.62
+      ) * 0.07;
 
     const wobbleX =
-      Math.sin(time * 1.8) *
-      0.035;
+      Math.sin(
+        time * 1.8
+      ) * 0.035;
 
     const wobbleZ =
-      Math.cos(time * 1.55) *
-      0.04;
+      Math.cos(
+        time * 1.55
+      ) * 0.04;
 
-    const targetRotationX =
-      baseRotationX +
-      spinX +
-      wobbleX;
-
-    const targetRotationY =
-      baseRotationY +
-      spinY;
-
-    const targetRotationZ =
-      baseRotationZ +
-      spinZ +
-      wobbleZ;
-
-    // =======================================
-    // APPLY ROTATION
-    // =======================================
-
-    ref.current.rotation.x =
-      THREE.MathUtils.damp(
-        ref.current.rotation.x,
-        targetRotationX,
+    object.rotation.x =
+      damp(
+        object.rotation.x,
+        baseRotationX +
+          spinX +
+          wobbleX,
         4.5,
-        delta
+        dt
       );
 
-    ref.current.rotation.y =
-      THREE.MathUtils.damp(
-        ref.current.rotation.y,
-        targetRotationY,
+    object.rotation.y =
+      damp(
+        object.rotation.y,
+        baseRotationY +
+          spinY,
         4.5,
-        delta
+        dt
       );
 
-    ref.current.rotation.z =
-      THREE.MathUtils.damp(
-        ref.current.rotation.z,
-        targetRotationZ,
+    object.rotation.z =
+      damp(
+        object.rotation.z,
+        baseRotationZ +
+          spinZ +
+          wobbleZ,
         4.5,
-        delta
+        dt
       );
 
     // =======================================
-    // SCALE
+    // BREATHING
     // =======================================
-
-    let targetScale = 0;
-
-    if (safeProgress < 3) {
-      const index =
-        Math.floor(
-          safeProgress
-        );
-
-      const local =
-        safeProgress - index;
-
-      const fromScale =
-        states[index].scale;
-
-      const toScale =
-        states[
-          Math.min(
-            index + 1,
-            states.length - 1
-          )
-        ].scale;
-
-      targetScale =
-        THREE.MathUtils.lerp(
-          fromScale,
-          toScale,
-          THREE.MathUtils.smootherstep(
-            local,
-            0,
-            1
-          )
-        );
-    } else if (
-      safeProgress >= 3 &&
-      safeProgress < 4
-    ) {
-      const disappear =
-        safeProgress - 3;
-
-      targetScale =
-        THREE.MathUtils.lerp(
-          0.68,
-          0,
-          THREE.MathUtils.smootherstep(
-            disappear,
-            0,
-            1
-          )
-        );
-    } else if (
-      safeProgress >= 4 &&
-      safeProgress < 5
-    ) {
-      targetScale = 0;
-    } else if (
-      safeProgress >= 5 &&
-      safeProgress < 6
-    ) {
-      const appear =
-        safeProgress - 5;
-
-      targetScale =
-        THREE.MathUtils.lerp(
-          0,
-          0.67,
-          THREE.MathUtils.smootherstep(
-            appear,
-            0,
-            1
-          )
-        );
-    } else {
-      targetScale = 0.65;
-    }
-
-    // =======================================
-    // BREATHING SCALE
-    // =======================================
-
-    const breathing =
-      1 +
-      Math.sin(time * 1.25) *
-        0.018;
 
     targetScale *=
-      breathing;
+      1 +
+      Math.sin(
+        time * 1.25
+      ) * 0.018;
+
+    // =======================================
+    // FINAL SCALE
+    // =======================================
 
     const smoothScale =
-      THREE.MathUtils.damp(
-        ref.current.scale.x,
+      damp(
+        object.scale.x,
         targetScale,
         7,
-        delta
+        dt
       );
 
-    ref.current.scale.setScalar(
+    object.scale.setScalar(
       smoothScale
     );
   });

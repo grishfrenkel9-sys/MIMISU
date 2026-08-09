@@ -30,20 +30,36 @@ export default function BottleStory() {
 
   return (
     <section
-      id="story"
       ref={storyRef}
+      id="story"
       className="
         relative
         overflow-hidden
-        bg-[#040404]
-        py-24
+        bg-[#07303A]
         text-white
-        md:py-32
-        lg:py-36
       "
     >
       {/* =========================================
-          AMBIENT LIGHT
+          TOP TRANSITION
+      ========================================= */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-x-0
+          top-0
+          z-0
+          h-[180px]
+          bg-gradient-to-b
+          from-[#06232B]
+          via-[#06303A]
+          to-[#07303A]
+        "
+      />
+
+      {/* =========================================
+          OCEAN AMBIENT LIGHT
       ========================================= */}
 
       <motion.div
@@ -56,11 +72,11 @@ export default function BottleStory() {
           absolute
           left-1/2
           top-[15%]
-          h-[500px]
-          w-[500px]
+          h-[520px]
+          w-[520px]
           -translate-x-1/2
           rounded-full
-          bg-red-500/[0.025]
+          bg-[#1596A8]/[0.12]
           blur-[150px]
         "
       />
@@ -70,12 +86,26 @@ export default function BottleStory() {
           pointer-events-none
           absolute
           -right-[180px]
-          top-[40%]
-          h-[420px]
-          w-[420px]
+          top-[38%]
+          h-[500px]
+          w-[500px]
           rounded-full
-          bg-cyan-400/[0.018]
+          bg-[#0B7888]/[0.10]
           blur-[150px]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -left-[180px]
+          top-[65%]
+          h-[500px]
+          w-[500px]
+          rounded-full
+          bg-[#0E6675]/[0.08]
+          blur-[160px]
         "
       />
 
@@ -88,22 +118,264 @@ export default function BottleStory() {
           pointer-events-none
           absolute
           inset-0
-          opacity-[0.012]
+          z-0
+          opacity-[0.025]
         "
         style={{
           backgroundImage: `
             linear-gradient(
-              rgba(255,255,255,.08) 1px,
+              rgba(102,220,225,.16) 1px,
               transparent 1px
             ),
             linear-gradient(
               90deg,
-              rgba(255,255,255,.08) 1px,
+              rgba(102,220,225,.16) 1px,
               transparent 1px
             )
           `,
-          backgroundSize: "100px 100px",
+          backgroundSize: "140px 140px",
+          maskImage:
+            "linear-gradient(to bottom, transparent, black 18%, black 82%, transparent)",
+          WebkitMaskImage:
+            "linear-gradient(to bottom, transparent, black 18%, black 82%, transparent)",
         }}
+      />
+
+      {/* =========================================
+          HORIZONTAL LINES
+      ========================================= */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-x-0
+          top-[18%]
+          h-px
+          bg-gradient-to-r
+          from-transparent
+          via-[#63D5DC]/[0.10]
+          to-transparent
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-x-0
+          top-[58%]
+          h-px
+          bg-gradient-to-r
+          from-transparent
+          via-[#63D5DC]/[0.065]
+          to-transparent
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-x-0
+          top-[84%]
+          h-px
+          bg-gradient-to-r
+          from-transparent
+          via-[#63D5DC]/[0.04]
+          to-transparent
+        "
+      />
+
+      {/* =========================================
+          DIAGONAL WATER LINES
+      ========================================= */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -left-[10%]
+          top-[32%]
+          h-px
+          w-[120%]
+          rotate-[-4deg]
+          bg-gradient-to-r
+          from-transparent
+          via-[#63D5DC]/[0.07]
+          to-transparent
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -left-[10%]
+          top-[76%]
+          h-px
+          w-[120%]
+          rotate-[2deg]
+          bg-gradient-to-r
+          from-transparent
+          via-[#63D5DC]/[0.055]
+          to-transparent
+        "
+      />
+
+      {/* =========================================
+          ORBIT DETAILS
+      ========================================= */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-[14%]
+          top-[27%]
+          h-[420px]
+          w-[420px]
+          rounded-full
+          border
+          border-[#63D5DC]/[0.055]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-[calc(14%+34px)]
+          top-[calc(27%+34px)]
+          h-[350px]
+          w-[350px]
+          rounded-full
+          border
+          border-[#63D5DC]/[0.035]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[8%]
+          top-[48%]
+          h-[300px]
+          w-[300px]
+          rounded-full
+          border
+          border-[#63D5DC]/[0.03]
+        "
+      />
+
+      {/* =========================================
+          MICRO MARKERS
+      ========================================= */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-[8%]
+          top-[24%]
+          h-1.5
+          w-1.5
+          rounded-full
+          bg-[#6CE0E5]/70
+          shadow-[0_0_16px_rgba(99,213,220,.35)]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[12%]
+          top-[38%]
+          h-1
+          w-1
+          rounded-full
+          bg-[#6CE0E5]/55
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[22%]
+          bottom-[24%]
+          h-1.5
+          w-1.5
+          rounded-full
+          bg-[#6CE0E5]/40
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-[31%]
+          top-[52%]
+          h-1
+          w-1
+          rounded-full
+          bg-[#8BE6E9]/30
+        "
+      />
+
+      {/* =========================================
+          COORDINATE MARKS
+      ========================================= */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-[7%]
+          top-[24%]
+          h-px
+          w-8
+          bg-[#63D5DC]/30
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-[7%]
+          top-[24%]
+          h-8
+          w-px
+          bg-[#63D5DC]/30
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[10%]
+          bottom-[22%]
+          h-px
+          w-8
+          bg-[#63D5DC]/22
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[10%]
+          bottom-[22%]
+          h-8
+          w-px
+          bg-[#63D5DC]/22
+        "
       />
 
       {/* =========================================
@@ -118,8 +390,16 @@ export default function BottleStory() {
           w-full
           max-w-[1250px]
           px-6
+          pt-28
+          pb-24
+
           md:px-10
+          md:pt-36
+          md:pb-28
+
           xl:px-14
+          xl:pt-44
+          xl:pb-32
         "
       >
         {/* HEADER */}
@@ -149,7 +429,7 @@ export default function BottleStory() {
             md:mb-24
           "
         >
-          {/* Label */}
+          {/* LABEL */}
 
           <div
             className="
@@ -160,7 +440,7 @@ export default function BottleStory() {
               font-medium
               uppercase
               tracking-[0.35em]
-              text-red-400/70
+              text-[#74DDE2]/75
             "
           >
             <span
@@ -168,17 +448,17 @@ export default function BottleStory() {
                 h-1.5
                 w-1.5
                 rounded-full
-                bg-red-400
-                shadow-[0_0_12px_rgba(248,113,113,.7)]
+                bg-[#6CE0E5]
+                shadow-[0_0_14px_rgba(108,224,229,.65)]
               "
             />
 
             О бренде
 
-            <span className="h-px w-10 bg-red-400/25" />
+            <span className="h-px w-10 bg-[#6CE0E5]/30" />
           </div>
 
-          {/* Heading */}
+          {/* HEADING */}
 
           <h2
             className="
@@ -187,13 +467,13 @@ export default function BottleStory() {
               font-light
               leading-[0.9]
               tracking-[-0.055em]
-              text-white
+              text-[#F0FFFF]
             "
           >
             Как бутылка
             <br />
 
-            <span className="text-white/30">
+            <span className="text-[#A8CDD1]/40">
               становится контактом
             </span>
           </h2>
@@ -204,7 +484,7 @@ export default function BottleStory() {
               max-w-xl
               text-sm
               leading-7
-              text-white/35
+              text-[#A8CDD1]/65
               md:text-base
               md:leading-8
             "
@@ -230,7 +510,7 @@ export default function BottleStory() {
               w-px
               bg-gradient-to-b
               from-transparent
-              via-white/[0.08]
+              via-[#63D5DC]/[0.12]
               to-transparent
               lg:block
             "
@@ -272,7 +552,7 @@ export default function BottleStory() {
       </div>
 
       {/* =========================================
-          BOTTOM FADE
+          BOTTOM TRANSITION
       ========================================= */}
 
       <div
@@ -281,9 +561,10 @@ export default function BottleStory() {
           absolute
           inset-x-0
           bottom-0
-          h-32
+          z-20
+          h-40
           bg-gradient-to-t
-          from-[#040404]
+          from-[#06232B]
           to-transparent
         "
       />
