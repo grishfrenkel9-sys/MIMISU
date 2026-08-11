@@ -21,10 +21,7 @@ export default function BottleStory() {
   });
 
   /*
-   * Небольшое сглаживание.
-   *
-   * Не делаем слишком быстрым, иначе Story начинает
-   * "догонять" скролл.
+   * Плавный прогресс Story.
    */
   const progress = useSpring(scrollYProgress, {
     stiffness: 180,
@@ -33,13 +30,9 @@ export default function BottleStory() {
   });
 
   /*
-   * Очень медленное движение фонового света.
+   * Медленное движение фонового свечения.
    */
-  const glowY = useTransform(
-    progress,
-    [0, 1],
-    [-40, 40]
-  );
+  const glowY = useTransform(progress, [0, 1], [-40, 40]);
 
   return (
     <section
@@ -47,7 +40,7 @@ export default function BottleStory() {
       id="story"
       className="
         relative
-        overflow-visible
+        overflow-hidden
         bg-[#062A32]
         text-white
       "
@@ -66,16 +59,17 @@ export default function BottleStory() {
             left-1/2
             top-1/2
             z-0
-            h-[360px]
-            w-[360px]
+            h-[280px]
+            w-[280px]
             -translate-x-1/2
             -translate-y-1/2
             rounded-full
             bg-[#6CE0E5]/[0.035]
-            blur-[110px]
+            blur-[90px]
 
             sm:h-[480px]
             sm:w-[480px]
+            sm:blur-[110px]
 
             lg:h-[620px]
             lg:w-[620px]
@@ -94,6 +88,7 @@ export default function BottleStory() {
           pointer-events-none
           absolute
           inset-0
+          z-0
           opacity-[0.015]
         "
         style={{
@@ -128,7 +123,7 @@ export default function BottleStory() {
           w-full
           max-w-[1320px]
           px-5
-          pb-14
+          pb-10
           pt-24
 
           sm:px-7
@@ -161,43 +156,58 @@ export default function BottleStory() {
             duration: reduceMotion ? 0 : 0.6,
             ease: [0.16, 1, 0.3, 1],
           }}
-          className="max-w-[760px]"
+          className="
+            w-full
+            max-w-[760px]
+          "
         >
+          {/* LABEL */}
+
           <div
             className="
               flex
               items-center
               gap-3
-              text-[9px]
+              text-[8px]
               font-semibold
               uppercase
-              tracking-[0.3em]
+              tracking-[0.28em]
               text-[#6CE0E5]/70
+
+              sm:text-[9px]
+              sm:tracking-[0.3em]
             "
           >
             <span
               className="
                 h-1.5
                 w-1.5
+                shrink-0
                 rounded-full
                 bg-[#6CE0E5]
                 shadow-[0_0_12px_rgba(108,224,229,.55)]
               "
             />
 
-            О бренде
+            <span>О бренде</span>
 
-            <span className="h-px w-8 bg-[#6CE0E5]/30" />
+            <span className="h-px w-7 bg-[#6CE0E5]/30 sm:w-8" />
           </div>
+
+          {/* TITLE */}
 
           <h2
             className="
-              mt-6
-              text-[clamp(2.7rem,8vw,6.5rem)]
+              mt-5
+              max-w-[700px]
+              text-[clamp(2.5rem,11vw,6.5rem)]
               font-light
-              leading-[0.9]
-              tracking-[-0.06em]
+              leading-[0.92]
+              tracking-[-0.065em]
               text-[#F0FFFF]
+
+              sm:mt-6
+              sm:text-[clamp(2.7rem,8vw,6.5rem)]
             "
           >
             Как бутылка
@@ -208,14 +218,17 @@ export default function BottleStory() {
             </span>
           </h2>
 
+          {/* DESCRIPTION */}
+
           <p
             className="
-              mt-7
-              max-w-[560px]
-              text-sm
-              leading-6
+              mt-6
+              max-w-[500px]
+              text-[13px]
+              leading-[1.8]
               text-[#A8CDD1]/65
 
+              sm:mt-7
               sm:text-base
               sm:leading-8
             "
@@ -248,20 +261,30 @@ export default function BottleStory() {
         <div
           className="
             relative
-            min-h-[280vh]
+            min-h-[250vh]
 
             sm:min-h-[300vh]
 
             lg:min-h-[340vh]
           "
         >
+          {/* =================================================
+              STICKY CONTENT
+          ================================================= */}
+
           <div
             className="
               sticky
-              top-0
+              top-[4.5rem]
               flex
-              min-h-screen
+              min-h-[calc(100svh-4.5rem)]
               items-center
+
+              sm:top-20
+              sm:min-h-[calc(100vh-5rem)]
+
+              lg:top-20
+              lg:min-h-[calc(100vh-5rem)]
             "
           >
             <div
@@ -269,8 +292,8 @@ export default function BottleStory() {
                 grid
                 w-full
                 grid-cols-1
-                gap-7
-                py-8
+                gap-5
+                py-4
 
                 sm:gap-10
                 sm:py-12
@@ -282,13 +305,15 @@ export default function BottleStory() {
               "
             >
               {/* =================================================
-                  NUMBERS
+                  DESKTOP NUMBERS
               ================================================= */}
 
-              <StoryNumbers
-                progress={progress}
-                mobile={false}
-              />
+              <div className="hidden lg:block">
+                <StoryNumbers
+                  progress={progress}
+                  mobile={false}
+                />
+              </div>
 
               {/* =================================================
                   STORY CARD
@@ -297,9 +322,10 @@ export default function BottleStory() {
               <div
                 className="
                   relative
-                  min-h-[380px]
+                  min-h-[340px]
+                  w-full
                   overflow-hidden
-                  rounded-[1.75rem]
+                  rounded-[1.5rem]
                   border
                   border-[#6CE0E5]/[0.07]
                   bg-[#07303A]/[0.42]
@@ -319,54 +345,68 @@ export default function BottleStory() {
                   reduceMotion={reduceMotion}
                 />
 
-                {/* INNER FRAME */}
+                {/* =================================================
+                    INNER FRAME
+                ================================================= */}
 
                 <div
                   aria-hidden
                   className="
                     pointer-events-none
                     absolute
-                    inset-3
-                    rounded-[1.35rem]
+                    inset-2
+                    rounded-[1.2rem]
                     border
                     border-[#6CE0E5]/[0.035]
 
                     sm:inset-4
+                    sm:rounded-[1.5rem]
 
                     lg:inset-6
                     lg:rounded-[2rem]
                   "
                 />
 
-                {/* SIGNAL */}
+                {/* =================================================
+                    SIGNAL
+                ================================================= */}
 
                 <div
                   aria-hidden
                   className="
                     pointer-events-none
                     absolute
-                    left-6
-                    top-6
+                    left-5
+                    top-5
                     h-1.5
                     w-1.5
                     rounded-full
                     bg-[#6CE0E5]
                     shadow-[0_0_12px_rgba(108,224,229,.65)]
+
+                    sm:left-6
+                    sm:top-6
                   "
                 />
 
-                {/* DETAIL */}
+                {/* =================================================
+                    DETAIL
+                ================================================= */}
 
                 <div
                   aria-hidden
                   className="
                     pointer-events-none
                     absolute
-                    bottom-7
-                    right-7
+                    bottom-5
+                    right-5
                     h-px
-                    w-12
+                    w-10
                     bg-[#6CE0E5]/20
+
+                    sm:bottom-7
+                    sm:right-7
+                    sm:w-12
                   "
                 />
               </div>
@@ -433,10 +473,18 @@ export default function BottleStory() {
                   MOBILE NUMBERS
               ================================================= */}
 
-              <StoryNumbers
-                progress={progress}
-                mobile
-              />
+              <div
+                className="
+                  block
+                  w-full
+                  lg:hidden
+                "
+              >
+                <StoryNumbers
+                  progress={progress}
+                  mobile
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -453,13 +501,15 @@ export default function BottleStory() {
           mx-auto
           max-w-[1320px]
           px-5
-          pb-20
-          pt-6
+          pb-16
+          pt-5
 
           sm:px-7
+          sm:pb-20
 
           lg:px-12
           lg:pb-28
+          lg:pt-6
         "
       >
         <div

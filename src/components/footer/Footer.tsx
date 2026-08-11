@@ -1,28 +1,11 @@
 import { motion } from "framer-motion";
 
-const footerLinks = [
-  { label: "История", href: "#story" },
-  { label: "Возможности", href: "#features" },
-  { label: "Калькулятор", href: "#calculator" },
-  { label: "FAQ", href: "#faq" },
-];
-
 const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function Footer() {
-  const scrollTo = (href: string) => {
-    const element = document.querySelector(href);
-
-    if (!element) return;
-
-    element.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  };
-
   return (
     <footer
+      id="contacts"
       className="
         relative
         overflow-hidden
@@ -237,17 +220,15 @@ export default function Footer() {
           <motion.div
             initial={{
               opacity: 0,
-              y: 35,
-              filter: "blur(8px)",
+              y: 30,
             }}
             whileInView={{
               opacity: 1,
               y: 0,
-              filter: "blur(0px)",
             }}
             viewport={{
-              once: false,
-              amount: 0.3,
+              once: true,
+              amount: 0.2,
             }}
             transition={{
               duration: 0.8,
@@ -308,7 +289,14 @@ export default function Footer() {
 
             <motion.button
               type="button"
-              onClick={() => scrollTo("#calculator")}
+              onClick={() => {
+                document
+                  .getElementById("calculator")
+                  ?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+              }}
               whileHover={{
                 y: -2,
               }}
@@ -348,15 +336,15 @@ export default function Footer() {
           <motion.div
             initial={{
               opacity: 0,
-              y: 35,
+              y: 30,
             }}
             whileInView={{
               opacity: 1,
               y: 0,
             }}
             viewport={{
-              once: false,
-              amount: 0.3,
+              once: true,
+              amount: 0.2,
             }}
             transition={{
               duration: 0.8,
@@ -376,13 +364,30 @@ export default function Footer() {
             </p>
 
             <nav className="mt-7 flex flex-col gap-4">
-              {footerLinks.map((link, index) => (
+              {[
+                { label: "О платформе", id: "about" },
+                { label: "История", id: "story" },
+                { label: "Возможности", id: "features" },
+                { label: "Калькулятор", id: "calculator" },
+                { label: "FAQ", id: "faq" },
+                { label: "Контакты", id: "contacts" },
+              ].map((link, index) => (
                 <motion.button
-                  key={link.href}
+                  key={link.id}
                   type="button"
-                  onClick={() => scrollTo(link.href)}
+                  onClick={() => {
+                    document
+                      .getElementById(link.id)
+                      ?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      });
+                  }}
                   whileHover={{
                     x: 5,
+                  }}
+                  whileTap={{
+                    scale: 0.98,
                   }}
                   className="
                     group
@@ -409,7 +414,7 @@ export default function Footer() {
                       group-hover:text-cyan-300/50
                     "
                   >
-                    0{index + 1}
+                    {String(index + 1).padStart(2, "0")}
                   </span>
 
                   {link.label}
@@ -425,15 +430,15 @@ export default function Footer() {
           <motion.div
             initial={{
               opacity: 0,
-              y: 35,
+              y: 30,
             }}
             whileInView={{
               opacity: 1,
               y: 0,
             }}
             viewport={{
-              once: false,
-              amount: 0.3,
+              once: true,
+              amount: 0.2,
             }}
             transition={{
               duration: 0.8,
@@ -525,7 +530,7 @@ export default function Footer() {
             opacity: 1,
           }}
           viewport={{
-            once: false,
+            once: true,
             amount: 0.4,
           }}
           transition={{

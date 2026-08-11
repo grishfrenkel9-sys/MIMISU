@@ -39,7 +39,7 @@ export default function CalculatorConfig({
     100;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       {/* =================================
           ADVERTISERS
       ================================= */}
@@ -48,11 +48,14 @@ export default function CalculatorConfig({
         className="
           relative
           overflow-hidden
-          rounded-3xl
+          rounded-[1.25rem]
           border
           border-cyan-100/[0.06]
           bg-[#0A2027]/70
-          p-7
+          p-4
+
+          sm:rounded-3xl
+          sm:p-7
 
           md:p-8
         "
@@ -71,47 +74,93 @@ export default function CalculatorConfig({
           "
         />
 
-        <div className="relative z-10">
-          <div className="flex items-center justify-between gap-4">
-            <div>
+        <div className="relative z-10 min-w-0">
+          {/* HEADER */}
+
+          <div
+            className="
+              flex
+              items-start
+              justify-between
+              gap-3
+            "
+          >
+            <div className="min-w-0">
               <p
                 className="
-                  text-[10px]
+                  text-[8px]
                   uppercase
-                  tracking-[0.3em]
+                  tracking-[0.25em]
                   text-cyan-100/25
+
+                  sm:text-[10px]
+                  sm:tracking-[0.3em]
                 "
               >
                 Параметр 01
               </p>
 
-              <h3 className="mt-2 text-xl font-light text-white">
+              <h3
+                className="
+                  mt-1.5
+                  max-w-[210px]
+                  text-[16px]
+                  font-light
+                  leading-tight
+                  text-white
+
+                  sm:mt-2
+                  sm:max-w-none
+                  sm:text-xl
+                "
+              >
                 Количество рекламодателей
               </h3>
             </div>
 
+            {/* CURRENT VALUE */}
+
             <div
               className="
                 flex
-                h-12
-                min-w-16
+                h-10
+                min-w-11
+                shrink-0
                 items-center
                 justify-center
-                rounded-xl
+                rounded-lg
                 border
                 border-cyan-200/[0.10]
                 bg-cyan-200/[0.025]
-                px-4
+                px-3
                 font-mono
-                text-lg
+                text-base
                 text-cyan-100/80
+
+                sm:h-12
+                sm:min-w-16
+                sm:rounded-xl
+                sm:px-4
+                sm:text-lg
               "
             >
               {advertisers}
             </div>
           </div>
 
-          <div className="mt-8 grid grid-cols-3 gap-3">
+          {/* ADVERTISER BUTTONS */}
+
+          <div
+            className="
+              mt-5
+              grid
+              grid-cols-3
+              gap-2
+
+              sm:mt-8
+              sm:gap-3
+            "
+          >
             {[1, 2, 4].map((value) => {
               const selected =
                 advertisers === value;
@@ -127,13 +176,17 @@ export default function CalculatorConfig({
                     )
                   }
                   className={`
-                    rounded-xl
+                    min-w-0
+                    rounded-lg
                     border
-                    py-4
+                    py-3
                     font-mono
                     text-sm
                     transition-[border-color,background-color,color,box-shadow]
                     duration-200
+
+                    sm:rounded-xl
+                    sm:py-4
 
                     ${
                       selected
@@ -160,19 +213,33 @@ export default function CalculatorConfig({
             })}
           </div>
 
+          {/* LABELS */}
+
           <div
             className="
-              mt-3
-              flex
-              justify-between
-              text-[10px]
+              mt-2
+              grid
+              grid-cols-3
+              items-start
+              text-[8px]
               uppercase
-              tracking-[0.2em]
+              tracking-[0.12em]
               text-white/20
+
+              sm:mt-3
+              sm:text-[10px]
+              sm:tracking-[0.2em]
             "
           >
-            <span>1 рекламодатель</span>
-            <span>4 рекламодателя</span>
+            <span className="text-left">
+              1 рекламодатель
+            </span>
+
+            <span />
+
+            <span className="text-right">
+              4 рекламодателя
+            </span>
           </div>
         </div>
       </div>
@@ -185,11 +252,14 @@ export default function CalculatorConfig({
         className="
           relative
           overflow-hidden
-          rounded-3xl
+          rounded-[1.25rem]
           border
           border-cyan-100/[0.06]
           bg-[#0A2027]/70
-          p-7
+          p-4
+
+          sm:rounded-3xl
+          sm:p-7
 
           md:p-8
         "
@@ -208,36 +278,65 @@ export default function CalculatorConfig({
           "
         />
 
-        <div className="relative z-10">
-          <div className="flex items-center justify-between gap-4">
-            <div>
+        <div className="relative z-10 min-w-0">
+          {/* HEADER */}
+
+          <div
+            className="
+              flex
+              items-start
+              justify-between
+              gap-3
+            "
+          >
+            <div className="min-w-0">
               <p
                 className="
-                  text-[10px]
+                  text-[8px]
                   uppercase
-                  tracking-[0.3em]
+                  tracking-[0.25em]
                   text-cyan-100/25
+
+                  sm:text-[10px]
+                  sm:tracking-[0.3em]
                 "
               >
                 Параметр 02
               </p>
 
-              <h3 className="mt-2 text-xl font-light text-white">
+              <h3
+                className="
+                  mt-1.5
+                  text-[16px]
+                  font-light
+                  leading-tight
+                  text-white
+
+                  sm:mt-2
+                  sm:text-xl
+                "
+              >
                 Тираж бутылок
               </h3>
             </div>
 
             <div
               className="
-                rounded-xl
+                shrink-0
+                rounded-lg
                 border
                 border-white/[0.06]
                 bg-white/[0.018]
-                px-4
-                py-3
+                px-2.5
+                py-2
                 font-mono
-                text-sm
+                text-xs
                 text-white/65
+
+                sm:rounded-xl
+                sm:px-4
+                sm:py-3
+                sm:text-sm
               "
             >
               {quantity.toLocaleString("ru-RU")}
@@ -246,7 +345,9 @@ export default function CalculatorConfig({
 
           {/* SLIDER */}
 
-          <div className="relative mt-8 h-10">
+          <div className="relative mt-6 h-9 sm:mt-8 sm:h-10">
+            {/* TRACK */}
+
             <div
               className="
                 pointer-events-none
@@ -260,6 +361,8 @@ export default function CalculatorConfig({
                 bg-white/[0.08]
               "
             />
+
+            {/* PROGRESS */}
 
             <div
               className="
@@ -279,21 +382,27 @@ export default function CalculatorConfig({
               }}
             />
 
+            {/* KNOB */}
+
             <div
               className="
                 pointer-events-none
                 absolute
                 top-1/2
                 z-10
-                h-5
-                w-5
+                h-4
+                w-4
                 -translate-x-1/2
                 -translate-y-1/2
                 rounded-full
-                border-[4px]
+                border-[3px]
                 border-[#071A20]
                 bg-cyan-200
                 shadow-[0_0_14px_rgba(103,232,249,.45)]
+
+                sm:h-5
+                sm:w-5
+                sm:border-[4px]
               "
               style={{
                 left: `${progress}%`,
@@ -324,15 +433,21 @@ export default function CalculatorConfig({
             />
           </div>
 
+          {/* RANGE LABELS */}
+
           <div
             className="
-              mt-2
+              mt-1
               flex
               justify-between
-              text-[10px]
+              text-[8px]
               uppercase
-              tracking-[0.2em]
+              tracking-[0.16em]
               text-white/20
+
+              sm:mt-2
+              sm:text-[10px]
+              sm:tracking-[0.2em]
             "
           >
             <span>1 000</span>
@@ -349,11 +464,14 @@ export default function CalculatorConfig({
         className="
           relative
           overflow-hidden
-          rounded-3xl
+          rounded-[1.25rem]
           border
           border-cyan-100/[0.06]
           bg-[#0A2027]/70
-          p-7
+          p-4
+
+          sm:rounded-3xl
+          sm:p-7
 
           md:p-8
         "
@@ -375,16 +493,19 @@ export default function CalculatorConfig({
         <div className="relative z-10">
           <p
             className="
-              text-[10px]
+              text-[8px]
               uppercase
-              tracking-[0.3em]
+              tracking-[0.25em]
               text-cyan-100/25
+
+              sm:text-[10px]
+              sm:tracking-[0.3em]
             "
           >
             Дополнительные услуги
           </p>
 
-          <div className="mt-6 space-y-3">
+          <div className="mt-4 space-y-2 sm:mt-6 sm:space-y-3">
             <Option
               checked={includeDesign}
               onChange={onDesignChange}
@@ -431,15 +552,20 @@ function Option({
         relative
         flex
         w-full
+        min-w-0
         items-center
-        gap-4
+        gap-3
         overflow-hidden
-        rounded-2xl
+        rounded-xl
         border
-        p-5
+        p-3.5
         text-left
         transition-[border-color,background-color]
         duration-200
+
+        sm:gap-4
+        sm:rounded-2xl
+        sm:p-5
 
         ${
           checked
@@ -472,6 +598,8 @@ function Option({
           "
         />
       )}
+
+      {/* CHECKBOX */}
 
       <span
         className={`
@@ -509,11 +637,17 @@ function Option({
         )}
       </span>
 
-      <span className="relative z-10 flex-1">
+      {/* TEXT */}
+
+      <span className="relative z-10 min-w-0 flex-1">
         <span
           className={`
             block
-            text-sm
+            truncate
+            text-[13px]
+
+            sm:text-sm
+
             ${
               checked
                 ? "text-white"
@@ -524,7 +658,18 @@ function Option({
           {title}
         </span>
 
-        <span className="mt-1 block text-xs text-white/25">
+        <span
+          className="
+            mt-0.5
+            block
+            truncate
+            text-[10px]
+            text-white/25
+
+            sm:mt-1
+            sm:text-xs
+          "
+        >
           {description}
         </span>
       </span>

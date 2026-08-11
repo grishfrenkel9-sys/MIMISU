@@ -9,16 +9,13 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
+  /* =========================================
+     NAVBAR SCROLL STATE
+  ========================================= */
+
   useEffect(() => {
-    let frame = 0;
-
     const handleScroll = () => {
-      if (frame) return;
-
-      frame = requestAnimationFrame(() => {
-        setScrolled(window.scrollY > SCROLL_THRESHOLD);
-        frame = 0;
-      });
+      setScrolled(window.scrollY > SCROLL_THRESHOLD);
     };
 
     handleScroll();
@@ -29,12 +26,12 @@ export default function Navbar() {
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-
-      if (frame) {
-        cancelAnimationFrame(frame);
-      }
     };
   }, []);
+
+  /* =========================================
+     ESCAPE
+  ========================================= */
 
   useEffect(() => {
     if (!open) return;
@@ -52,27 +49,66 @@ export default function Navbar() {
     };
   }, [open]);
 
+  /* =========================================
+     SMOOTH NAVIGATION
+  ========================================= */
+
   const scrollTo = (id: string) => {
     const element = document.getElementById(id);
 
+    console.log("NAV CLICK:", id);
+    console.log("ELEMENT:", element);
+
     if (!element) {
+      console.error(`Элемент #${id} не найден`);
       setOpen(false);
       return;
     }
 
-    const offset = 80;
+    setOpen(false);
 
-    const top =
+    const lenis = (
+      window as Window & {
+        __mimisuLenis?: {
+          scrollTo: (
+            target: HTMLElement,
+            options?: {
+              duration?: number;
+              offset?: number;
+              easing?: (t: number) => number;
+            }
+          ) => void;
+        };
+      }
+    ).__mimisuLenis;
+
+    /* =========================================
+       LENIS
+    ========================================= */
+
+    if (lenis) {
+      lenis.scrollTo(element, {
+        duration: 1.4,
+        offset: -80,
+        easing: (t: number) =>
+          1 - Math.pow(1 - t, 4),
+      });
+
+      return;
+    }
+
+    /* =========================================
+       FALLBACK
+    ========================================= */
+
+    const elementTop =
       element.getBoundingClientRect().top +
-      window.scrollY -
-      offset;
+      window.scrollY;
 
     window.scrollTo({
-      top: Math.max(0, top),
+      top: Math.max(0, elementTop - 80),
       behavior: "smooth",
     });
-
-    setOpen(false);
   };
 
   return (
@@ -126,8 +162,6 @@ export default function Navbar() {
         {/* MOBILE */}
 
         <div className="flex items-center lg:hidden">
-          {/* Mobile logo */}
-
           <button
             type="button"
             onClick={() => scrollTo("hero")}

@@ -4,6 +4,8 @@ interface HeroButtonsProps {
   onNavigate: (id: string) => void;
 }
 
+const ease = [0.16, 1, 0.3, 1] as const;
+
 export default function HeroButtons({
   onNavigate,
 }: HeroButtonsProps) {
@@ -22,8 +24,8 @@ export default function HeroButtons({
           scale: 0.97,
         }}
         transition={{
-          duration: 0.2,
-          ease: [0.16, 1, 0.3, 1],
+          duration: 0.25,
+          ease,
         }}
         className="
           group
@@ -45,16 +47,17 @@ export default function HeroButtons({
       >
         <span>Запустить кампанию</span>
 
-        <motion.span
-          initial={{ x: 0 }}
-          whileHover={{ x: 4 }}
-          transition={{
-            duration: 0.2,
-            ease: "easeOut",
-          }}
+        <span
+          className="
+            inline-block
+            transition-transform
+            duration-300
+            ease-[cubic-bezier(.16,1,.3,1)]
+            group-hover:translate-x-1
+          "
         >
           →
-        </motion.span>
+        </span>
       </motion.button>
 
       {/* СМОТРЕТЬ ИСТОРИЮ */}
@@ -70,8 +73,8 @@ export default function HeroButtons({
           scale: 0.97,
         }}
         transition={{
-          duration: 0.2,
-          ease: [0.16, 1, 0.3, 1],
+          duration: 0.25,
+          ease,
         }}
         className="
           group
@@ -106,6 +109,10 @@ export default function HeroButtons({
             rounded-full
             bg-[#dff7f8]
             text-[#0aa6b7]
+            transition-transform
+            duration-300
+            ease-[cubic-bezier(.16,1,.3,1)]
+            group-hover:scale-105
           "
         >
           <span className="ml-0.5 text-[10px]">

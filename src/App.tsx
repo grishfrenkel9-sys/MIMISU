@@ -17,9 +17,13 @@ import BottleCanvas from "./components/canvas/BottleCanvas";
 export default function App() {
   const [loading, setLoading] = useState(true);
 
+  /* =========================================
+     LENIS
+  ========================================= */
+
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.4,
       smoothWheel: true,
       touchMultiplier: 1.2,
       autoRaf: true,
@@ -33,29 +37,49 @@ export default function App() {
     };
   }, []);
 
-  const scrollToSection = (id: string) => {
-    const lenis = (window as any).__mimisuLenis as Lenis | undefined;
+  /* =========================================
+     GLOBAL NAVIGATION
+  ========================================= */
 
+  const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
 
-    if (!element) return;
+    if (!element) {
+      console.warn(`Section #${id} not found`);
+      return;
+    }
+
+    const lenis = (window as any).__mimisuLenis;
 
     if (lenis) {
       lenis.scrollTo(element, {
-        duration: 1.4,
-        easing: (t: number) =>
-          1 - Math.pow(1 - t, 4),
+        offset: -80,
+        duration: 1.5,
+        easing: (t: number) => {
+          return 1 - Math.pow(1 - t, 4);
+        },
       });
-    } else {
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+
+      return;
     }
+
+    const top =
+      element.getBoundingClientRect().top +
+      window.scrollY -
+      80;
+
+    window.scrollTo({
+      top: Math.max(0, top),
+      behavior: "smooth",
+    });
   };
 
   return (
     <>
+      {/* =========================================
+          LOADER
+      ========================================= */}
+
       {loading && (
         <SiteLoader
           onComplete={() => {
@@ -64,18 +88,39 @@ export default function App() {
         />
       )}
 
+      {/* =========================================
+          NAVBAR
+      ========================================= */}
+
       <Navbar />
+
+      {/* =========================================
+          3D BOTTLE
+      ========================================= */}
 
       <BottleCanvas />
 
+      {/* =========================================
+          MAIN
+      ========================================= */}
+
       <main className="relative z-20">
         <Hero onNavigate={scrollToSection} />
+
         <About />
+
         <Story />
+
         <Features />
+
         <Calculator />
+
         <FAQ />
       </main>
+
+      {/* =========================================
+          FOOTER
+      ========================================= */}
 
       <Footer />
     </>
