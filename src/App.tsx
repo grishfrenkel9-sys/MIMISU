@@ -19,29 +19,43 @@ export default function App() {
 
   useEffect(() => {
     const lenis = new Lenis({
-      autoRaf: true,
       duration: 1.2,
       smoothWheel: true,
       touchMultiplier: 1.2,
+      autoRaf: true,
     });
 
+    (window as any).__mimisuLenis = lenis;
+
     return () => {
+      delete (window as any).__mimisuLenis;
       lenis.destroy();
     };
   }, []);
 
+  const scrollToSection = (id: string) => {
+    const lenis = (window as any).__mimisuLenis as Lenis | undefined;
+
+    const element = document.getElementById(id);
+
+    if (!element) return;
+
+    if (lenis) {
+      lenis.scrollTo(element, {
+        duration: 1.4,
+        easing: (t: number) =>
+          1 - Math.pow(1 - t, 4),
+      });
+    } else {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   return (
     <>
-      {/* =========================================
-          LIVE BACKGROUND
-      ========================================= */}
-
-    
-
-      {/* =========================================
-          LOADER
-      ========================================= */}
-
       {loading && (
         <SiteLoader
           onComplete={() => {
@@ -50,34 +64,18 @@ export default function App() {
         />
       )}
 
-      {/* =========================================
-          NAVBAR
-      ========================================= */}
-
       <Navbar />
-
-      {/* =========================================
-          3D MOLECULE
-      ========================================= */}
 
       <BottleCanvas />
 
-      {/* =========================================
-          PAGE
-      ========================================= */}
-
       <main className="relative z-20">
-        <Hero />
+        <Hero onNavigate={scrollToSection} />
         <About />
         <Story />
         <Features />
         <Calculator />
         <FAQ />
       </main>
-
-      {/* =========================================
-          FOOTER
-      ========================================= */}
 
       <Footer />
     </>

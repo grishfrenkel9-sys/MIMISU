@@ -7,11 +7,12 @@ import {
 } from "framer-motion";
 import { useRef } from "react";
 
+import StoryNumbers from "./StoryNumbers";
 import StoryStep from "./StoryStep";
 import { story } from "./storyData";
 
 export default function BottleStory() {
-  const sectionRef = useRef<HTMLElement | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
@@ -20,18 +21,24 @@ export default function BottleStory() {
   });
 
   /*
-   * Быстрый отклик без ощущения рывка.
+   * Небольшое сглаживание.
+   *
+   * Не делаем слишком быстрым, иначе Story начинает
+   * "догонять" скролл.
    */
   const progress = useSpring(scrollYProgress, {
-    stiffness: 320,
-    damping: 36,
-    mass: 0.12,
+    stiffness: 180,
+    damping: 30,
+    mass: 0.25,
   });
 
+  /*
+   * Очень медленное движение фонового света.
+   */
   const glowY = useTransform(
     progress,
     [0, 1],
-    [-60, 60],
+    [-40, 40]
   );
 
   return (
@@ -59,20 +66,20 @@ export default function BottleStory() {
             left-1/2
             top-1/2
             z-0
-            h-[380px]
-            w-[380px]
+            h-[360px]
+            w-[360px]
             -translate-x-1/2
             -translate-y-1/2
             rounded-full
-            bg-[#6CE0E5]/[0.055]
-            blur-[120px]
+            bg-[#6CE0E5]/[0.035]
+            blur-[110px]
 
-            sm:h-[500px]
-            sm:w-[500px]
+            sm:h-[480px]
+            sm:w-[480px]
 
-            lg:h-[650px]
-            lg:w-[650px]
-            lg:blur-[160px]
+            lg:h-[620px]
+            lg:w-[620px]
+            lg:blur-[150px]
           "
         />
       )}
@@ -87,7 +94,7 @@ export default function BottleStory() {
           pointer-events-none
           absolute
           inset-0
-          opacity-[0.018]
+          opacity-[0.015]
         "
         style={{
           backgroundImage: `
@@ -136,10 +143,10 @@ export default function BottleStory() {
         <motion.div
           initial={
             reduceMotion
-              ? undefined
+              ? false
               : {
                   opacity: 0,
-                  y: 18,
+                  y: 16,
                 }
           }
           whileInView={{
@@ -151,7 +158,7 @@ export default function BottleStory() {
             amount: 0.2,
           }}
           transition={{
-            duration: reduceMotion ? 0 : 0.55,
+            duration: reduceMotion ? 0 : 0.6,
             ease: [0.16, 1, 0.3, 1],
           }}
           className="max-w-[760px]"
@@ -180,13 +187,7 @@ export default function BottleStory() {
 
             О бренде
 
-            <span
-              className="
-                h-px
-                w-8
-                bg-[#6CE0E5]/30
-              "
-            />
+            <span className="h-px w-8 bg-[#6CE0E5]/30" />
           </div>
 
           <h2
@@ -244,22 +245,14 @@ export default function BottleStory() {
           lg:px-12
         "
       >
-        {/*
-         * 5 состояний.
-         *
-         * Важно:
-         * родитель НЕ имеет overflow-hidden.
-         *
-         * Sticky живёт внутри этого блока.
-         */}
         <div
           className="
             relative
-            min-h-[300vh]
+            min-h-[280vh]
 
-            sm:min-h-[320vh]
+            sm:min-h-[300vh]
 
-            lg:min-h-[380vh]
+            lg:min-h-[340vh]
           "
         >
           <div
@@ -289,85 +282,13 @@ export default function BottleStory() {
               "
             >
               {/* =================================================
-                  LEFT NUMBERS
+                  NUMBERS
               ================================================= */}
 
-              <div
-                className="
-                  hidden
-                  lg:flex
-                  lg:flex-col
-                  lg:items-center
-                  lg:gap-4
-                "
-              >
-                {story.map((item, index) => {
-                  const start = index / story.length;
-                  const end = (index + 1) / story.length;
-
-                  const opacity = useTransform(
-                    progress,
-                    [
-                      start,
-                      start + 0.02,
-                      end - 0.02,
-                      end,
-                    ],
-                    [0.28, 1, 1, 0.28],
-                  );
-
-                  const scale = useTransform(
-                    progress,
-                    [
-                      start,
-                      start + 0.045,
-                      end - 0.045,
-                      end,
-                    ],
-                    [0.88, 1, 1, 0.88],
-                  );
-
-                  return (
-                    <motion.div
-                      key={item.id}
-                      style={{
-                        opacity,
-                        scale,
-                      }}
-                      className="
-                        flex
-                        h-10
-                        w-10
-                        shrink-0
-                        items-center
-                        justify-center
-                        rounded-full
-                        border
-                        border-[#6CE0E5]/[0.14]
-                        bg-[#6CE0E5]/[0.025]
-                        font-mono
-                        text-[9px]
-                        tracking-[0.15em]
-                        text-[#6CE0E5]/70
-                      "
-                    >
-                      {item.number}
-                    </motion.div>
-                  );
-                })}
-
-                {/* Декоративная линия — БЕЗ progress fill */}
-                <div
-                  className="
-                    mt-1
-                    h-16
-                    w-px
-                    bg-gradient-to-b
-                    from-[#6CE0E5]/20
-                    to-transparent
-                  "
-                />
-              </div>
+              <StoryNumbers
+                progress={progress}
+                mobile={false}
+              />
 
               {/* =================================================
                   STORY CARD
@@ -388,11 +309,14 @@ export default function BottleStory() {
 
                   lg:min-h-[560px]
                   lg:rounded-[2.5rem]
+
+                  will-change-transform
                 "
               >
                 <StoryStep
                   story={story}
                   progress={progress}
+                  reduceMotion={reduceMotion}
                 />
 
                 {/* INNER FRAME */}
@@ -414,7 +338,7 @@ export default function BottleStory() {
                   "
                 />
 
-                {/* TOP SIGNAL */}
+                {/* SIGNAL */}
 
                 <div
                   aria-hidden
@@ -431,7 +355,7 @@ export default function BottleStory() {
                   "
                 />
 
-                {/* BOTTOM DETAIL */}
+                {/* DETAIL */}
 
                 <div
                   aria-hidden
@@ -448,18 +372,11 @@ export default function BottleStory() {
               </div>
 
               {/* =================================================
-                  RIGHT DESCRIPTION
+                  DESCRIPTION
               ================================================= */}
 
               <div className="hidden lg:block">
-                <div
-                  className="
-                    mb-7
-                    h-px
-                    w-14
-                    bg-[#6CE0E5]/30
-                  "
-                />
+                <div className="mb-7 h-px w-14 bg-[#6CE0E5]/30" />
 
                 <p
                   className="
@@ -516,69 +433,10 @@ export default function BottleStory() {
                   MOBILE NUMBERS
               ================================================= */}
 
-              <div
-                className="
-                  flex
-                  items-center
-                  justify-center
-                  gap-2
-                  lg:hidden
-                "
-              >
-                {story.map((item, index) => {
-                  const start = index / story.length;
-                  const end = (index + 1) / story.length;
-
-                  const opacity = useTransform(
-                    progress,
-                    [
-                      start,
-                      start + 0.02,
-                      end - 0.02,
-                      end,
-                    ],
-                    [0.3, 1, 1, 0.3],
-                  );
-
-                  const scale = useTransform(
-                    progress,
-                    [
-                      start,
-                      start + 0.04,
-                      end - 0.04,
-                      end,
-                    ],
-                    [0.9, 1, 1, 0.9],
-                  );
-
-                  return (
-                    <motion.div
-                      key={item.id}
-                      style={{
-                        opacity,
-                        scale,
-                      }}
-                      className="
-                        flex
-                        h-8
-                        min-w-8
-                        items-center
-                        justify-center
-                        rounded-full
-                        border
-                        border-[#6CE0E5]/[0.13]
-                        bg-[#6CE0E5]/[0.025]
-                        px-2
-                        font-mono
-                        text-[8px]
-                        text-[#6CE0E5]/65
-                      "
-                    >
-                      {item.number}
-                    </motion.div>
-                  );
-                })}
-              </div>
+              <StoryNumbers
+                progress={progress}
+                mobile
+              />
             </div>
           </div>
         </div>

@@ -1,9 +1,12 @@
 import { motion } from "framer-motion";
 
+const ease = [0.16, 1, 0.3, 1] as const;
+
 export default function Statement() {
   return (
     <section className="relative py-20 md:py-28">
-      {/* Soft ambient glow */}
+      {/* Ambient glow */}
+
       <div
         className="
           pointer-events-none
@@ -34,12 +37,23 @@ export default function Statement() {
       />
 
       <div className="relative z-10 grid gap-12 lg:grid-cols-[0.35fr_1fr] lg:gap-20">
-        {/* Label */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            margin: "-100px",
+          }}
+          transition={{
+            duration: 0.7,
+            ease,
+          }}
           className="
             flex
             items-start
@@ -69,14 +83,22 @@ export default function Statement() {
           </span>
         </motion.div>
 
-        {/* Main statement */}
         <motion.div
-          initial={{ opacity: 0, y: 35 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          initial={{
+            opacity: 0,
+            y: 35,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            margin: "-100px",
+          }}
           transition={{
             duration: 0.9,
-            ease: [0.16, 1, 0.3, 1],
+            ease,
           }}
           className="max-w-[1000px]"
         >
@@ -92,14 +114,27 @@ export default function Statement() {
             Мы превращаем
             <span className="text-[#0E7490]"> воду </span>
             в точку контакта
-            <span className="text-[#4B8D99]"> между брендом и человеком.</span>
+            <span className="text-[#4B8D99]">
+              {" "}
+              между брендом и человеком.
+            </span>
           </h2>
 
           <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.25, duration: 0.7 }}
+            initial={{
+              opacity: 0,
+            }}
+            whileInView={{
+              opacity: 1,
+            }}
+            viewport={{
+              once: true,
+            }}
+            transition={{
+              delay: 0.25,
+              duration: 0.7,
+              ease,
+            }}
             className="
               mt-8
               max-w-[720px]
@@ -116,12 +151,23 @@ export default function Statement() {
             аналитику в одной рекламной системе.
           </motion.p>
 
-          {/* Small data line */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4, duration: 0.7 }}
+            initial={{
+              opacity: 0,
+              x: -20,
+            }}
+            whileInView={{
+              opacity: 1,
+              x: 0,
+            }}
+            viewport={{
+              once: true,
+            }}
+            transition={{
+              delay: 0.4,
+              duration: 0.7,
+              ease,
+            }}
             className="
               mt-10
               flex

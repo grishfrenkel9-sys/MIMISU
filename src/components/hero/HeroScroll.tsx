@@ -3,32 +3,43 @@ import { motion } from "framer-motion";
 export default function HeroScroll() {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{
+        opacity: 0,
+        y: 15,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
       transition={{
         duration: 0.7,
         delay: 1.1,
       }}
       className="
         absolute
-        bottom-8
+        bottom-5
         left-1/2
         z-30
-        flex
+        hidden
         -translate-x-1/2
         flex-col
         items-center
         gap-2
         select-none
+
+        sm:bottom-7
+        sm:flex
       "
     >
       <span
         className="
-          text-[9px]
+          text-[8px]
           font-semibold
           uppercase
           tracking-[0.35em]
           text-[#073b4c]/45
+
+          sm:text-[9px]
         "
       >
         ЛИСТАЙТЕ
@@ -38,14 +49,17 @@ export default function HeroScroll() {
         className="
           relative
           flex
-          h-11
-          w-6
+          h-10
+          w-5
           items-start
           justify-center
           rounded-full
           border
           border-[#073b4c]/20
           bg-white/25
+
+          sm:h-11
+          sm:w-6
         "
       >
         <motion.div
@@ -59,10 +73,13 @@ export default function HeroScroll() {
             ease: "easeInOut",
           }}
           className="
-            h-2
-            w-2
+            h-1.5
+            w-1.5
             rounded-full
             bg-[#078c9d]
+
+            sm:h-2
+            sm:w-2
           "
         />
       </div>

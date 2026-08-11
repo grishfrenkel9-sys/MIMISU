@@ -18,43 +18,185 @@ export default function NavbarMobile({
   links,
   scrollTo,
 }: Props) {
+  const toggleMenu = () => setOpen(!open);
+
   return (
     <>
+      {/* MOBILE BUTTON */}
+
       <button
-        onClick={() => setOpen(!open)}
-        className="lg:hidden"
+        type="button"
+        onClick={toggleMenu}
+        aria-label={open ? "Закрыть меню" : "Открыть меню"}
+        aria-expanded={open}
+        className="
+          flex
+          h-10
+          w-10
+          items-center
+          justify-center
+          rounded-full
+          border
+          border-[#092B32]/15
+          bg-white/70
+          text-[#092B32]
+          backdrop-blur-md
+          transition-all
+          duration-300
+          hover:border-[#2F6873]/40
+          hover:bg-[#2F6873]/[0.06]
+          active:scale-95
+          lg:hidden
+        "
       >
-        {open ? <X /> : <Menu />}
+        {open ? (
+          <X size={19} strokeWidth={1.6} />
+        ) : (
+          <Menu size={19} strokeWidth={1.6} />
+        )}
       </button>
 
+      {/* MENU */}
+
       <div
-        className={`overflow-hidden transition-all duration-500 lg:hidden ${
-          open ? "max-h-[500px]" : "max-h-0"
-        }`}
+        className={`
+          fixed
+          inset-0
+          z-40
+          lg:hidden
+          transition-opacity
+          duration-300
+          ${
+            open
+              ? "pointer-events-auto opacity-100"
+              : "pointer-events-none opacity-0"
+          }
+        `}
       >
-        <div className="mx-4 mt-3 rounded-3xl border border-white/10 bg-black/20/80 p-6 backdrop-blur-2xl">
+        {/* BACKDROP */}
 
-          <div className="flex flex-col gap-4">
+        <button
+          type="button"
+          aria-label="Закрыть меню"
+          onClick={() => setOpen(false)}
+          className="
+            absolute
+            inset-0
+            h-full
+            w-full
+            bg-[#092B32]/25
+            backdrop-blur-md
+          "
+        />
 
-            {links.map((link) => (
+        {/* PANEL */}
+
+        <div
+          className={`
+            absolute
+            inset-x-0
+            top-20
+            overflow-hidden
+            border-t
+            border-[#092B32]/[0.08]
+            bg-[#F5F9F8]
+            shadow-[0_20px_60px_rgba(9,43,50,.12)]
+            transition-transform
+            duration-500
+            ease-[cubic-bezier(0.16,1,0.3,1)]
+            ${
+              open
+                ? "translate-y-0"
+                : "-translate-y-4"
+            }
+          `}
+        >
+          <nav aria-label="Мобильная навигация">
+            {links.map((link, index) => (
               <button
                 key={link.id}
+                type="button"
                 onClick={() => scrollTo(link.id)}
-                className="rounded-xl py-3 text-left text-white/80 transition hover:bg-white/5"
+                className="
+                  group
+                  flex
+                  w-full
+                  items-center
+                  justify-between
+                  border-b
+                  border-[#092B32]/[0.07]
+                  px-7
+                  py-5
+                  text-left
+                  text-lg
+                  font-light
+                  text-[#092B32]
+                  transition-all
+                  duration-300
+                  hover:bg-[#2F6873]/[0.05]
+                  hover:pl-9
+                  hover:text-[#2F6873]
+                "
               >
-                {link.title}
+                <span>{link.title}</span>
+
+                <span
+                  className="
+                    font-mono
+                    text-[9px]
+                    tracking-[0.3em]
+                    text-[#2F6873]/45
+                    transition-colors
+                    duration-300
+                    group-hover:text-[#2F6873]
+                  "
+                >
+                  0{index + 1}
+                </span>
               </button>
             ))}
+          </nav>
 
+          <div className="p-7">
             <button
+              type="button"
               onClick={() => scrollTo("calculator")}
-              className="mt-3 rounded-full bg-white py-4 text-black"
+              className="
+                flex
+                w-full
+                items-center
+                justify-center
+                gap-3
+                rounded-full
+                border
+                border-[#2F6873]/30
+                bg-[#2F6873]/[0.07]
+                py-4
+                text-[11px]
+                font-medium
+                uppercase
+                tracking-[0.18em]
+                text-[#092B32]
+                transition-all
+                duration-300
+                hover:border-[#2F6873]/55
+                hover:bg-[#2F6873]/[0.12]
+                active:scale-[0.98]
+              "
             >
-              Рассчитать стоимость
+              <span>Запустить кампанию</span>
+
+              <span
+                className="
+                  h-1.5
+                  w-1.5
+                  rounded-full
+                  bg-[#2F6873]
+                  shadow-[0_0_8px_rgba(47,104,115,.45)]
+                "
+              />
             </button>
-
           </div>
-
         </div>
       </div>
     </>

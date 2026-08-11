@@ -1,15 +1,16 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+
 import FeatureCard from "./FeatureCard";
 import { steps } from "./data";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function FeatureTimeline() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <div className="relative">
-      {/* =================================================
-          CENTRAL TIMELINE
-      ================================================= */}
+      {/* TIMELINE */}
 
       <div
         className="
@@ -27,49 +28,31 @@ export default function FeatureTimeline() {
         "
       />
 
-      {/* Static timeline accent */}
+      {/* CARDS */}
 
-      <div
-        className="
-          pointer-events-none
-          absolute
-          left-[10px]
-          top-[8%]
-          h-[18%]
-          w-px
-          bg-gradient-to-b
-          from-transparent
-          via-cyan-300/25
-          to-transparent
-          md:left-[14px]
-        "
-      />
-
-      {/* =================================================
-          CARDS
-      ================================================= */}
-
-      <div className="relative space-y-6">
+      <div className="relative space-y-5 sm:space-y-6">
         {steps.map((step, index) => (
           <motion.div
             key={step.number}
-            initial={{
-              opacity: 0,
-              y: 60,
-              filter: "blur(10px)",
-            }}
+            initial={
+              reduceMotion
+                ? false
+                : {
+                    opacity: 0,
+                    y: 24,
+                  }
+            }
             whileInView={{
               opacity: 1,
               y: 0,
-              filter: "blur(0px)",
             }}
             viewport={{
-              once: false,
-              amount: 0.2,
+              once: true,
+              amount: 0.12,
             }}
             transition={{
-              duration: 0.9,
-              delay: index * 0.08,
+              duration: reduceMotion ? 0 : 0.55,
+              delay: reduceMotion ? 0 : index * 0.05,
               ease,
             }}
             className="
@@ -78,26 +61,9 @@ export default function FeatureTimeline() {
               md:pl-14
             "
           >
-            {/* Timeline node */}
+            {/* TIMELINE NODE */}
 
-            <motion.div
-              initial={{
-                scale: 0,
-                opacity: 0,
-              }}
-              whileInView={{
-                scale: 1,
-                opacity: 1,
-              }}
-              viewport={{
-                once: false,
-                amount: 0.35,
-              }}
-              transition={{
-                duration: 0.55,
-                delay: index * 0.08 + 0.15,
-                ease,
-              }}
+            <div
               className="
                 absolute
                 left-[5px]
@@ -123,10 +89,10 @@ export default function FeatureTimeline() {
                   w-1
                   rounded-full
                   bg-cyan-300
-                  shadow-[0_0_10px_rgba(103,232,249,0.65)]
+                  shadow-[0_0_8px_rgba(103,232,249,0.55)]
                 "
               />
-            </motion.div>
+            </div>
 
             <FeatureCard
               number={step.number}

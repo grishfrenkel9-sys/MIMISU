@@ -43,11 +43,13 @@ export default function HeroBadge() {
       <div className="flex flex-col leading-none">
         <span
           className="
-            text-[12px]
+            text-[10px]
             font-bold
             uppercase
             tracking-[0.18em]
             text-[#073b4c]
+
+            sm:text-[11px]
           "
         >
           QR AD NETWORK
@@ -56,10 +58,12 @@ export default function HeroBadge() {
         <span
           className="
             mt-1
-            text-[10px]
+            text-[8px]
             uppercase
             tracking-[0.2em]
             text-[#0a8b9b]/70
+
+            sm:text-[9px]
           "
         >
           DIGITAL WATER

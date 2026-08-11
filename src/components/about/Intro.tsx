@@ -9,8 +9,6 @@ const lines = [
 export default function Intro() {
   return (
     <div>
-      {/* LABEL */}
-
       <ScrollReveal
         direction="left"
         distance={30}
@@ -19,13 +17,9 @@ export default function Intro() {
         <div className="flex items-center gap-4 text-[10px] font-medium uppercase tracking-[0.35em] text-neutral-500">
           <span className="h-px w-8 bg-cyan-400/50" />
 
-          <span>
-            Глава 01 // О платформе
-          </span>
+          <span>Глава 01 // О платформе</span>
         </div>
       </ScrollReveal>
-
-      {/* TITLE */}
 
       <h2 className="mt-8 max-w-[1100px] text-[clamp(3rem,7vw,7rem)] font-light leading-[0.95] tracking-[-0.045em]">
         {lines.map((line, index) => (
@@ -40,11 +34,11 @@ export default function Intro() {
               duration={1}
             >
               <span
-                className={`block ${
+                className={
                   index === 2
-                    ? "text-white"
-                    : "text-white/95"
-                }`}
+                    ? "block text-white"
+                    : "block text-white/95"
+                }
               >
                 {line}
               </span>
@@ -52,8 +46,6 @@ export default function Intro() {
           </span>
         ))}
       </h2>
-
-      {/* DECORATIVE LINE */}
 
       <ScrollReveal
         direction="right"

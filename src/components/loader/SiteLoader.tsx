@@ -24,29 +24,37 @@ export default function SiteLoader({
   const [messageIndex, setMessageIndex] = useState(0);
 
   useEffect(() => {
-    const start = performance.now();
+    let frameId = 0;
+    let finishTimeout: number | undefined;
+    let completeTimeout: number | undefined;
 
-    let frame = 0;
-    let finishTimeout = 0;
-    let completeTimeout = 0;
+    const start = performance.now();
 
     const update = (time: number) => {
       const elapsed = time - start;
-      const raw = Math.min(elapsed / LOADING_TIME, 1);
+      const rawProgress = Math.min(elapsed / LOADING_TIME, 1);
 
-      const eased = 1 - Math.pow(1 - raw, 3);
+      // Smooth ease-out
+      const easedProgress =
+        1 - Math.pow(1 - rawProgress, 3);
 
-      setProgress(eased * 100);
+      const nextProgress = Math.round(easedProgress * 100);
 
-      setMessageIndex(
-        Math.min(
-          Math.floor(eased * loadingMessages.length),
-          loadingMessages.length - 1,
-        ),
+      setProgress((previous) =>
+        previous === nextProgress ? previous : nextProgress,
       );
 
-      if (raw < 1) {
-        frame = requestAnimationFrame(update);
+      const nextMessage = Math.min(
+        Math.floor(easedProgress * loadingMessages.length),
+        loadingMessages.length - 1,
+      );
+
+      setMessageIndex((previous) =>
+        previous === nextMessage ? previous : nextMessage,
+      );
+
+      if (rawProgress < 1) {
+        frameId = requestAnimationFrame(update);
         return;
       }
 
@@ -55,24 +63,26 @@ export default function SiteLoader({
 
         completeTimeout = window.setTimeout(() => {
           onComplete();
-        }, 900);
+        }, reduceMotion ? 200 : 900);
       }, 250);
     };
 
-    frame = requestAnimationFrame(update);
+    frameId = requestAnimationFrame(update);
 
     return () => {
-      cancelAnimationFrame(frame);
-      window.clearTimeout(finishTimeout);
-      window.clearTimeout(completeTimeout);
+      cancelAnimationFrame(frameId);
+
+      if (finishTimeout !== undefined) {
+        window.clearTimeout(finishTimeout);
+      }
+
+      if (completeTimeout !== undefined) {
+        window.clearTimeout(completeTimeout);
+      }
     };
-  }, [onComplete]);
+  }, [onComplete, reduceMotion]);
 
-  const percentage = Math.round(progress);
-
-  /* =====================================================
-     FINAL TRANSITION
-  ===================================================== */
+  const percentage = progress;
 
   if (finished) {
     return (
@@ -125,10 +135,7 @@ export default function SiteLoader({
         text-[#173F49]
       "
     >
-      {/* =================================================
-          BACKGROUND
-      ================================================= */}
-
+      {/* Background grid */}
       <div
         className="
           pointer-events-none
@@ -153,7 +160,6 @@ export default function SiteLoader({
       />
 
       {/* Ambient light */}
-
       <motion.div
         animate={
           reduceMotion
@@ -184,7 +190,6 @@ export default function SiteLoader({
       />
 
       {/* Decorative circles */}
-
       <div
         className="
           pointer-events-none
@@ -227,10 +232,7 @@ export default function SiteLoader({
         "
       />
 
-      {/* =================================================
-          TOP BAR
-      ================================================= */}
-
+      {/* Top bar */}
       <div
         className="
           absolute
@@ -240,19 +242,12 @@ export default function SiteLoader({
           flex
           items-center
           justify-between
-
           sm:left-8
           sm:right-8
           sm:top-8
         "
       >
-        <div
-          className="
-            flex
-            items-center
-            gap-3
-          "
-        >
+        <div className="flex items-center gap-3">
           <span
             className="
               h-1.5
@@ -288,10 +283,7 @@ export default function SiteLoader({
         </span>
       </div>
 
-      {/* =================================================
-          CENTER
-      ================================================= */}
-
+      {/* Center */}
       <div
         className="
           absolute
@@ -306,10 +298,7 @@ export default function SiteLoader({
           px-6
         "
       >
-        {/* =================================================
-            WATER OBJECT
-        ================================================= */}
-
+        {/* Water object */}
         <div
           className="
             relative
@@ -318,13 +307,11 @@ export default function SiteLoader({
             w-[170px]
             items-center
             justify-center
-
             sm:h-[190px]
             sm:w-[190px]
           "
         >
           {/* Outer circle */}
-
           <motion.div
             animate={
               reduceMotion
@@ -361,7 +348,6 @@ export default function SiteLoader({
           </motion.div>
 
           {/* Inner circle */}
-
           <div
             className="
               absolute
@@ -372,8 +358,7 @@ export default function SiteLoader({
             "
           />
 
-          {/* Water container */}
-
+          {/* Water */}
           <div
             className="
               absolute
@@ -386,8 +371,6 @@ export default function SiteLoader({
               shadow-[0_15px_45px_rgba(23,63,73,.08)]
             "
           >
-            {/* Water */}
-
             <motion.div
               className="
                 absolute
@@ -405,36 +388,30 @@ export default function SiteLoader({
               }}
             />
 
-            {/* Wave */}
-
-            <motion.div
-              animate={
-                reduceMotion
-                  ? undefined
-                  : {
-                      x: ["-12%", "12%", "-12%"],
-                    }
-              }
-              transition={{
-                duration: 3.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="
-                absolute
-                left-[-15%]
-                right-[-15%]
-                h-5
-                rounded-[50%]
-                border-t
-                border-[#2F6873]/20
-              "
-              style={{
-                bottom: `calc(${progress}% - 8px)`,
-              }}
-            />
-
-            {/* Shine */}
+            {!reduceMotion && (
+              <motion.div
+                animate={{
+                  x: ["-12%", "12%", "-12%"],
+                }}
+                transition={{
+                  duration: 3.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="
+                  absolute
+                  left-[-15%]
+                  right-[-15%]
+                  h-5
+                  rounded-[50%]
+                  border-t
+                  border-[#2F6873]/20
+                "
+                style={{
+                  bottom: `calc(${progress}% - 8px)`,
+                }}
+              />
+            )}
 
             <div
               className="
@@ -450,7 +427,6 @@ export default function SiteLoader({
           </div>
 
           {/* Percentage */}
-
           <div
             className="
               relative
@@ -487,10 +463,7 @@ export default function SiteLoader({
           </div>
         </div>
 
-        {/* =================================================
-            BRAND
-        ================================================= */}
-
+        {/* Brand */}
         <motion.div
           initial={{
             opacity: 0,
@@ -504,10 +477,7 @@ export default function SiteLoader({
             duration: reduceMotion ? 0.2 : 0.8,
             ease: [0.16, 1, 0.3, 1],
           }}
-          className="
-            mt-9
-            text-center
-          "
+          className="mt-9 text-center"
         >
           <div
             className="
@@ -535,10 +505,7 @@ export default function SiteLoader({
           </div>
         </motion.div>
 
-        {/* =================================================
-            STATUS
-        ================================================= */}
-
+        {/* Status */}
         <div
           className="
             mt-7
@@ -596,10 +563,7 @@ export default function SiteLoader({
         </div>
       </div>
 
-      {/* =================================================
-          BOTTOM
-      ================================================= */}
-
+      {/* Bottom */}
       <div
         className="
           absolute
@@ -609,7 +573,6 @@ export default function SiteLoader({
           flex
           items-end
           justify-between
-
           sm:bottom-8
           sm:left-8
           sm:right-8
@@ -640,10 +603,7 @@ export default function SiteLoader({
         </div>
       </div>
 
-      {/* =================================================
-          SIDE PROGRESS
-      ================================================= */}
-
+      {/* Side progress */}
       <div
         className="
           absolute
@@ -654,12 +614,11 @@ export default function SiteLoader({
           w-px
           -translate-y-1/2
           bg-[#2F6873]/[0.10]
-
           sm:right-8
           sm:block
         "
       >
-        <motion.div
+        <div
           className="
             absolute
             bottom-0
@@ -686,7 +645,6 @@ export default function SiteLoader({
           uppercase
           tracking-[0.35em]
           text-[#779397]
-
           sm:block
         "
       >

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+
 import type { AdvertiserCount } from "./types";
 
 interface Props {
@@ -7,11 +8,20 @@ interface Props {
   includeDesign: boolean;
   includeDistribution: boolean;
 
-  onAdvertiserChange: (value: AdvertiserCount) => void;
+  onAdvertiserChange: (
+    value: AdvertiserCount
+  ) => void;
+
   onQuantityChange: (value: number) => void;
+
   onDesignChange: (value: boolean) => void;
+
   onDistributionChange: (value: boolean) => void;
 }
+
+const MIN_QUANTITY = 1000;
+const MAX_QUANTITY = 20000;
+const QUANTITY_STEP = 500;
 
 export default function CalculatorConfig({
   advertisers,
@@ -23,6 +33,11 @@ export default function CalculatorConfig({
   onDesignChange,
   onDistributionChange,
 }: Props) {
+  const progress =
+    ((quantity - MIN_QUANTITY) /
+      (MAX_QUANTITY - MIN_QUANTITY)) *
+    100;
+
   return (
     <div className="space-y-4">
       {/* =================================
@@ -38,24 +53,21 @@ export default function CalculatorConfig({
           border-cyan-100/[0.06]
           bg-[#0A2027]/70
           p-7
-          backdrop-blur-2xl
 
           md:p-8
         "
       >
-        {/* Soft background detail */}
-
         <div
           className="
             pointer-events-none
             absolute
-            -right-20
-            -top-20
-            h-40
-            w-40
+            -right-16
+            -top-16
+            h-32
+            w-32
             rounded-full
-            bg-cyan-300/[0.025]
-            blur-[70px]
+            bg-cyan-300/[0.02]
+            blur-[50px]
           "
         />
 
@@ -101,7 +113,8 @@ export default function CalculatorConfig({
 
           <div className="mt-8 grid grid-cols-3 gap-3">
             {[1, 2, 4].map((value) => {
-              const selected = advertisers === value;
+              const selected =
+                advertisers === value;
 
               return (
                 <motion.button
@@ -119,8 +132,8 @@ export default function CalculatorConfig({
                     py-4
                     font-mono
                     text-sm
-                    transition-all
-                    duration-300
+                    transition-[border-color,background-color,color,box-shadow]
+                    duration-200
 
                     ${
                       selected
@@ -128,7 +141,7 @@ export default function CalculatorConfig({
                           border-cyan-200/20
                           bg-cyan-200/[0.045]
                           text-cyan-100
-                          shadow-[0_0_30px_rgba(127,197,208,0.05)]
+                          shadow-[0_0_25px_rgba(127,197,208,0.04)]
                         `
                         : `
                           border-white/[0.05]
@@ -177,7 +190,6 @@ export default function CalculatorConfig({
           border-cyan-100/[0.06]
           bg-[#0A2027]/70
           p-7
-          backdrop-blur-2xl
 
           md:p-8
         "
@@ -186,13 +198,13 @@ export default function CalculatorConfig({
           className="
             pointer-events-none
             absolute
-            -left-20
-            bottom-[-80px]
-            h-40
-            w-40
+            -left-16
+            bottom-[-60px]
+            h-32
+            w-32
             rounded-full
-            bg-sky-300/[0.02]
-            blur-[70px]
+            bg-sky-300/[0.018]
+            blur-[50px]
           "
         />
 
@@ -232,32 +244,89 @@ export default function CalculatorConfig({
             </div>
           </div>
 
-          <input
-            type="range"
-            min={1000}
-            max={20000}
-            step={500}
-            value={quantity}
-            onChange={(event) =>
-              onQuantityChange(
-                Number(event.target.value)
-              )
-            }
-            style={
-              {
-                "--progress": `${
-                  ((quantity - 1000) /
-                    (20000 - 1000)) *
-                  100
-                }%`,
-              } as React.CSSProperties
-            }
-            className="slider mt-8 w-full"
-          />
+          {/* SLIDER */}
+
+          <div className="relative mt-8 h-10">
+            <div
+              className="
+                pointer-events-none
+                absolute
+                left-0
+                right-0
+                top-1/2
+                h-[3px]
+                -translate-y-1/2
+                rounded-full
+                bg-white/[0.08]
+              "
+            />
+
+            <div
+              className="
+                pointer-events-none
+                absolute
+                left-0
+                top-1/2
+                h-[3px]
+                -translate-y-1/2
+                rounded-full
+                bg-gradient-to-r
+                from-cyan-400
+                to-cyan-200
+              "
+              style={{
+                width: `${progress}%`,
+              }}
+            />
+
+            <div
+              className="
+                pointer-events-none
+                absolute
+                top-1/2
+                z-10
+                h-5
+                w-5
+                -translate-x-1/2
+                -translate-y-1/2
+                rounded-full
+                border-[4px]
+                border-[#071A20]
+                bg-cyan-200
+                shadow-[0_0_14px_rgba(103,232,249,.45)]
+              "
+              style={{
+                left: `${progress}%`,
+              }}
+            />
+
+            <input
+              type="range"
+              min={MIN_QUANTITY}
+              max={MAX_QUANTITY}
+              step={QUANTITY_STEP}
+              value={quantity}
+              onChange={(event) =>
+                onQuantityChange(
+                  Number(event.target.value)
+                )
+              }
+              aria-label="Тираж"
+              className="
+                absolute
+                inset-0
+                z-20
+                h-full
+                w-full
+                cursor-pointer
+                opacity-0
+              "
+            />
+          </div>
 
           <div
             className="
-              mt-3
+              mt-2
               flex
               justify-between
               text-[10px]
@@ -285,7 +354,6 @@ export default function CalculatorConfig({
           border-cyan-100/[0.06]
           bg-[#0A2027]/70
           p-7
-          backdrop-blur-2xl
 
           md:p-8
         "
@@ -294,13 +362,13 @@ export default function CalculatorConfig({
           className="
             pointer-events-none
             absolute
-            right-[-60px]
-            bottom-[-70px]
-            h-40
-            w-40
+            right-[-50px]
+            bottom-[-60px]
+            h-32
+            w-32
             rounded-full
-            bg-cyan-300/[0.018]
-            blur-[70px]
+            bg-cyan-300/[0.015]
+            blur-[50px]
           "
         />
 
@@ -370,8 +438,8 @@ function Option({
         border
         p-5
         text-left
-        transition-all
-        duration-300
+        transition-[border-color,background-color]
+        duration-200
 
         ${
           checked
@@ -388,21 +456,19 @@ function Option({
         }
       `}
     >
-      {/* Small active glow */}
-
       {checked && (
         <span
           className="
             pointer-events-none
             absolute
-            -left-10
+            -left-8
             top-1/2
-            h-20
-            w-20
+            h-16
+            w-16
             -translate-y-1/2
             rounded-full
-            bg-cyan-300/[0.06]
-            blur-[35px]
+            bg-cyan-300/[0.05]
+            blur-[25px]
           "
         />
       )}
@@ -419,8 +485,8 @@ function Option({
           justify-center
           rounded-md
           border
-          transition-all
-          duration-300
+          transition-[border-color,background-color]
+          duration-200
 
           ${
             checked

@@ -1,9 +1,5 @@
-
 import { useMemo, useState } from "react";
-import {
-  motion,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 import type { AdvertiserCount } from "./types";
 import CalculatorConfig from "./CalculatorConfig";
@@ -18,16 +14,13 @@ export default function Calculator() {
   const [advertisers, setAdvertisers] =
     useState<AdvertiserCount>(4);
 
-  const [quantity, setQuantity] =
-    useState(3000);
+  const [quantity, setQuantity] = useState(3000);
 
   const [includeDesign, setIncludeDesign] =
     useState(false);
 
-  const [
-    includeDistribution,
-    setIncludeDistribution,
-  ] = useState(false);
+  const [includeDistribution, setIncludeDistribution] =
+    useState(false);
 
   const result = useMemo(
     () =>
@@ -78,7 +71,7 @@ export default function Calculator() {
       />
 
       {/* =====================================================
-          DEEP OCEAN AMBIENT LIGHT
+          AMBIENT LIGHT
       ===================================================== */}
 
       <div
@@ -86,17 +79,17 @@ export default function Calculator() {
           pointer-events-none
           absolute
           left-1/2
-          top-[-120px]
-          h-[760px]
-          w-[760px]
+          top-[-100px]
+          h-[520px]
+          w-[520px]
           -translate-x-1/2
           rounded-full
-          bg-cyan-400/[0.055]
-          blur-[220px]
+          bg-cyan-400/[0.045]
+          blur-[120px]
 
-          max-md:h-[500px]
-          max-md:w-[500px]
-          max-md:blur-[120px]
+          max-md:h-[360px]
+          max-md:w-[360px]
+          max-md:blur-[80px]
         "
       />
 
@@ -104,17 +97,17 @@ export default function Calculator() {
         className="
           pointer-events-none
           absolute
-          -right-[260px]
-          top-[28%]
-          h-[620px]
-          w-[620px]
+          -right-[180px]
+          top-[30%]
+          h-[420px]
+          w-[420px]
           rounded-full
-          bg-teal-400/[0.035]
-          blur-[190px]
+          bg-teal-400/[0.025]
+          blur-[100px]
 
-          max-md:h-[400px]
-          max-md:w-[400px]
-          max-md:blur-[100px]
+          max-md:h-[280px]
+          max-md:w-[280px]
+          max-md:blur-[70px]
         "
       />
 
@@ -122,22 +115,22 @@ export default function Calculator() {
         className="
           pointer-events-none
           absolute
-          -left-[260px]
-          bottom-[5%]
-          h-[560px]
-          w-[560px]
+          -left-[180px]
+          bottom-[8%]
+          h-[380px]
+          w-[380px]
           rounded-full
-          bg-cyan-500/[0.025]
-          blur-[180px]
+          bg-cyan-500/[0.02]
+          blur-[100px]
 
-          max-md:h-[380px]
-          max-md:w-[380px]
-          max-md:blur-[90px]
+          max-md:h-[260px]
+          max-md:w-[260px]
+          max-md:blur-[70px]
         "
       />
 
       {/* =====================================================
-          DEEP WATER GRID
+          GRID
       ===================================================== */}
 
       <div
@@ -145,7 +138,7 @@ export default function Calculator() {
           pointer-events-none
           absolute
           inset-0
-          opacity-[0.025]
+          opacity-[0.02]
         "
         style={{
           backgroundImage: `
@@ -168,7 +161,7 @@ export default function Calculator() {
       />
 
       {/* =====================================================
-          OCEAN HORIZONTAL LINES
+          HORIZONTAL LINES
       ===================================================== */}
 
       <div
@@ -181,7 +174,7 @@ export default function Calculator() {
           w-[42%]
           bg-gradient-to-r
           from-transparent
-          via-cyan-200/[0.11]
+          via-cyan-200/[0.08]
           to-transparent
         "
       />
@@ -196,7 +189,7 @@ export default function Calculator() {
           w-[38%]
           bg-gradient-to-l
           from-transparent
-          via-cyan-200/[0.08]
+          via-cyan-200/[0.06]
           to-transparent
         "
       />
@@ -210,7 +203,7 @@ export default function Calculator() {
           h-px
           bg-gradient-to-r
           from-transparent
-          via-cyan-200/[0.045]
+          via-cyan-200/[0.04]
           to-transparent
         "
       />
@@ -228,8 +221,8 @@ export default function Calculator() {
           h-1.5
           w-1.5
           rounded-full
-          bg-cyan-200/45
-          shadow-[0_0_18px_rgba(103,232,249,.5)]
+          bg-cyan-200/40
+          shadow-[0_0_12px_rgba(103,232,249,.35)]
         "
       />
 
@@ -243,8 +236,8 @@ export default function Calculator() {
           w-2
           rounded-full
           border
-          border-cyan-200/25
-          bg-cyan-200/[0.06]
+          border-cyan-200/20
+          bg-cyan-200/[0.05]
         "
       />
 
@@ -257,7 +250,7 @@ export default function Calculator() {
           h-1
           w-1
           rounded-full
-          bg-cyan-200/30
+          bg-cyan-200/25
         "
       />
 
@@ -288,7 +281,7 @@ export default function Calculator() {
               ? false
               : {
                   opacity: 0,
-                  y: 35,
+                  y: 25,
                 }
           }
           whileInView={
@@ -304,7 +297,7 @@ export default function Calculator() {
             amount: 0.25,
           }}
           transition={{
-            duration: 0.8,
+            duration: 0.65,
             ease,
           }}
           className="
@@ -329,11 +322,11 @@ export default function Calculator() {
               text-cyan-200/70
             "
           >
-            <span className="h-px w-10 bg-cyan-200/35" />
+            <span className="h-px w-10 bg-cyan-200/30" />
 
             CAMPAIGN ESTIMATOR
 
-            <span className="h-px w-10 bg-cyan-200/35" />
+            <span className="h-px w-10 bg-cyan-200/30" />
           </div>
 
           <h2
@@ -395,7 +388,7 @@ export default function Calculator() {
                 ? false
                 : {
                     opacity: 0,
-                    x: -45,
+                    x: -30,
                   }
             }
             whileInView={
@@ -411,7 +404,7 @@ export default function Calculator() {
               amount: 0.15,
             }}
             transition={{
-              duration: 0.8,
+              duration: 0.65,
               ease,
             }}
             className="relative"
@@ -425,8 +418,8 @@ export default function Calculator() {
                 h-28
                 w-px
                 bg-gradient-to-b
-                from-cyan-300/70
-                via-cyan-300/25
+                from-cyan-300/60
+                via-cyan-300/20
                 to-transparent
               "
             />
@@ -440,14 +433,14 @@ export default function Calculator() {
                 border-cyan-100/[0.10]
                 bg-[#062730]/90
                 p-6
-                shadow-[0_30px_100px_rgba(0,20,25,.18)]
+                shadow-[0_30px_80px_rgba(0,20,25,.15)]
 
                 md:p-8
 
                 transition-[border-color,background-color]
                 duration-300
 
-                hover:border-cyan-200/[0.18]
+                hover:border-cyan-200/[0.16]
                 hover:bg-[#07303A]
               "
             >
@@ -460,7 +453,7 @@ export default function Calculator() {
                   h-px
                   bg-gradient-to-r
                   from-transparent
-                  via-cyan-200/30
+                  via-cyan-200/25
                   to-transparent
                 "
               />
@@ -496,7 +489,7 @@ export default function Calculator() {
                 ? false
                 : {
                     opacity: 0,
-                    x: 45,
+                    x: 30,
                   }
             }
             whileInView={
@@ -512,24 +505,20 @@ export default function Calculator() {
               amount: 0.15,
             }}
             transition={{
-              duration: 0.8,
-              delay: 0.08,
+              duration: 0.65,
+              delay: 0.06,
               ease,
             }}
             className="relative"
           >
-            {/* STATIC GLOW */}
-
             <div
               className="
                 pointer-events-none
                 absolute
                 inset-8
                 rounded-full
-                bg-cyan-300/[0.035]
-                blur-[90px]
-
-                max-md:blur-[60px]
+                bg-cyan-300/[0.025]
+                blur-[70px]
               "
             />
 
@@ -540,13 +529,13 @@ export default function Calculator() {
                 overflow-hidden
                 rounded-3xl
                 border
-                border-cyan-200/[0.16]
+                border-cyan-200/[0.14]
                 bg-gradient-to-br
                 from-[#08333D]
                 via-[#062730]
                 to-[#041D24]
                 p-6
-                shadow-[0_30px_120px_rgba(0,30,35,.25)]
+                shadow-[0_30px_100px_rgba(0,30,35,.2)]
 
                 md:p-8
               "
@@ -561,7 +550,7 @@ export default function Calculator() {
                   h-px
                   bg-gradient-to-r
                   from-transparent
-                  via-cyan-200/55
+                  via-cyan-200/45
                   to-transparent
                 "
               />
@@ -570,23 +559,17 @@ export default function Calculator() {
                 className="
                   pointer-events-none
                   absolute
-                  right-[-100px]
-                  top-[-100px]
-                  h-[300px]
-                  w-[300px]
+                  right-[-80px]
+                  top-[-80px]
+                  h-[240px]
+                  w-[240px]
                   rounded-full
-                  bg-cyan-300/[0.035]
-                  blur-[80px]
-
-                  max-md:h-[220px]
-                  max-md:w-[220px]
-                  max-md:blur-[60px]
+                  bg-cyan-300/[0.025]
+                  blur-[60px]
                 "
               />
 
-              <CalculatorResult
-                result={result}
-              />
+              <CalculatorResult result={result} />
             </div>
           </motion.div>
         </div>
@@ -615,8 +598,8 @@ export default function Calculator() {
             amount: 0.2,
           }}
           transition={{
-            duration: 0.6,
-            delay: 0.15,
+            duration: 0.5,
+            delay: 0.1,
           }}
           className="
             mt-10
@@ -635,8 +618,8 @@ export default function Calculator() {
               h-1.5
               w-1.5
               rounded-full
-              bg-cyan-300/70
-              shadow-[0_0_12px_rgba(34,211,238,.6)]
+              bg-cyan-300/60
+              shadow-[0_0_8px_rgba(34,211,238,.45)]
             "
           />
 
@@ -645,7 +628,7 @@ export default function Calculator() {
       </div>
 
       {/* =====================================================
-          BOTTOM TRANSITION → FOOTER
+          BOTTOM TRANSITION
       ===================================================== */}
 
       <div
@@ -655,10 +638,10 @@ export default function Calculator() {
           inset-x-0
           bottom-0
           z-20
-          h-[220px]
+          h-[180px]
           bg-gradient-to-t
           from-[#03171D]
-          via-[#041E25]/80
+          via-[#041E25]/70
           to-transparent
         "
       />

@@ -13,7 +13,9 @@ export default function Scene({
       <Lights />
 
       <Bottle
-        reduceMotion={reduceMotion}
+        reduceMotion={
+          reduceMotion
+        }
       />
     </>
   );

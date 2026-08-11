@@ -1,31 +1,37 @@
 import { motion, useReducedMotion } from "framer-motion";
 
+const steps = [
+  {
+    number: "01",
+    title: "Бренд появляется в реальном мире",
+    text: "Кампания начинается с физического контакта. Бренд выбирает объём размещения и получает присутствие там, где люди уже потребляют воду.",
+  },
+  {
+    number: "02",
+    title: "Контакт происходит естественно",
+    text: "Бутылка оказывается в руках человека без дополнительного рекламного барьера — в кафе, офисе, магазине или городском пространстве.",
+  },
+  {
+    number: "03",
+    title: "Физический контакт становится действием",
+    text: "QR-код переводит человека из офлайн-среды в цифровой канал, где можно измерять переходы, интерес и дальнейшее взаимодействие.",
+  },
+];
+
+const ease = [0.16, 1, 0.3, 1] as const;
+
 export default function About() {
   const reduceMotion = useReducedMotion();
-
-  const steps = [
-    {
-      number: "01",
-      title: "Бренд появляется в реальном мире",
-      text: "Кампания начинается с физического контакта. Бренд выбирает объём размещения и получает присутствие там, где люди уже потребляют воду.",
-    },
-    {
-      number: "02",
-      title: "Контакт происходит естественно",
-      text: "Бутылка оказывается в руках человека без дополнительного рекламного барьера — в кафе, офисе, магазине или городском пространстве.",
-    },
-    {
-      number: "03",
-      title: "Физический контакт становится действием",
-      text: "QR-код переводит человека из офлайн-среды в цифровой канал, где можно измерять переходы, интерес и дальнейшее взаимодействие.",
-    },
-  ];
+  const motionEnabled = !reduceMotion;
 
   return (
-    <section className="relative overflow-hidden bg-[#0A3B45] text-white">
-      {/* =====================================================
+    <section
+      id="about"
+      className="relative overflow-hidden bg-[#0A3B45] text-white"
+    >
+      {/* =========================================
           BACKGROUND
-      ===================================================== */}
+      ========================================= */}
 
       <div
         className="
@@ -78,9 +84,9 @@ export default function About() {
         "
       />
 
-      {/* =====================================================
+      {/* =========================================
           CONTENT
-      ===================================================== */}
+      ========================================= */}
 
       <div
         className="
@@ -98,18 +104,18 @@ export default function About() {
           lg:py-40
         "
       >
-        {/* =================================================
+        {/* =========================================
             HEADER
-        ================================================= */}
+        ========================================= */}
 
         <motion.div
           initial={
-            reduceMotion
-              ? undefined
-              : {
+            motionEnabled
+              ? {
                   opacity: 0,
                   y: 18,
                 }
+              : false
           }
           whileInView={{
             opacity: 1,
@@ -120,8 +126,8 @@ export default function About() {
             amount: 0.2,
           }}
           transition={{
-            duration: reduceMotion ? 0 : 0.55,
-            ease: [0.16, 1, 0.3, 1],
+            duration: motionEnabled ? 0.55 : 0,
+            ease,
           }}
           className="max-w-[820px]"
         >
@@ -188,18 +194,18 @@ export default function About() {
           </p>
         </motion.div>
 
-        {/* =================================================
+        {/* =========================================
             SYSTEM VISUAL
-        ================================================= */}
+        ========================================= */}
 
         <motion.div
           initial={
-            reduceMotion
-              ? undefined
-              : {
+            motionEnabled
+              ? {
                   opacity: 0,
                   y: 24,
                 }
+              : false
           }
           whileInView={{
             opacity: 1,
@@ -210,9 +216,9 @@ export default function About() {
             amount: 0.12,
           }}
           transition={{
-            duration: reduceMotion ? 0 : 0.65,
-            delay: reduceMotion ? 0 : 0.05,
-            ease: [0.16, 1, 0.3, 1],
+            duration: motionEnabled ? 0.65 : 0,
+            delay: motionEnabled ? 0.05 : 0,
+            ease,
           }}
           className="
             relative
@@ -227,8 +233,6 @@ export default function About() {
             md:rounded-[38px]
           "
         >
-          {/* TOP LINE */}
-
           <div
             className="
               absolute
@@ -243,15 +247,8 @@ export default function About() {
             "
           />
 
-          <div
-            className="
-              grid
-              lg:grid-cols-[0.72fr_1.28fr]
-            "
-          >
-            {/* =================================================
-                LEFT PANEL
-            ================================================= */}
+          <div className="grid lg:grid-cols-[0.72fr_1.28fr]">
+            {/* LEFT PANEL */}
 
             <div
               className="
@@ -316,9 +313,7 @@ export default function About() {
                 </p>
               </div>
 
-              {/* =================================================
-                  SIGNAL VISUAL
-              ================================================= */}
+              {/* SIGNAL */}
 
               <div
                 className="
@@ -362,7 +357,7 @@ export default function About() {
                   "
                 />
 
-                {!reduceMotion && (
+                {motionEnabled && (
                   <motion.div
                     animate={{
                       x: ["-120%", "500%"],
@@ -405,9 +400,7 @@ export default function About() {
               </div>
             </div>
 
-            {/* =================================================
-                RIGHT PANEL
-            ================================================= */}
+            {/* RIGHT PANEL */}
 
             <div className="p-7 sm:p-9 lg:p-12">
               <div
@@ -454,12 +447,12 @@ export default function About() {
                   <motion.div
                     key={step.number}
                     initial={
-                      reduceMotion
-                        ? undefined
-                        : {
+                      motionEnabled
+                        ? {
                             opacity: 0,
                             y: 12,
                           }
+                        : false
                     }
                     whileInView={{
                       opacity: 1,
@@ -470,11 +463,11 @@ export default function About() {
                       amount: 0.15,
                     }}
                     transition={{
-                      duration: reduceMotion ? 0 : 0.45,
-                      delay: reduceMotion
-                        ? 0
-                        : index * 0.06,
-                      ease: [0.16, 1, 0.3, 1],
+                      duration: motionEnabled ? 0.45 : 0,
+                      delay: motionEnabled
+                        ? index * 0.06
+                        : 0,
+                      ease,
                     }}
                     className="
                       group
@@ -487,8 +480,6 @@ export default function About() {
                       last:border-b-0
                     "
                   >
-                    {/* NUMBER */}
-
                     <div
                       className="
                         relative
@@ -512,8 +503,6 @@ export default function About() {
                     >
                       {step.number}
                     </div>
-
-                    {/* TEXT */}
 
                     <div>
                       <h3
@@ -547,18 +536,18 @@ export default function About() {
           </div>
         </motion.div>
 
-        {/* =================================================
+        {/* =========================================
             BOTTOM STATEMENT
-        ================================================= */}
+        ========================================= */}
 
         <motion.div
           initial={
-            reduceMotion
-              ? undefined
-              : {
+            motionEnabled
+              ? {
                   opacity: 0,
                   y: 16,
                 }
+              : false
           }
           whileInView={{
             opacity: 1,
@@ -569,8 +558,8 @@ export default function About() {
             amount: 0.15,
           }}
           transition={{
-            duration: reduceMotion ? 0 : 0.55,
-            ease: [0.16, 1, 0.3, 1],
+            duration: motionEnabled ? 0.55 : 0,
+            ease,
           }}
           className="
             mt-12
@@ -618,9 +607,9 @@ export default function About() {
         </motion.div>
       </div>
 
-      {/* =====================================================
-          ABOUT → FEATURES TRANSITION
-      ===================================================== */}
+      {/* =========================================
+          TRANSITION
+      ========================================= */}
 
       <div
         className="

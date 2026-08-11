@@ -25,7 +25,6 @@ export default function Stats() {
         border-t
         border-white/[0.08]
         pt-8
-
         lg:mt-32
         lg:pt-10
       "
@@ -34,7 +33,6 @@ export default function Stats() {
         className="
           grid
           grid-cols-1
-
           sm:grid-cols-3
         "
       >
@@ -43,25 +41,23 @@ export default function Stats() {
             key={stat.label}
             initial={{
               opacity: 0,
-              y: 45,
-              filter: "blur(10px)",
+              y: 30,
             }}
             whileInView={{
               opacity: 1,
               y: 0,
-              filter: "blur(0px)",
             }}
             viewport={{
-              once: false,
-              amount: 0.45,
+              once: true,
+              amount: 0.3,
             }}
             transition={{
-              duration: 0.9,
-              delay: index * 0.12,
+              duration: 0.7,
+              delay: index * 0.1,
               ease,
             }}
             whileHover={{
-              y: -6,
+              y: -4,
             }}
             className="
               group
@@ -83,24 +79,7 @@ export default function Stats() {
           >
             {/* Ambient glow */}
 
-            <motion.div
-              initial={{
-                opacity: 0,
-                scale: 0.8,
-              }}
-              whileInView={{
-                opacity: 1,
-                scale: 1,
-              }}
-              viewport={{
-                once: false,
-                amount: 0.5,
-              }}
-              transition={{
-                duration: 1.2,
-                delay: index * 0.12,
-                ease,
-              }}
+            <div
               className="
                 pointer-events-none
                 absolute
@@ -111,8 +90,9 @@ export default function Stats() {
                 rounded-full
                 bg-cyan-400/[0.045]
                 blur-3xl
+                opacity-70
                 transition-opacity
-                duration-700
+                duration-500
                 group-hover:opacity-100
               "
             />
@@ -140,17 +120,7 @@ export default function Stats() {
                 0{index + 1}
               </span>
 
-              <motion.span
-                animate={{
-                  opacity: [0.3, 0.8, 0.3],
-                  scale: [1, 1.15, 1],
-                }}
-                transition={{
-                  duration: 2.8,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: index * 0.35,
-                }}
+              <span
                 className="
                   h-1.5
                   w-1.5
@@ -192,7 +162,7 @@ export default function Stats() {
               {stat.label}
             </div>
 
-            {/* Bottom progress line */}
+            {/* Progress line */}
 
             <motion.div
               initial={{
@@ -202,12 +172,12 @@ export default function Stats() {
                 scaleX: 1,
               }}
               viewport={{
-                once: false,
-                amount: 0.5,
+                once: true,
+                amount: 0.3,
               }}
               transition={{
-                duration: 1,
-                delay: 0.25 + index * 0.12,
+                duration: 0.8,
+                delay: 0.2 + index * 0.1,
                 ease,
               }}
               className="

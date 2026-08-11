@@ -1,9 +1,4 @@
-
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 import type { CampaignResult } from "./types";
 import { formatPrice } from "./utils";
@@ -58,9 +53,8 @@ export default function CalculatorResult({
   };
 
   return (
-    <motion.div
+    <div
       className="
-        group
         relative
         overflow-hidden
         rounded-[32px]
@@ -85,17 +79,17 @@ export default function CalculatorResult({
         className="
           pointer-events-none
           absolute
-          -right-32
-          -top-32
-          h-80
-          w-80
+          -right-24
+          -top-24
+          h-64
+          w-64
           rounded-full
-          bg-cyan-400/[0.06]
-          blur-[80px]
+          bg-cyan-400/[0.04]
+          blur-[60px]
 
-          max-md:h-56
-          max-md:w-56
-          max-md:blur-[55px]
+          max-md:h-48
+          max-md:w-48
+          max-md:blur-[45px]
         "
       />
 
@@ -103,17 +97,17 @@ export default function CalculatorResult({
         className="
           pointer-events-none
           absolute
-          -bottom-40
-          -left-32
-          h-80
-          w-80
+          -bottom-32
+          -left-24
+          h-64
+          w-64
           rounded-full
-          bg-[#E3C14B]/[0.025]
-          blur-[90px]
+          bg-[#E3C14B]/[0.02]
+          blur-[70px]
 
-          max-md:h-56
-          max-md:w-56
-          max-md:blur-[60px]
+          max-md:h-48
+          max-md:w-48
+          max-md:blur-[50px]
         "
       />
 
@@ -129,13 +123,12 @@ export default function CalculatorResult({
           h-px
           bg-gradient-to-r
           from-transparent
-          via-cyan-300/30
+          via-cyan-300/25
           to-transparent
         "
       />
 
       <div className="relative z-10">
-
         {/* =========================================
             HEADER
         ========================================= */}
@@ -169,7 +162,7 @@ export default function CalculatorResult({
                 w-1.5
                 rounded-full
                 bg-cyan-300
-                shadow-[0_0_8px_rgba(103,232,249,.65)]
+                shadow-[0_0_7px_rgba(103,232,249,.5)]
               "
             />
 
@@ -195,48 +188,42 @@ export default function CalculatorResult({
 
           <div
             className="
-              relative
               mt-3
               min-h-[72px]
               overflow-hidden
             "
           >
-            <AnimatePresence
-              mode="popLayout"
-              initial={false}
-            >
-              <motion.div
-                key={result.advertiserBudget}
-                initial={{
-                  opacity: 0,
-                  y: reduceMotion ? 0 : 18,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                exit={{
-                  opacity: 0,
-                  y: reduceMotion ? 0 : -14,
-                }}
-                transition={{
-                  duration: 0.3,
-                  ease,
-                }}
-                className="
-                  text-5xl
-                  font-light
-                  tracking-[-0.05em]
-                  text-white
+            <motion.div
+              key={result.advertiserBudget}
+              initial={
+                reduceMotion
+                  ? false
+                  : {
+                      opacity: 0.4,
+                      y: 10,
+                    }
+              }
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.2,
+                ease,
+              }}
+              className="
+                text-5xl
+                font-light
+                tracking-[-0.05em]
+                text-white
 
-                  md:text-6xl
-                "
-              >
-                {formatPrice(
-                  result.advertiserBudget
-                )}
-              </motion.div>
-            </AnimatePresence>
+                md:text-6xl
+              "
+            >
+              {formatPrice(
+                result.advertiserBudget
+              )}
+            </motion.div>
           </div>
 
           <p
@@ -278,7 +265,7 @@ export default function CalculatorResult({
                   ? false
                   : {
                       opacity: 0,
-                      x: 12,
+                      x: 8,
                     }
               }
               whileInView={
@@ -294,12 +281,11 @@ export default function CalculatorResult({
                 amount: 0.2,
               }}
               transition={{
-                duration: 0.4,
-                delay: index * 0.04,
+                duration: 0.35,
+                delay: index * 0.03,
                 ease,
               }}
               className={`
-                relative
                 flex
                 items-center
                 justify-between
@@ -343,49 +329,27 @@ export default function CalculatorResult({
                 {item.label}
               </span>
 
-              <AnimatePresence
-                mode="popLayout"
-                initial={false}
-              >
-                <motion.span
-                  key={item.value}
-                  initial={{
-                    opacity: 0,
-                    y: reduceMotion ? 0 : 6,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                  }}
-                  exit={{
-                    opacity: 0,
-                    y: reduceMotion ? 0 : -6,
-                  }}
-                  transition={{
-                    duration: 0.2,
-                    ease,
-                  }}
-                  className={`
-                    shrink-0
-                    text-sm
-                    font-medium
+              <span
+                className={`
+                  shrink-0
+                  text-sm
+                  font-medium
 
-                    ${
-                      item.accent
-                        ? "text-cyan-200"
-                        : "text-white/75"
-                    }
-                  `}
-                >
-                  {item.value}
-                </motion.span>
-              </AnimatePresence>
+                  ${
+                    item.accent
+                      ? "text-cyan-200"
+                      : "text-white/75"
+                  }
+                `}
+              >
+                {item.value}
+              </span>
             </motion.div>
           ))}
         </div>
 
         {/* =========================================
-            CTA — WHATSAPP
+            CTA
         ========================================= */}
 
         <motion.button
@@ -406,7 +370,7 @@ export default function CalculatorResult({
                 }
           }
           transition={{
-            duration: 0.2,
+            duration: 0.15,
             ease,
           }}
           className="
@@ -428,14 +392,12 @@ export default function CalculatorResult({
             duration-200
 
             hover:bg-cyan-200
-            hover:shadow-[0_15px_40px_rgba(103,232,249,.15)]
+            hover:shadow-[0_15px_35px_rgba(103,232,249,.12)]
           "
         >
           <span className="relative z-10">
             Получить коммерческое предложение
           </span>
-
-          {/* Shine только для desktop */}
 
           <span
             className="
@@ -446,7 +408,7 @@ export default function CalculatorResult({
               hidden
               w-20
               skew-x-[-20deg]
-              bg-white/40
+              bg-white/30
               blur-md
 
               lg:block
@@ -487,8 +449,7 @@ export default function CalculatorResult({
 
           Расчёт является предварительным
         </div>
-
       </div>
-    </motion.div>
+    </div>
   );
 }

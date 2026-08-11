@@ -1,5 +1,5 @@
-
 import { Canvas } from "@react-three/fiber";
+
 import Scene from "./Scene";
 
 interface BottleCanvasProps {
@@ -33,9 +33,10 @@ export default function BottleCanvas({
         gl={{
           antialias: false,
           alpha: true,
-          powerPreference: "high-performance",
+          powerPreference:
+            "high-performance",
           stencil: false,
-          depth: false,
+          depth: true,
           preserveDrawingBuffer: false,
         }}
         performance={{
@@ -47,7 +48,11 @@ export default function BottleCanvas({
           pointerEvents: "none",
         }}
       >
-        <Scene reduceMotion={reduceMotion} />
+        <Scene
+          reduceMotion={
+            reduceMotion
+          }
+        />
       </Canvas>
     </div>
   );

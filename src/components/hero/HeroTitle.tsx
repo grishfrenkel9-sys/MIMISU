@@ -24,7 +24,9 @@ export default function HeroTitle() {
     <motion.h1
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.7 }}
+      transition={{
+        duration: 0.7,
+      }}
       className="
         relative
         mt-6
@@ -33,7 +35,10 @@ export default function HeroTitle() {
         uppercase
         leading-[0.91]
         tracking-[-0.055em]
-        [font-size:clamp(3rem,6vw,6.2rem)]
+        text-[clamp(3rem,11vw,6.2rem)]
+
+        sm:text-[clamp(3.8rem,8vw,6.2rem)]
+        lg:text-[clamp(4rem,6vw,6.2rem)]
       "
     >
       {lines.map((line, index) => (
@@ -62,7 +67,8 @@ export default function HeroTitle() {
         </motion.div>
       ))}
 
-      {/* Акцентная последняя строка */}
+      {/* Accent */}
+
       <motion.div
         initial={{
           opacity: 0,
@@ -91,7 +97,8 @@ export default function HeroTitle() {
       >
         ПРОЛИСТАТЬ
 
-        {/* Мягкое свечение под акцентом */}
+        {/* Glow */}
+
         <motion.div
           aria-hidden="true"
           animate={{
@@ -118,7 +125,8 @@ export default function HeroTitle() {
         />
       </motion.div>
 
-      {/* Тонкая водная линия */}
+      {/* Water line */}
+
       <motion.div
         initial={{
           opacity: 0,
@@ -136,12 +144,14 @@ export default function HeroTitle() {
         className="
           mt-5
           h-[2px]
-          w-28
+          w-24
           origin-left
           rounded-full
           bg-gradient-to-r
           from-[#0AA6B7]
           to-transparent
+
+          sm:w-28
         "
       />
     </motion.h1>

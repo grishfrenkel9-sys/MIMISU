@@ -6,6 +6,7 @@ import type {
 import { PRICE_TABLE } from "./data";
 
 const DESIGN_PRICE = 10_000;
+
 const DISTRIBUTION_PER_1000 = 35_000;
 
 // =========================================
@@ -152,9 +153,7 @@ export function formatNumber(
 ) {
   return new Intl.NumberFormat(
     "ru-RU"
-  ).format(
-    Math.round(value)
-  );
+  ).format(Math.round(value));
 }
 
 // =========================================

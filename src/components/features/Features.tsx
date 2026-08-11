@@ -1,9 +1,10 @@
 import { motion, useReducedMotion } from "framer-motion";
+
 import FeatureTimeline from "./FeatureTimeline";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-const steps = [
+const systemSteps = [
   {
     number: "01",
     title: "Создаём носитель",
@@ -34,48 +35,44 @@ export default function Features() {
         text-white
       "
     >
-      {/* =====================================================
-          ATMOSPHERE
-      ===================================================== */}
+      {/* ATMOSPHERE */}
 
       <div
         className="
           pointer-events-none
           absolute
-          -right-[20%]
+          -right-[18%]
           top-[8%]
-          h-[520px]
-          w-[520px]
-          rounded-full
-          bg-cyan-300/[0.055]
-          blur-[140px]
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          -left-[20%]
-          bottom-[15%]
           h-[420px]
           w-[420px]
           rounded-full
-          bg-teal-300/[0.035]
-          blur-[130px]
+          bg-cyan-300/[0.045]
+          blur-[100px]
         "
       />
 
-      {/* =====================================================
-          SOFT GRID
-      ===================================================== */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -left-[18%]
+          bottom-[15%]
+          h-[340px]
+          w-[340px]
+          rounded-full
+          bg-teal-300/[0.03]
+          blur-[100px]
+        "
+      />
+
+      {/* GRID */}
 
       <div
         className="
           pointer-events-none
           absolute
           inset-0
-          opacity-[0.018]
+          opacity-[0.014]
         "
         style={{
           backgroundImage: `
@@ -97,9 +94,7 @@ export default function Features() {
         }}
       />
 
-      {/* =====================================================
-          DECORATIVE ORBIT
-      ===================================================== */}
+      {/* ORBIT */}
 
       <div
         className="
@@ -109,31 +104,14 @@ export default function Features() {
           top-[25%]
           h-[600px]
           w-[900px]
-          rounded-[50%]
-          border
-          border-cyan-200/[0.035]
           rotate-[-8deg]
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          -right-[210px]
-          top-[31%]
-          h-[470px]
-          w-[740px]
           rounded-[50%]
           border
           border-cyan-200/[0.025]
-          rotate-[-8deg]
         "
       />
 
-      {/* =====================================================
-          TOP TRANSITION
-      ===================================================== */}
+      {/* TOP TRANSITION */}
 
       <div
         className="
@@ -148,9 +126,7 @@ export default function Features() {
         "
       />
 
-      {/* =====================================================
-          CONTENT
-      ===================================================== */}
+      {/* CONTENT */}
 
       <div
         className="
@@ -173,9 +149,7 @@ export default function Features() {
           xl:pt-44
         "
       >
-        {/* =================================================
-            HEADER
-        ================================================= */}
+        {/* HEADER */}
 
         <motion.div
           initial={
@@ -183,7 +157,7 @@ export default function Features() {
               ? false
               : {
                   opacity: 0,
-                  y: 24,
+                  y: 20,
                 }
           }
           whileInView={{
@@ -195,12 +169,10 @@ export default function Features() {
             amount: 0.2,
           }}
           transition={{
-            duration: reduceMotion ? 0 : 0.65,
+            duration: reduceMotion ? 0 : 0.6,
             ease,
           }}
         >
-          {/* LABEL */}
-
           <div
             className="
               flex
@@ -220,14 +192,11 @@ export default function Features() {
                 w-1.5
                 rounded-full
                 bg-cyan-300
-                shadow-[0_0_12px_rgba(103,232,249,.5)]
               "
             />
 
-             Система
+            Система
           </div>
-
-          {/* TITLE */}
 
           <h2
             className="
@@ -248,8 +217,6 @@ export default function Features() {
             </span>
           </h2>
 
-          {/* DESCRIPTION */}
-
           <p
             className="
               mt-7
@@ -269,32 +236,9 @@ export default function Features() {
           </p>
         </motion.div>
 
-        {/* =================================================
-            SYSTEM HEADER
-        ================================================= */}
+        {/* SYSTEM HEADER */}
 
-        <motion.div
-          initial={
-            reduceMotion
-              ? false
-              : {
-                  opacity: 0,
-                  y: 20,
-                }
-          }
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-            amount: 0.15,
-          }}
-          transition={{
-            duration: reduceMotion ? 0 : 0.6,
-            delay: reduceMotion ? 0 : 0.1,
-            ease,
-          }}
+        <div
           className="
             mt-16
             flex
@@ -343,11 +287,9 @@ export default function Features() {
 
             Physical → Digital
           </div>
-        </motion.div>
+        </div>
 
-        {/* =================================================
-            MAIN SYSTEM
-        ================================================= */}
+        {/* MAIN SYSTEM */}
 
         <div
           className="
@@ -358,7 +300,6 @@ export default function Features() {
             border
             border-cyan-100/[0.09]
             bg-white/[0.025]
-            shadow-[0_35px_100px_rgba(0,0,0,.18)]
             sm:rounded-[36px]
             md:mt-10
           "
@@ -385,9 +326,7 @@ export default function Features() {
               lg:grid-cols-[0.65fr_1.35fr]
             "
           >
-            {/* =================================================
-                LEFT VISUAL
-            ================================================= */}
+            {/* LEFT VISUAL */}
 
             <div
               className="
@@ -404,25 +343,6 @@ export default function Features() {
                 lg:p-12
               "
             >
-              {/* BIG NUMBER */}
-
-              <div
-                className="
-                  absolute
-                  -right-4
-                  top-0
-                  select-none
-                  text-[180px]
-                  font-light
-                  leading-none
-                  tracking-[-0.12em]
-                  text-white/[0.025]
-                  sm:text-[220px]
-                "
-              >
-                
-              </div>
-
               <div className="relative z-10">
                 <div
                   className="
@@ -465,7 +385,7 @@ export default function Features() {
                 </div>
               </div>
 
-              {/* FLOW VISUAL */}
+              {/* FLOW */}
 
               <div
                 className="
@@ -507,17 +427,16 @@ export default function Features() {
 
                   {/* NODES */}
 
-                  {[0, 1, 2].map((index) => (
+                  {[12, 50, 88].map((position) => (
                     <div
-                      key={index}
-                      className="absolute top-1/2 -translate-y-1/2"
+                      key={position}
+                      className="
+                        absolute
+                        top-1/2
+                        -translate-y-1/2
+                      "
                       style={{
-                        left:
-                          index === 0
-                            ? "12%"
-                            : index === 1
-                              ? "50%"
-                              : "88%",
+                        left: `${position}%`,
                       }}
                     >
                       <div
@@ -528,13 +447,13 @@ export default function Features() {
                           border
                           border-cyan-200/50
                           bg-[#052830]
-                          shadow-[0_0_18px_rgba(103,232,249,.35)]
+                          shadow-[0_0_12px_rgba(103,232,249,.3)]
                         "
                       />
                     </div>
                   ))}
 
-                  {/* MOVING SIGNAL */}
+                  {/* SIGNAL */}
 
                   {!reduceMotion && (
                     <motion.div
@@ -542,7 +461,7 @@ export default function Features() {
                         x: ["-100%", "520%"],
                       }}
                       transition={{
-                        duration: 3.2,
+                        duration: 4,
                         repeat: Infinity,
                         ease: "linear",
                       }}
@@ -551,7 +470,7 @@ export default function Features() {
                         left-0
                         top-1/2
                         h-px
-                        w-24
+                        w-20
                         -translate-y-1/2
                         bg-gradient-to-r
                         from-transparent
@@ -607,9 +526,7 @@ export default function Features() {
               </div>
             </div>
 
-            {/* =================================================
-                RIGHT STEPS
-            ================================================= */}
+            {/* RIGHT SYSTEM */}
 
             <div className="p-6 sm:p-9 lg:p-12">
               <div
@@ -626,7 +543,7 @@ export default function Features() {
               </div>
 
               <div>
-                {steps.map((step, index) => (
+                {systemSteps.map((step, index) => (
                   <motion.div
                     key={step.number}
                     initial={
@@ -634,7 +551,7 @@ export default function Features() {
                         ? false
                         : {
                             opacity: 0,
-                            x: 20,
+                            x: 16,
                           }
                     }
                     whileInView={{
@@ -643,13 +560,11 @@ export default function Features() {
                     }}
                     viewport={{
                       once: true,
-                      amount: 0.2,
+                      amount: 0.15,
                     }}
                     transition={{
-                      duration: reduceMotion ? 0 : 0.55,
-                      delay: reduceMotion
-                        ? 0
-                        : index * 0.08,
+                      duration: reduceMotion ? 0 : 0.5,
+                      delay: reduceMotion ? 0 : index * 0.06,
                       ease,
                     }}
                     className="
@@ -667,7 +582,7 @@ export default function Features() {
                   >
                     {/* CONNECTOR */}
 
-                    {index < steps.length - 1 && (
+                    {index < systemSteps.length - 1 && (
                       <div
                         className="
                           absolute
@@ -676,7 +591,7 @@ export default function Features() {
                           bottom-[-1px]
                           w-px
                           bg-gradient-to-b
-                          from-cyan-300/25
+                          from-cyan-300/20
                           to-transparent
                           sm:left-[21px]
                           sm:top-[82px]
@@ -703,7 +618,7 @@ export default function Features() {
                         text-[8px]
                         font-bold
                         text-cyan-100/45
-                        transition-all
+                        transition-colors
                         duration-300
                         group-hover:border-cyan-300/40
                         group-hover:text-cyan-200
@@ -717,39 +632,17 @@ export default function Features() {
                     {/* TEXT */}
 
                     <div className="min-w-0">
-                      <div
+                      <h3
                         className="
-                          flex
-                          flex-col
-                          gap-2
-                          sm:flex-row
-                          sm:items-center
-                          sm:justify-between
+                          text-lg
+                          font-medium
+                          tracking-[-0.025em]
+                          text-white
+                          sm:text-xl
                         "
                       >
-                        <h3
-                          className="
-                            text-lg
-                            font-medium
-                            tracking-[-0.025em]
-                            text-white
-                            sm:text-xl
-                          "
-                        >
-                          {step.title}
-                        </h3>
-
-                        <span
-                          className="
-                            text-[7px]
-                            uppercase
-                            tracking-[0.2em]
-                            text-cyan-200/25
-                          "
-                        >
-                          0{index + 1}
-                        </span>
-                      </div>
+                        {step.title}
+                      </h3>
 
                       <p
                         className="
@@ -772,40 +665,13 @@ export default function Features() {
           </div>
         </div>
 
-        {/* =================================================
-            FEATURE TIMELINE
-        ================================================= */}
+        {/* FEATURE TIMELINE */}
 
-        <motion.div
-          initial={
-            reduceMotion
-              ? false
-              : {
-                  opacity: 0,
-                  y: 30,
-                }
-          }
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-            amount: 0.1,
-          }}
-          transition={{
-            duration: reduceMotion ? 0 : 0.7,
-            delay: reduceMotion ? 0 : 0.1,
-            ease,
-          }}
-          className="mt-12 sm:mt-16"
-        >
+        <div className="mt-12 sm:mt-16">
           <FeatureTimeline />
-        </motion.div>
+        </div>
 
-        {/* =================================================
-            FINAL STATEMENT
-        ================================================= */}
+        {/* FINAL STATEMENT */}
 
         <motion.div
           initial={
@@ -813,7 +679,7 @@ export default function Features() {
               ? false
               : {
                   opacity: 0,
-                  y: 25,
+                  y: 20,
                 }
           }
           whileInView={{
@@ -825,7 +691,7 @@ export default function Features() {
             amount: 0.2,
           }}
           transition={{
-            duration: reduceMotion ? 0 : 0.65,
+            duration: reduceMotion ? 0 : 0.6,
             ease,
           }}
           className="
@@ -851,9 +717,8 @@ export default function Features() {
               md:text-4xl
             "
           >
-            Каждый этап работает
+            Каждый этап работает{" "}
             <span className="text-cyan-100/30">
-              {" "}
               на следующий.
             </span>
           </p>
@@ -874,9 +739,7 @@ export default function Features() {
         </motion.div>
       </div>
 
-      {/* =====================================================
-          BOTTOM TRANSITION
-      ===================================================== */}
+      {/* BOTTOM TRANSITION */}
 
       <div
         className="

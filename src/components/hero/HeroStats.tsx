@@ -50,16 +50,20 @@ function StatCard({
         group
         relative
         overflow-hidden
-        rounded-[24px]
+        rounded-[20px]
         border
         border-white/70
         bg-white/45
-        p-5
+        p-4
         shadow-[0_14px_45px_rgba(7,59,76,.07)]
         backdrop-blur-[8px]
+
+        sm:rounded-[24px]
+        sm:p-5
       "
     >
-      {/* Glass highlight */}
+      {/* Highlight */}
+
       <div
         className="
           pointer-events-none
@@ -74,7 +78,8 @@ function StatCard({
         "
       />
 
-      {/* Water glow */}
+      {/* Glow */}
+
       <div
         className="
           pointer-events-none
@@ -93,8 +98,6 @@ function StatCard({
       />
 
       <div className="relative z-10">
-
-        {/* Small water indicator */}
         <div className="flex items-center justify-between">
           <span
             className="
@@ -108,18 +111,19 @@ function StatCard({
 
           <span
             className="
-              text-[8px]
+              text-[7px]
               font-semibold
               uppercase
-              tracking-[0.25em]
+              tracking-[0.22em]
               text-[#0e7490]/35
+
+              sm:text-[8px]
             "
           >
             DATA
           </span>
         </div>
 
-        {/* Number */}
         <motion.div
           initial={{ opacity: 0.4 }}
           animate={{ opacity: 1 }}
@@ -128,38 +132,44 @@ function StatCard({
             delay: 1 + index * 0.07,
           }}
           className="
-            mt-5
-            text-[clamp(2rem,3.5vw,2.8rem)]
+            mt-4
+            text-[clamp(1.7rem,7vw,2.5rem)]
             font-black
             leading-none
             tracking-[-0.055em]
             text-[#073b4c]
+
+            sm:mt-5
+            sm:text-[clamp(2rem,3.5vw,2.8rem)]
           "
         >
           {value}
         </motion.div>
 
-        {/* Label */}
         <div
           className="
             mt-3
             max-w-[150px]
-            text-[9px]
+            text-[8px]
             font-semibold
             uppercase
             leading-[1.5]
-            tracking-[0.2em]
+            tracking-[0.18em]
             text-[#0e7490]/55
+
+            sm:text-[9px]
+            sm:tracking-[0.2em]
           "
         >
           {title}
         </div>
 
-        {/* Water line */}
-        <div className="mt-5 h-px w-full overflow-hidden bg-[#073b4c]/[0.07]">
+        <div className="mt-4 h-px w-full bg-[#073b4c]/[0.07] sm:mt-5">
           <motion.div
             initial={{ width: 0 }}
-            animate={{ width: `${45 + index * 13}%` }}
+            animate={{
+              width: `${45 + index * 13}%`,
+            }}
             transition={{
               duration: 0.9,
               delay: 1.05 + index * 0.08,
@@ -174,7 +184,6 @@ function StatCard({
             "
           />
         </div>
-
       </div>
     </motion.div>
   );
@@ -194,11 +203,14 @@ export default function HeroStats() {
         delay: 0.8,
       }}
       className="
-        mt-10
+        mt-8
         grid
         grid-cols-2
         gap-3
+
+        sm:mt-10
         sm:gap-4
+
         lg:gap-5
       "
     >

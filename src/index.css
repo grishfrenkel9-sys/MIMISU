@@ -231,7 +231,7 @@ body {
 /* STORY — INNER ORBIT */
 /* ================================================= */
 
-@keyframes story-orbit-reverse {
+ 
   from {
     transform: rotate(0deg);
   }
@@ -239,7 +239,7 @@ body {
   to {
     transform: rotate(-360deg);
   }
-}
+
 
 /* ================================================= */
 /* FUTURE UTILITY — SOFT PULSE */

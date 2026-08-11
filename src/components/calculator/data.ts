@@ -1,6 +1,12 @@
-import type { AdvertiserCount, PriceTier } from "./types";
+import type {
+  AdvertiserCount,
+  PriceTier,
+} from "./types";
 
-export const PRICE_TABLE: Record<AdvertiserCount, PriceTier[]> = {
+export const PRICE_TABLE: Record<
+  AdvertiserCount,
+  PriceTier[]
+> = {
   1: [
     {
       min: 1000,

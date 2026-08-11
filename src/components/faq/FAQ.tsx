@@ -1,8 +1,13 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { Plus } from "lucide-react";
 
-const faqItems = [
+interface FAQItemData {
+  question: string;
+  answer: string;
+}
+
+const faqItems: FAQItemData[] = [
   {
     question: "Что такое MIMISU?",
     answer:
@@ -14,28 +19,43 @@ const faqItems = [
       "Бренд размещается на этикетке бутылки. После производства бутылки распространяются через выбранные каналы и становятся частью повседневного контакта с аудиторией.",
   },
   {
-    question: "Какой тираж можно заказать?",
+    question: "Какой минимальный тираж?",
     answer:
-      "В калькуляторе можно выбрать тираж от 1 000 до 20 000 бутылок. Итоговая стоимость зависит от количества рекламодателей и дополнительных услуг.",
+      "Минимальный тираж начинается от 1 000 бутылок. При увеличении тиража стоимость размещения одной бутылки снижается.",
   },
   {
     question: "Можно ли заказать дизайн?",
     answer:
-      "Да. Можно добавить разработку фирменной этикетки как дополнительную услугу. Стоимость отображается непосредственно в калькуляторе.",
+      "Да. Мы можем разработать индивидуальный дизайн этикетки с учётом фирменного стиля, цветов и рекламного сообщения бренда.",
   },
   {
     question: "Можно ли организовать распространение?",
     answer:
-      "Да. В калькуляторе можно добавить услугу распространения — организацию размещения и раздачи готовой продукции.",
+      "Да. При подключении услуги распространения мы берём организацию раздачи на себя: планируем точки, логистику и процесс передачи бутылок аудитории.",
   },
   {
     question: "Можно ли разместить несколько рекламодателей?",
     answer:
-      "Да. Один тираж может быть разделён между несколькими рекламодателями. Количество рекламодателей выбирается в калькуляторе.",
+      "Да. Один тираж может быть разделён между несколькими рекламодателями. Это позволяет распределить стоимость производства между участниками.",
+  },
+  {
+    question: "Как рассчитывается стоимость кампании?",
+    answer:
+      "Стоимость зависит от количества рекламодателей, тиража бутылок и дополнительных услуг. В калькуляторе можно изменить параметры и сразу увидеть предварительный расчёт.",
+  },
+  {
+    question: "Какой охват можно получить?",
+    answer:
+      "Охват зависит от тиража и сценария распространения. В калькуляторе используется предварительная модель прогнозирования, которая помогает оценить потенциальное количество контактов.",
+  },
+  {
+    question: "Можно ли получить коммерческое предложение?",
+    answer:
+      "Да. После предварительного расчёта вы можете связаться с нами, чтобы обсудить задачу, формат размещения и получить персональное коммерческое предложение.",
   },
 ];
 
-const ease = [0.22, 1, 0.36, 1] as const;
+const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -79,7 +99,7 @@ export default function FAQ() {
           pointer-events-none
           absolute
           -left-[280px]
-          bottom-[0]
+          bottom-0
           h-[500px]
           w-[500px]
           rounded-full
@@ -128,14 +148,8 @@ export default function FAQ() {
         ======================================= */}
 
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 24,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{
             once: true,
             amount: 0.2,
@@ -150,7 +164,7 @@ export default function FAQ() {
             md:mb-20
           "
         >
-          {/* SMALL LABEL */}
+          {/* LABEL */}
 
           <div
             className="
@@ -224,7 +238,7 @@ export default function FAQ() {
         </motion.div>
 
         {/* =======================================
-            PREMIUM FAQ
+            FAQ LIST
         ======================================= */}
 
         <div className="space-y-2">
@@ -256,7 +270,7 @@ export default function FAQ() {
                   overflow-hidden
                   rounded-[22px]
                   border
-                  transition-all
+                  transition-colors
                   duration-500
                   sm:rounded-[26px]
 
@@ -277,14 +291,17 @@ export default function FAQ() {
                 `}
               >
                 {/* =================================
-                    QUESTION BUTTON
+                    QUESTION
                 ================================= */}
 
                 <button
                   type="button"
                   aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${index}`}
                   onClick={() =>
-                    setOpenIndex(isOpen ? null : index)
+                    setOpenIndex(
+                      isOpen ? null : index
+                    )
                   }
                   className="
                     relative
@@ -306,7 +323,7 @@ export default function FAQ() {
                     focus-visible:ring-cyan-300/40
                   "
                 >
-                  {/* SUBTLE LIGHT */}
+                  {/* ACTIVE TOP LINE */}
 
                   <span
                     className={`
@@ -328,6 +345,8 @@ export default function FAQ() {
                       }
                     `}
                   />
+
+                  {/* QUESTION CONTENT */}
 
                   <div
                     className="
@@ -358,7 +377,7 @@ export default function FAQ() {
                         }
                       `}
                     >
-                      0{index + 1}
+                      {String(index + 1).padStart(2, "0")}
                     </span>
 
                     {/* QUESTION */}
@@ -387,10 +406,17 @@ export default function FAQ() {
                   </div>
 
                   {/* =================================
-                      ICON
+                      PLUS ICON
                   ================================= */}
 
-                  <span
+                  <motion.span
+                    animate={{
+                      rotate: isOpen ? 45 : 0,
+                    }}
+                    transition={{
+                      duration: 0.35,
+                      ease,
+                    }}
                     className={`
                       flex
                       h-10
@@ -400,7 +426,7 @@ export default function FAQ() {
                       justify-center
                       rounded-full
                       border
-                      transition-all
+                      transition-colors
                       duration-500
                       sm:h-11
                       sm:w-11
@@ -408,7 +434,6 @@ export default function FAQ() {
                       ${
                         isOpen
                           ? `
-                            rotate-45
                             border-cyan-200/20
                             bg-cyan-200/[0.07]
                             text-cyan-100
@@ -427,7 +452,7 @@ export default function FAQ() {
                       size={17}
                       strokeWidth={1.4}
                     />
-                  </span>
+                  </motion.span>
                 </button>
 
                 {/* =================================
@@ -437,6 +462,7 @@ export default function FAQ() {
                 <AnimatePresence initial={false}>
                   {isOpen && (
                     <motion.div
+                      id={`faq-answer-${index}`}
                       initial={{
                         height: 0,
                         opacity: 0,
