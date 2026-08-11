@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
@@ -22,12 +21,7 @@ export default function Navbar() {
       ticking = true;
 
       requestAnimationFrame(() => {
-        const nextScrolled = window.scrollY > 30;
-
-        setScrolled((prev) =>
-          prev === nextScrolled ? prev : nextScrolled
-        );
-
+        setScrolled(window.scrollY > 30);
         ticking = false;
       });
     };
@@ -43,31 +37,32 @@ export default function Navbar() {
     };
   }, []);
 
-  const scrollToSection = (href: string) => {
-    const id = href.slice(1);
-    const element = document.getElementById(id);
+  const closeMenu = () => setOpen(false);
 
-    if (!element) return;
+  const scrollTo = (href: string) => {
+    const element = document.querySelector(href);
 
-    const offset = 90;
+    if (!element) {
+      closeMenu();
+      return;
+    }
+
+    const offset = 80;
+    const top =
+      element.getBoundingClientRect().top +
+      window.scrollY -
+      offset;
 
     window.scrollTo({
-      top:
-        element.getBoundingClientRect().top +
-        window.scrollY -
-        offset,
+      top,
       behavior: "smooth",
     });
 
-    setOpen(false);
+    closeMenu();
   };
 
   return (
     <>
-      {/* =====================================================
-          NAVBAR
-      ===================================================== */}
-
       <header
         className={`
           fixed
@@ -75,22 +70,22 @@ export default function Navbar() {
           top-0
           z-50
           h-20
-          transition-[background-color,border-color,box-shadow]
+          transition-all
           duration-500
-          ease-out
           ${
             scrolled
               ? `
                 border-b
-                border-white/[0.08]
-                bg-[#173F49]/85
-                shadow-[0_4px_24px_rgba(0,0,0,0.08)]
+                border-[#092B32]/[0.08]
+                bg-[#F5F9F8]/90
+                shadow-[0_8px_30px_rgba(9,43,50,.06)]
                 backdrop-blur-xl
               `
               : `
                 border-b
-                border-transparent
-                bg-transparent
+                border-[#092B32]/[0.05]
+                bg-[#F5F9F8]/60
+                backdrop-blur-md
               `
           }
         `}
@@ -103,37 +98,34 @@ export default function Navbar() {
             max-w-[1700px]
             items-center
             justify-between
-            px-8
+            px-5
+            sm:px-8
             lg:px-12
           "
         >
-          {/* =================================================
-              DESKTOP
-          ================================================= */}
+          {/* DESKTOP */}
 
-          <div className="hidden items-center gap-8 lg:flex">
-            {/* =================================================
-                LOGO
-            ================================================= */}
+          <div className="hidden items-center gap-7 lg:flex">
+            {/* LOGO */}
 
             <button
               type="button"
-              onClick={() => scrollToSection("#hero")}
+              onClick={() => scrollTo("#hero")}
               className="
                 group
                 relative
-                text-[28px]
+                text-[27px]
                 font-light
                 uppercase
-                tracking-[0.45em]
-                text-[#F0FEFF]
+                tracking-[0.42em]
+                text-[#092B32]
                 transition-all
-                duration-500
-                ease-out
-                hover:text-[#D5FBFC]
-                hover:[text-shadow:0_0_12px_rgba(213,251,252,0.35),0_0_28px_rgba(213,251,252,0.18)]
+                duration-300
+                hover:text-[#2F6873]
               "
             >
+              MIMISU
+
               <span
                 className="
                   pointer-events-none
@@ -142,51 +134,37 @@ export default function Navbar() {
                   -inset-y-3
                   -z-10
                   rounded-full
-                  bg-[#D5FBFC]/0
-                  opacity-0
+                  bg-[#2F6873]/0
                   blur-xl
                   transition-all
                   duration-500
-                  ease-out
-                  group-hover:bg-[#D5FBFC]/10
-                  group-hover:opacity-100
+                  group-hover:bg-[#2F6873]/10
                 "
               />
-
-              <span className="relative">
-                MIMISU
-              </span>
             </button>
 
-            {/* DIVIDER */}
+            <div className="h-5 w-px bg-[#092B32]/[0.12]" />
 
-            <div className="h-5 w-px bg-white/[0.12]" />
+            {/* LINKS */}
 
-            {/* =================================================
-                LINKS
-            ================================================= */}
-
-            <nav className="flex items-center gap-7">
+            <nav className="flex items-center gap-6">
               {links.map((link) => (
                 <button
                   key={link.href}
                   type="button"
-                  onClick={() =>
-                    scrollToSection(link.href)
-                  }
+                  onClick={() => scrollTo(link.href)}
                   className="
                     group
                     relative
                     py-2
-                    text-[13px]
+                    text-[12px]
                     font-medium
                     uppercase
-                    tracking-[0.22em]
-                    text-[#D8F3F5]/75
+                    tracking-[0.20em]
+                    text-[#092B32]/80
                     transition-colors
                     duration-300
-                    ease-out
-                    hover:text-white
+                    hover:text-[#092B32]
                   "
                 >
                   {link.label}
@@ -198,11 +176,10 @@ export default function Navbar() {
                       left-0
                       h-px
                       w-0
-                      bg-[#D5FBFC]
-                      shadow-[0_0_8px_rgba(213,251,252,0.35)]
+                      bg-[#2F6873]
+                      shadow-[0_0_8px_rgba(47,104,115,.30)]
                       transition-[width]
                       duration-300
-                      ease-out
                       group-hover:w-full
                     "
                   />
@@ -210,66 +187,38 @@ export default function Navbar() {
               ))}
             </nav>
 
-            {/* DIVIDER */}
+            <div className="h-5 w-px bg-[#092B32]/[0.12]" />
 
-            <div className="h-5 w-px bg-white/[0.12]" />
-
-            {/* =================================================
-                DESKTOP CTA
-            ================================================= */}
+            {/* CTA */}
 
             <button
               type="button"
-              onClick={() =>
-                scrollToSection("#calculator")
-              }
+              onClick={() => scrollTo("#calculator")}
               className="
                 group
                 relative
-                h-11
+                h-10
                 overflow-hidden
                 rounded-full
                 border
-                border-[#D5FBFC]/30
-                bg-white/[0.06]
-                px-7
-                text-[13px]
+                border-[#2F6873]/30
+                bg-[#2F6873]/[0.07]
+                px-6
+                text-[11px]
                 font-medium
                 uppercase
-                tracking-[0.18em]
-                text-[#E9FCFD]
-
+                tracking-[0.17em]
+                text-[#092B32]
                 transition-all
-                duration-500
-                ease-[cubic-bezier(0.16,1,0.3,1)]
-
-                hover:-translate-y-1
-                hover:border-[#D5FBFC]/60
-                hover:bg-[#D5FBFC]/[0.10]
-                hover:text-white
-                hover:shadow-[0_10px_35px_rgba(213,251,252,0.14)]
-
+                duration-400
+                hover:-translate-y-0.5
+                hover:border-[#2F6873]/55
+                hover:bg-[#2F6873]/[0.12]
+                hover:shadow-[0_10px_30px_rgba(47,104,115,.12)]
                 active:translate-y-0
                 active:scale-[0.98]
               "
             >
-              {/* INNER GLOW */}
-
-              <span
-                className="
-                  pointer-events-none
-                  absolute
-                  inset-0
-                  rounded-full
-                  bg-[#D5FBFC]/0
-                  transition-colors
-                  duration-500
-                  group-hover:bg-[#D5FBFC]/[0.04]
-                "
-              />
-
-              {/* SHINE */}
-
               <span
                 className="
                   pointer-events-none
@@ -280,91 +229,60 @@ export default function Navbar() {
                   -skew-x-[20deg]
                   bg-gradient-to-r
                   from-transparent
-                  via-white/20
+                  via-white/60
                   to-transparent
                   transition-[left]
-                  duration-[900ms]
-                  ease-out
+                  duration-[850ms]
                   group-hover:left-[130%]
                 "
               />
 
-              <span
-                className="
-                  relative
-                  z-10
-                  transition-[letter-spacing]
-                  duration-500
-                  ease-out
-                  group-hover:tracking-[0.21em]
-                "
-              >
+              <span className="relative z-10">
                 Запустить кампанию
               </span>
             </button>
           </div>
 
-          {/* =================================================
-              MOBILE BUTTON
-          ================================================= */}
+          {/* MOBILE */}
 
           <button
             type="button"
-            onClick={() => setOpen((prev) => !prev)}
+            onClick={() => setOpen((value) => !value)}
+            aria-label={
+              open ? "Закрыть меню" : "Открыть меню"
+            }
+            aria-expanded={open}
             className="
-              group
               ml-auto
               flex
-              h-11
-              w-11
+              h-10
+              w-10
               items-center
               justify-center
               rounded-full
               border
-              border-[#D5FBFC]/25
-              bg-white/[0.06]
-              text-[#D5FBFC]
+              border-[#092B32]/15
+              bg-white/70
+              text-[#092B32]
               backdrop-blur-md
               transition-all
               duration-300
-              ease-out
-              hover:-translate-y-0.5
-              hover:border-[#D5FBFC]/50
-              hover:bg-[#D5FBFC]/[0.09]
-              hover:text-white
-              hover:shadow-[0_6px_24px_rgba(213,251,252,0.10)]
+              hover:border-[#2F6873]/40
+              hover:bg-[#2F6873]/[0.06]
+              active:scale-95
               lg:hidden
             "
-            aria-label={
-              open ? "Закрыть меню" : "Открыть меню"
-            }
           >
             {open ? (
-              <X
-                size={20}
-                strokeWidth={1.7}
-                className="
-                  transition-transform
-                  duration-300
-                "
-              />
+              <X size={19} strokeWidth={1.6} />
             ) : (
-              <Menu
-                size={20}
-                strokeWidth={1.7}
-                className="
-                  transition-transform
-                  duration-300
-                "
-              />
+              <Menu size={19} strokeWidth={1.6} />
             )}
           </button>
         </div>
       </header>
 
-      {/* =====================================================
-          MOBILE MENU
-      ===================================================== */}
+      {/* MOBILE MENU */}
 
       <div
         className={`
@@ -372,28 +290,28 @@ export default function Navbar() {
           inset-0
           z-40
           lg:hidden
-          transition-[opacity,visibility]
+          transition-opacity
           duration-300
           ${
             open
-              ? "pointer-events-auto visible opacity-100"
-              : "pointer-events-none invisible opacity-0"
+              ? "pointer-events-auto opacity-100"
+              : "pointer-events-none opacity-0"
           }
         `}
       >
-        {/* BACKDROP */}
-
-        <div
+        <button
+          type="button"
+          aria-label="Закрыть меню"
+          onClick={closeMenu}
           className="
             absolute
             inset-0
-            bg-[#173F49]/95
-            backdrop-blur-xl
+            h-full
+            w-full
+            bg-[#092B32]/25
+            backdrop-blur-md
           "
-          onClick={() => setOpen(false)}
         />
-
-        {/* MENU */}
 
         <div
           className={`
@@ -402,8 +320,9 @@ export default function Navbar() {
             top-20
             overflow-hidden
             border-t
-            border-white/[0.08]
-            bg-[#173F49]
+            border-[#092B32]/[0.08]
+            bg-[#F5F9F8]
+            shadow-[0_20px_60px_rgba(9,43,50,.12)]
             transition-transform
             duration-500
             ease-[cubic-bezier(0.16,1,0.3,1)]
@@ -419,9 +338,7 @@ export default function Navbar() {
               <button
                 key={link.href}
                 type="button"
-                onClick={() =>
-                  scrollToSection(link.href)
-                }
+                onClick={() => scrollTo(link.href)}
                 className="
                   group
                   flex
@@ -429,18 +346,18 @@ export default function Navbar() {
                   items-center
                   justify-between
                   border-b
-                  border-white/[0.07]
-                  px-8
+                  border-[#092B32]/[0.07]
+                  px-7
                   py-5
                   text-left
-                  text-xl
+                  text-lg
                   font-light
-                  text-[#D8F3F5]
+                  text-[#092B32]
                   transition-all
                   duration-300
-                  hover:bg-white/[0.04]
-                  hover:pl-10
-                  hover:text-white
+                  hover:bg-[#2F6873]/[0.05]
+                  hover:pl-9
+                  hover:text-[#2F6873]
                 "
               >
                 <span>{link.label}</span>
@@ -450,10 +367,10 @@ export default function Navbar() {
                     font-mono
                     text-[9px]
                     tracking-[0.3em]
-                    text-[#A9DDE1]/40
+                    text-[#2F6873]/45
                     transition-colors
                     duration-300
-                    group-hover:text-[#D5FBFC]/70
+                    group-hover:text-[#2F6873]
                   "
                 >
                   0{index + 1}
@@ -462,92 +379,36 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* =================================================
-              MOBILE CTA
-          ================================================= */}
-
-          <div className="p-8">
+          <div className="p-7">
             <button
               type="button"
-              onClick={() =>
-                scrollToSection("#calculator")
-              }
+              onClick={() => scrollTo("#calculator")}
               className="
                 group
                 relative
+                flex
                 w-full
+                items-center
+                justify-center
                 overflow-hidden
                 rounded-full
                 border
-                border-[#D5FBFC]/30
-                bg-white/[0.06]
+                border-[#2F6873]/30
+                bg-[#2F6873]/[0.07]
                 py-4
-                text-sm
+                text-[11px]
                 font-medium
                 uppercase
                 tracking-[0.18em]
-                text-[#E9FCFD]
-
+                text-[#092B32]
                 transition-all
-                duration-500
-                ease-[cubic-bezier(0.16,1,0.3,1)]
-
-                hover:-translate-y-1
-                hover:border-[#D5FBFC]/60
-                hover:bg-[#D5FBFC]/[0.10]
-                hover:text-white
-                hover:shadow-[0_10px_35px_rgba(213,251,252,0.14)]
-
-                active:translate-y-0
+                duration-400
+                hover:border-[#2F6873]/55
+                hover:bg-[#2F6873]/[0.12]
                 active:scale-[0.98]
               "
             >
-              {/* INNER GLOW */}
-
-              <span
-                className="
-                  pointer-events-none
-                  absolute
-                  inset-0
-                  rounded-full
-                  bg-[#D5FBFC]/0
-                  transition-colors
-                  duration-500
-                  group-hover:bg-[#D5FBFC]/[0.04]
-                "
-              />
-
-              {/* SHINE */}
-
-              <span
-                className="
-                  pointer-events-none
-                  absolute
-                  inset-y-0
-                  -left-[60%]
-                  w-[35%]
-                  -skew-x-[20deg]
-                  bg-gradient-to-r
-                  from-transparent
-                  via-white/20
-                  to-transparent
-                  transition-[left]
-                  duration-[900ms]
-                  ease-out
-                  group-hover:left-[130%]
-                "
-              />
-
-              <span
-                className="
-                  relative
-                  z-10
-                  transition-[letter-spacing]
-                  duration-500
-                  ease-out
-                  group-hover:tracking-[0.22em]
-                "
-              >
+              <span className="relative z-10">
                 Запустить кампанию
               </span>
 
@@ -556,18 +417,11 @@ export default function Navbar() {
                   relative
                   z-10
                   ml-3
-                  inline-block
                   h-1.5
                   w-1.5
                   rounded-full
-                  bg-[#D5FBFC]/60
-                  align-middle
-                  transition-all
-                  duration-500
-                  ease-out
-                  group-hover:scale-125
-                  group-hover:bg-[#D5FBFC]
-                  group-hover:shadow-[0_0_12px_rgba(213,251,252,0.9)]
+                  bg-[#2F6873]
+                  shadow-[0_0_8px_rgba(47,104,115,.45)]
                 "
               />
             </button>

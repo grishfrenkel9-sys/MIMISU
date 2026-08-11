@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import HeroTitle from "./HeroTitle";
 
@@ -26,27 +25,18 @@ export default function Hero() {
         relative
         min-h-[100svh]
         overflow-hidden
-        text-white
+        bg-white
+        text-slate-950
       "
     >
       {/* =====================================================
           BASE BACKGROUND
       ===================================================== */}
 
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          bg-gradient-to-br
-          from-[#285E68]
-          via-[#285E68]
-          to-[#245762]
-        "
-      />
+      <div className="pointer-events-none absolute inset-0 bg-white" />
 
       {/* =====================================================
-          OCEANIC LIGHT
+          SOFT LIGHT
       ===================================================== */}
 
       <div
@@ -55,24 +45,10 @@ export default function Hero() {
           absolute
           -left-[18%]
           -top-[20%]
-          h-[700px]
-          w-[700px]
+          h-[650px]
+          w-[650px]
           rounded-full
-          bg-[#B9F7F8]/[0.12]
-          blur-[170px]
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          -right-[12%]
-          top-[5%]
-          h-[720px]
-          w-[720px]
-          rounded-full
-          bg-[#8DE8EF]/[0.11]
+          bg-cyan-100/[0.28]
           blur-[180px]
         "
       />
@@ -81,12 +57,26 @@ export default function Hero() {
         className="
           pointer-events-none
           absolute
-          left-[32%]
+          -right-[15%]
+          top-[5%]
+          h-[700px]
+          w-[700px]
+          rounded-full
+          bg-slate-100
+          blur-[170px]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-[35%]
           top-[20%]
           h-[500px]
           w-[500px]
           rounded-full
-          bg-[#D2FAFB]/[0.07]
+          bg-cyan-50/[0.5]
           blur-[150px]
         "
       />
@@ -100,25 +90,25 @@ export default function Hero() {
           pointer-events-none
           absolute
           inset-0
-          opacity-[0.04]
+          opacity-[0.035]
         "
         style={{
           backgroundImage: `
             linear-gradient(
-              rgba(230,255,255,.25) 1px,
+              rgba(15,23,42,.22) 1px,
               transparent 1px
             ),
             linear-gradient(
               90deg,
-              rgba(230,255,255,.25) 1px,
+              rgba(15,23,42,.22) 1px,
               transparent 1px
             )
           `,
           backgroundSize: "90px 90px",
           maskImage:
-            "radial-gradient(circle at center, black 0%, transparent 78%)",
+            "radial-gradient(circle at center, black 0%, transparent 76%)",
           WebkitMaskImage:
-            "radial-gradient(circle at center, black 0%, transparent 78%)",
+            "radial-gradient(circle at center, black 0%, transparent 76%)",
         }}
       />
 
@@ -136,7 +126,7 @@ export default function Hero() {
           w-[980px]
           rounded-[50%]
           border
-          border-white/[0.08]
+          border-slate-900/[0.06]
           rotate-[-12deg]
         "
       />
@@ -151,7 +141,7 @@ export default function Hero() {
           w-[850px]
           rounded-[50%]
           border
-          border-cyan-50/[0.06]
+          border-slate-900/[0.045]
           rotate-[-12deg]
         "
       />
@@ -166,7 +156,7 @@ export default function Hero() {
           w-[680px]
           rounded-[50%]
           border
-          border-cyan-50/[0.045]
+          border-slate-900/[0.03]
           rotate-[-12deg]
         "
       />
@@ -184,8 +174,8 @@ export default function Hero() {
           h-2
           w-2
           rounded-full
-          bg-[#E0FCFD]
-          shadow-[0_0_22px_rgba(224,252,253,.85)]
+          bg-cyan-500
+          shadow-[0_0_20px_rgba(6,182,212,.25)]
         "
       />
 
@@ -198,8 +188,8 @@ export default function Hero() {
           h-1.5
           w-1.5
           rounded-full
-          bg-[#C4FAFC]
-          shadow-[0_0_18px_rgba(196,250,252,.75)]
+          bg-cyan-400
+          shadow-[0_0_16px_rgba(34,211,238,.25)]
         "
       />
 
@@ -212,8 +202,8 @@ export default function Hero() {
           h-2
           w-2
           rounded-full
-          bg-[#D5FBFC]
-          shadow-[0_0_20px_rgba(213,251,252,.75)]
+          bg-slate-400
+          shadow-[0_0_18px_rgba(100,116,139,.2)]
         "
       />
 
@@ -226,7 +216,7 @@ export default function Hero() {
           h-1
           w-1
           rounded-full
-          bg-white/70
+          bg-slate-400
         "
       />
 
@@ -243,9 +233,12 @@ export default function Hero() {
           min-h-[100svh]
           max-w-[1500px]
           flex-col
-          px-6
-          pb-28
-          pt-28
+          px-5
+          pb-20
+          pt-24
+          sm:px-6
+          sm:pb-24
+          sm:pt-28
           md:px-10
           md:pt-32
           lg:px-16
@@ -261,15 +254,18 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
           className="
-            mb-8
+            mb-6
             flex
             items-center
             justify-between
-            text-[9px]
+            text-[8px]
             font-semibold
             uppercase
-            tracking-[0.28em]
-            text-[#E8FCFD]
+            tracking-[0.25em]
+            text-slate-500
+            sm:mb-8
+            sm:text-[9px]
+            sm:tracking-[0.28em]
           "
         >
           <span className="flex items-center gap-3">
@@ -278,8 +274,8 @@ export default function Hero() {
                 h-1.5
                 w-1.5
                 rounded-full
-                bg-[#D5FBFC]
-                shadow-[0_0_14px_rgba(213,251,252,.9)]
+                bg-cyan-500
+                shadow-[0_0_12px_rgba(6,182,212,.35)]
               "
             />
 
@@ -300,7 +296,7 @@ export default function Hero() {
             grid
             flex-1
             items-center
-            gap-10
+            gap-4
             lg:grid-cols-[1.05fr_0.95fr]
             lg:gap-6
           "
@@ -310,6 +306,8 @@ export default function Hero() {
           ================================================= */}
 
           <div className="relative z-40 max-w-[820px]">
+            {/* BADGE */}
+
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
@@ -318,18 +316,19 @@ export default function Hero() {
                 delay: 0.15,
               }}
               className="
-                mb-6
+                mb-5
                 inline-flex
                 items-center
                 gap-3
                 rounded-full
                 border
-                border-white/[0.18]
-                bg-white/[0.08]
+                border-slate-900/[0.09]
+                bg-slate-900/[0.035]
                 px-4
                 py-2
-                shadow-[0_15px_45px_rgba(0,0,0,.12)]
+                shadow-[0_12px_35px_rgba(15,23,42,.06)]
                 backdrop-blur-xl
+                sm:mb-6
               "
             >
               <span
@@ -337,8 +336,8 @@ export default function Hero() {
                   h-2
                   w-2
                   rounded-full
-                  bg-[#D5FBFC]
-                  shadow-[0_0_14px_rgba(213,251,252,.9)]
+                  bg-cyan-500
+                  shadow-[0_0_12px_rgba(6,182,212,.35)]
                 "
               />
 
@@ -348,7 +347,7 @@ export default function Hero() {
                     text-[10px]
                     font-bold
                     tracking-[0.18em]
-                    text-white
+                    text-slate-950
                   "
                 >
                   QR AD NETWORK
@@ -359,7 +358,7 @@ export default function Hero() {
                     mt-0.5
                     text-[8px]
                     tracking-[0.22em]
-                    text-[#D4F5F6]
+                    text-slate-500
                   "
                 >
                   DIGITAL WATER
@@ -369,7 +368,9 @@ export default function Hero() {
 
             {/* TITLE */}
 
-            <HeroTitle />
+            <div className="text-slate-950">
+              <HeroTitle />
+            </div>
 
             {/* TITLE LIGHT */}
 
@@ -383,7 +384,7 @@ export default function Hero() {
                 h-48
                 w-96
                 rounded-full
-                bg-cyan-50/[0.07]
+                bg-cyan-100/[0.45]
                 blur-[100px]
               "
             />
@@ -398,11 +399,11 @@ export default function Hero() {
                 delay: 0.55,
               }}
               className="
-                mt-7
+                mt-6
                 h-[2px]
                 bg-gradient-to-r
-                from-[#E0FCFD]
-                via-[#B9F7F8]
+                from-cyan-600
+                via-cyan-400
                 to-transparent
               "
             />
@@ -417,12 +418,13 @@ export default function Hero() {
                 delay: 0.65,
               }}
               className="
-                mt-6
+                mt-5
                 max-w-[620px]
                 text-sm
                 font-medium
                 leading-7
-                text-[#E5F8F9]
+                text-slate-600
+                sm:mt-6
                 md:text-[15px]
               "
             >
@@ -444,10 +446,12 @@ export default function Hero() {
                 delay: 0.78,
               }}
               className="
-                mt-8
+                mt-7
                 flex
-                flex-wrap
+                flex-col
                 gap-3
+                sm:flex-row
+                sm:flex-wrap
               "
             >
               {/* CAMPAIGN */}
@@ -468,39 +472,23 @@ export default function Hero() {
                   relative
                   overflow-hidden
                   rounded-full
-                  bg-[#F4FEFF]
+                  bg-slate-950
                   px-7
                   py-4
                   text-sm
                   font-bold
-                  text-[#285E68]
-                  shadow-[0_18px_50px_rgba(0,0,0,.16)]
+                  text-white
+                  shadow-[0_18px_50px_rgba(15,23,42,.16)]
                   transition-all
                   duration-300
-                  hover:shadow-[0_22px_60px_rgba(0,0,0,.22)]
+                  hover:bg-slate-800
+                  hover:shadow-[0_22px_60px_rgba(15,23,42,.22)]
                 "
               >
                 <span className="relative z-10">
                   Запустить кампанию
                   <span className="ml-3">→</span>
                 </span>
-
-                <span
-                  className="
-                    pointer-events-none
-                    absolute
-                    inset-y-0
-                    left-0
-                    w-16
-                    -translate-x-[140%]
-                    skew-x-[-20deg]
-                    bg-white/60
-                    blur-md
-                    transition-transform
-                    duration-700
-                    group-hover:translate-x-[500%]
-                  "
-                />
               </motion.button>
 
               {/* STORY */}
@@ -523,18 +511,18 @@ export default function Hero() {
                   overflow-hidden
                   rounded-full
                   border
-                  border-white/[0.22]
-                  bg-white/[0.08]
+                  border-slate-900/[0.12]
+                  bg-white
                   px-7
                   py-4
                   text-sm
                   font-semibold
-                  text-white
-                  backdrop-blur-xl
+                  text-slate-900
+                  shadow-[0_10px_30px_rgba(15,23,42,.05)]
                   transition-all
                   duration-300
-                  hover:border-white/[0.35]
-                  hover:bg-white/[0.14]
+                  hover:border-slate-900/[0.2]
+                  hover:bg-slate-50
                 "
               >
                 <span className="relative z-10 flex items-center">
@@ -547,13 +535,13 @@ export default function Hero() {
                       items-center
                       justify-center
                       rounded-full
-                      bg-white/[0.14]
+                      bg-slate-900/[0.06]
                       text-[10px]
-                      text-[#E0FCFD]
+                      text-slate-700
                       transition-all
                       duration-300
-                      group-hover:bg-white/[0.22]
                       group-hover:scale-110
+                      group-hover:bg-cyan-500/[0.12]
                     "
                   >
                     ▶
@@ -572,25 +560,14 @@ export default function Hero() {
           <div
             className="
               relative
-              min-h-[420px]
+              mt-[-10px]
+              min-h-[300px]
+              sm:min-h-[380px]
+              lg:mt-0
               lg:min-h-[620px]
             "
           >
-            <div
-              className="
-                pointer-events-none
-                absolute
-                left-1/2
-                top-1/2
-                h-[470px]
-                w-[470px]
-                -translate-x-1/2
-                -translate-y-1/2
-                rounded-full
-                bg-[#D5FBFC]/[0.12]
-                blur-[130px]
-              "
-            />
+            {/* CENTRAL LIGHT */}
 
             <div
               className="
@@ -598,15 +575,20 @@ export default function Hero() {
                 absolute
                 left-1/2
                 top-1/2
-                h-[500px]
-                w-[500px]
+                h-[300px]
+                w-[300px]
                 -translate-x-1/2
                 -translate-y-1/2
                 rounded-full
-                border
-                border-white/[0.10]
+                bg-cyan-100/[0.5]
+                blur-[100px]
+                sm:h-[420px]
+                sm:w-[420px]
+                sm:blur-[130px]
               "
             />
+
+            {/* OUTER RING */}
 
             <div
               className="
@@ -614,33 +596,19 @@ export default function Hero() {
                 absolute
                 left-1/2
                 top-1/2
-                h-[390px]
-                w-[390px]
+                h-[320px]
+                w-[320px]
                 -translate-x-1/2
                 -translate-y-1/2
                 rounded-full
                 border
-                border-cyan-50/[0.08]
+                border-slate-900/[0.06]
+                sm:h-[500px]
+                sm:w-[500px]
               "
             />
 
-            <div
-              className="
-                absolute
-                left-1/2
-                top-1/2
-                h-[420px]
-                w-[420px]
-                -translate-x-1/2
-                -translate-y-1/2
-                rounded-full
-                border
-                border-white/[0.12]
-                bg-white/[0.045]
-                shadow-[0_40px_120px_rgba(0,0,0,.16)]
-                backdrop-blur-[3px]
-              "
-            />
+            {/* INNER RING */}
 
             <div
               className="
@@ -653,10 +621,35 @@ export default function Hero() {
                 -translate-x-1/2
                 -translate-y-1/2
                 rounded-full
-                bg-white/[0.04]
-                blur-[40px]
+                border
+                border-slate-900/[0.045]
+                sm:h-[390px]
+                sm:w-[390px]
               "
             />
+
+            {/* GLASS STAGE */}
+
+            <div
+              className="
+                absolute
+                left-1/2
+                top-1/2
+                h-[270px]
+                w-[270px]
+                -translate-x-1/2
+                -translate-y-1/2
+                rounded-full
+                border
+                border-slate-900/[0.07]
+                bg-slate-900/[0.025]
+                shadow-[0_30px_90px_rgba(15,23,42,.08)]
+                sm:h-[420px]
+                sm:w-[420px]
+              "
+            />
+
+            {/* 3D MODEL STAGE */}
 
             <div
               className="
@@ -664,62 +657,71 @@ export default function Hero() {
                 z-10
                 flex
                 h-full
-                min-h-[420px]
+                min-h-[300px]
                 items-center
                 justify-center
+                sm:min-h-[380px]
               "
             >
               <div
                 className="
                   absolute
-                  bottom-[16%]
-                  h-10
-                  w-44
+                  bottom-[12%]
+                  h-8
+                  w-32
                   rounded-full
-                  bg-[#D5FBFC]/[0.18]
+                  bg-slate-900/[0.08]
                   blur-2xl
+                  sm:h-10
+                  sm:w-44
                 "
               />
             </div>
 
+            {/* DATA LABEL */}
+
             <div
               className="
                 absolute
-                bottom-[8%]
-                right-[3%]
+                bottom-[5%]
+                right-[2%]
                 rounded-full
                 border
-                border-white/[0.16]
-                bg-white/[0.08]
-                px-4
+                border-slate-900/[0.08]
+                bg-white/[0.8]
+                px-3
                 py-2
-                text-[8px]
+                text-[7px]
                 font-semibold
                 uppercase
-                tracking-[0.22em]
-                text-[#E0F8F9]
-                shadow-[0_12px_35px_rgba(0,0,0,.1)]
+                tracking-[0.2em]
+                text-slate-500
+                shadow-[0_10px_30px_rgba(15,23,42,.06)]
                 backdrop-blur-xl
+                sm:px-4
+                sm:text-[8px]
               "
             >
               Water / Media / Data
             </div>
 
+            {/* CORNER MARKER */}
+
             <div
               className="
                 absolute
-                left-[10%]
-                top-[18%]
+                left-[8%]
+                top-[14%]
                 flex
                 items-center
                 gap-2
                 text-[8px]
                 uppercase
                 tracking-[0.2em]
-                text-white/45
+                text-slate-400
               "
             >
-              <span className="h-px w-6 bg-white/25" />
+              <span className="h-px w-6 bg-slate-300" />
               01
             </div>
           </div>
@@ -737,19 +739,20 @@ export default function Hero() {
             delay: 0.95,
           }}
           className="
-            mt-10
+            mt-8
             grid
             max-w-[760px]
             grid-cols-2
             gap-3
+            sm:mt-10
             md:grid-cols-4
           "
         >
           {[
-            ["10M+", "Бутылок в месяц"],
-            ["47", "Регионов"],
+            ["10К+", "Бутылок в месяц"],
+            ["3", "города"],
             ["98%", "Возвратов"],
-            ["1.2K", "Партнёров"],
+            ["200+", "Партнёров"],
           ].map(([value, label]) => (
             <div
               key={label}
@@ -759,15 +762,16 @@ export default function Hero() {
                 overflow-hidden
                 rounded-[20px]
                 border
-                border-white/[0.12]
-                bg-white/[0.065]
-                p-5
-                shadow-[0_18px_50px_rgba(0,0,0,.1)]
+                border-slate-900/[0.08]
+                bg-white/[0.75]
+                p-4
+                shadow-[0_15px_40px_rgba(15,23,42,.05)]
                 backdrop-blur-xl
                 transition-all
                 duration-300
                 hover:-translate-y-1
-                hover:bg-white/[0.10]
+                hover:bg-white
+                sm:p-5
               "
             >
               <div
@@ -778,19 +782,20 @@ export default function Hero() {
                   h-px
                   w-20
                   bg-gradient-to-l
-                  from-[#E0FCFD]/45
+                  from-cyan-500/40
                   to-transparent
                 "
               />
 
               <div
                 className="
-                  mb-4
+                  mb-3
                   h-1.5
                   w-1.5
                   rounded-full
-                  bg-[#E0FCFD]
-                  shadow-[0_0_12px_rgba(224,252,253,.75)]
+                  bg-cyan-500
+                  shadow-[0_0_10px_rgba(6,182,212,.3)]
+                  sm:mb-4
                 "
               />
 
@@ -799,7 +804,7 @@ export default function Hero() {
                   text-2xl
                   font-black
                   tracking-[-0.04em]
-                  text-white
+                  text-slate-950
                 "
               >
                 {value}
@@ -812,7 +817,7 @@ export default function Hero() {
                   font-bold
                   uppercase
                   tracking-[0.2em]
-                  text-[#D9F2F3]
+                  text-slate-500
                 "
               >
                 {label}
@@ -820,10 +825,11 @@ export default function Hero() {
 
               <div
                 className="
-                  mt-5
+                  mt-4
                   h-px
                   w-full
-                  bg-white/[0.12]
+                  bg-slate-900/[0.08]
+                  sm:mt-5
                 "
               />
             </div>
@@ -842,11 +848,11 @@ export default function Hero() {
           inset-x-0
           bottom-0
           z-30
-          h-[180px]
+          h-[120px]
           bg-gradient-to-b
           from-transparent
-          via-[#285E68]/45
-          to-[#1A4A55]
+          to-slate-50
+          sm:h-[160px]
         "
       />
     </section>

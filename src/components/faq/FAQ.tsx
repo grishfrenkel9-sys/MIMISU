@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Plus } from "lucide-react";
 
@@ -35,7 +35,7 @@ const faqItems = [
   },
 ];
 
-const ease = [0.16, 1, 0.3, 1] as const;
+const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -47,28 +47,30 @@ export default function FAQ() {
         relative
         overflow-hidden
         bg-[#031A21]
-        py-28
+        py-24
         text-white
-
+        sm:py-28
         md:py-36
         lg:py-44
       "
     >
-      {/* =====================================================
-          DEEP OCEAN ATMOSPHERE
-      ===================================================== */}
+      {/* =========================================
+          SOFT ATMOSPHERE
+      ========================================= */}
 
       <div
         className="
           pointer-events-none
           absolute
-          -right-[220px]
-          top-[8%]
-          h-[600px]
-          w-[600px]
+          -right-[260px]
+          top-[5%]
+          h-[520px]
+          w-[520px]
           rounded-full
-          bg-cyan-400/[0.055]
-          blur-[180px]
+          bg-cyan-400/[0.035]
+          blur-[160px]
+          sm:h-[650px]
+          sm:w-[650px]
         "
       />
 
@@ -76,207 +78,19 @@ export default function FAQ() {
         className="
           pointer-events-none
           absolute
-          -left-[240px]
-          bottom-[5%]
+          -left-[280px]
+          bottom-[0]
           h-[500px]
           w-[500px]
           rounded-full
-          bg-teal-500/[0.035]
+          bg-teal-400/[0.025]
           blur-[170px]
         "
       />
 
-      <div
-        className="
-          pointer-events-none
-          absolute
-          left-1/2
-          top-[45%]
-          h-[700px]
-          w-[700px]
-          -translate-x-1/2
-          rounded-full
-          bg-sky-500/[0.018]
-          blur-[220px]
-        "
-      />
-
-      {/* =====================================================
-          DEEP GRID
-      ===================================================== */}
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          opacity-[0.022]
-        "
-        style={{
-          backgroundImage: `
-            linear-gradient(
-              rgba(120,230,240,.12) 1px,
-              transparent 1px
-            ),
-            linear-gradient(
-              90deg,
-              rgba(120,230,240,.12) 1px,
-              transparent 1px
-            )
-          `,
-          backgroundSize: "120px 120px",
-          maskImage:
-            "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
-        }}
-      />
-
-      {/* =====================================================
-          HORIZONTAL DEPTH LINES
-      ===================================================== */}
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-x-0
-          top-[18%]
-          h-px
-          bg-gradient-to-r
-          from-transparent
-          via-cyan-200/[0.07]
-          to-transparent
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-x-0
-          top-[55%]
-          h-px
-          bg-gradient-to-r
-          from-transparent
-          via-cyan-200/[0.035]
-          to-transparent
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-x-0
-          bottom-[16%]
-          h-px
-          bg-gradient-to-r
-          from-transparent
-          via-cyan-200/[0.055]
-          to-transparent
-        "
-      />
-
-      {/* =====================================================
-          ORBIT / WATER DETAIL
-      ===================================================== */}
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          right-[5%]
-          top-[12%]
-          hidden
-          h-[260px]
-          w-[260px]
-          rounded-full
-          border
-          border-cyan-200/[0.055]
-          lg:block
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          right-[8%]
-          top-[16%]
-          hidden
-          h-[190px]
-          w-[190px]
-          rounded-full
-          border
-          border-cyan-200/[0.035]
-          lg:block
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          right-[18%]
-          top-[29%]
-          hidden
-          h-2
-          w-2
-          rounded-full
-          bg-cyan-300/45
-          shadow-[0_0_18px_rgba(103,232,249,.45)]
-          lg:block
-        "
-      />
-
-      {/* =====================================================
-          SMALL WATER PARTICLES
-      ===================================================== */}
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          left-[11%]
-          top-[31%]
-          h-1
-          w-1
-          rounded-full
-          bg-cyan-300/30
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          left-[19%]
-          bottom-[27%]
-          h-1.5
-          w-1.5
-          rounded-full
-          bg-cyan-300/25
-          shadow-[0_0_12px_rgba(103,232,249,.25)]
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          right-[12%]
-          bottom-[24%]
-          h-1
-          w-1
-          rounded-full
-          bg-cyan-200/25
-        "
-      />
-
-      {/* =====================================================
-          TOP TRANSITION
-      ===================================================== */}
+      {/* =========================================
+          TOP FADE
+      ========================================= */}
 
       <div
         className="
@@ -287,54 +101,56 @@ export default function FAQ() {
           h-40
           bg-gradient-to-b
           from-[#052830]
-          via-[#031F27]
+          via-[#031F27]/60
           to-transparent
         "
       />
 
-      {/* =====================================================
+      {/* =========================================
           CONTENT
-      ===================================================== */}
+      ========================================= */}
 
       <div
         className="
           relative
-          z-20
+          z-10
           mx-auto
           w-full
-          max-w-[1100px]
-          px-6
-
+          max-w-[1120px]
+          px-5
+          sm:px-8
           md:px-10
           xl:px-14
         "
       >
-        {/* =================================================
+        {/* =======================================
             HEADER
-        ================================================= */}
+        ======================================= */}
 
         <motion.div
           initial={{
             opacity: 0,
-            y: 45,
-            filter: "blur(10px)",
+            y: 24,
           }}
           whileInView={{
             opacity: 1,
             y: 0,
-            filter: "blur(0px)",
           }}
           viewport={{
-            once: false,
-            amount: 0.3,
+            once: true,
+            amount: 0.2,
           }}
           transition={{
-            duration: 0.9,
+            duration: 0.8,
             ease,
           }}
-          className="mb-16 md:mb-20"
+          className="
+            mb-14
+            sm:mb-16
+            md:mb-20
+          "
         >
-          {/* LABEL */}
+          {/* SMALL LABEL */}
 
           <div
             className="
@@ -345,7 +161,7 @@ export default function FAQ() {
               font-medium
               uppercase
               tracking-[0.35em]
-              text-cyan-200/70
+              text-cyan-200/60
             "
           >
             <span
@@ -354,7 +170,7 @@ export default function FAQ() {
                 w-1.5
                 rounded-full
                 bg-cyan-300
-                shadow-[0_0_14px_rgba(103,232,249,.7)]
+                shadow-[0_0_14px_rgba(103,232,249,.6)]
               "
             />
 
@@ -363,29 +179,28 @@ export default function FAQ() {
             <span
               className="
                 h-px
-                w-12
-                bg-cyan-300/30
+                w-10
+                bg-cyan-300/20
               "
             />
           </div>
 
-          {/* HEADING */}
+          {/* TITLE */}
 
           <h2
             className="
               mt-6
               max-w-4xl
-              text-[clamp(3rem,7vw,6rem)]
+              text-[clamp(3.2rem,12vw,6rem)]
               font-light
-              leading-[0.9]
-              tracking-[-0.055em]
+              leading-[0.88]
+              tracking-[-0.065em]
               text-white
             "
           >
             Частые
             <br />
-
-            <span className="text-cyan-100/30">
+            <span className="text-cyan-100/[0.22]">
               вопросы
             </span>
           </h2>
@@ -393,11 +208,12 @@ export default function FAQ() {
           <p
             className="
               mt-7
-              max-w-xl
-              text-sm
-              leading-7
-              text-cyan-50/45
-
+              max-w-[510px]
+              text-[13px]
+              leading-6
+              text-cyan-50/40
+              sm:text-sm
+              sm:leading-7
               md:text-base
               md:leading-8
             "
@@ -407,16 +223,11 @@ export default function FAQ() {
           </p>
         </motion.div>
 
-        {/* =================================================
-            FAQ LIST
-        ================================================= */}
+        {/* =======================================
+            PREMIUM FAQ
+        ======================================= */}
 
-        <div
-          className="
-            border-t
-            border-cyan-100/[0.10]
-          "
-        >
+        <div className="space-y-2">
           {faqItems.map((item, index) => {
             const isOpen = openIndex === index;
 
@@ -425,101 +236,149 @@ export default function FAQ() {
                 key={item.question}
                 initial={{
                   opacity: 0,
-                  y: 30,
+                  y: 18,
                 }}
                 whileInView={{
                   opacity: 1,
                   y: 0,
                 }}
                 viewport={{
-                  once: false,
-                  amount: 0.15,
+                  once: true,
+                  amount: 0.05,
                 }}
                 transition={{
-                  duration: 0.65,
-                  delay: index * 0.05,
+                  duration: 0.6,
+                  delay: index * 0.035,
                   ease,
                 }}
-                className="
+                className={`
                   group
-                  relative
-                  border-b
-                  border-cyan-100/[0.09]
-                "
+                  overflow-hidden
+                  rounded-[22px]
+                  border
+                  transition-all
+                  duration-500
+                  sm:rounded-[26px]
+
+                  ${
+                    isOpen
+                      ? `
+                        border-cyan-200/[0.14]
+                        bg-white/[0.035]
+                        shadow-[0_20px_70px_rgba(0,0,0,0.12)]
+                      `
+                      : `
+                        border-white/[0.055]
+                        bg-white/[0.012]
+                        hover:border-white/[0.10]
+                        hover:bg-white/[0.022]
+                      `
+                  }
+                `}
               >
-                {/* ACTIVE SIDE LIGHT */}
-
-                <span
-                  className={`
-                    pointer-events-none
-                    absolute
-                    left-0
-                    top-1/2
-                    h-10
-                    w-px
-                    -translate-y-1/2
-                    bg-gradient-to-b
-                    from-transparent
-                    via-cyan-300/0
-                    to-transparent
-                    transition-all
-                    duration-500
-
-                    ${
-                      isOpen
-                        ? "via-cyan-300/70"
-                        : "group-hover:via-cyan-300/35"
-                    }
-                  `}
-                />
+                {/* =================================
+                    QUESTION BUTTON
+                ================================= */}
 
                 <button
                   type="button"
+                  aria-expanded={isOpen}
                   onClick={() =>
                     setOpenIndex(isOpen ? null : index)
                   }
                   className="
+                    relative
                     flex
+                    min-h-[82px]
                     w-full
                     items-center
                     justify-between
-                    gap-6
-                    py-7
+                    gap-5
+                    px-5
+                    py-5
                     text-left
-                    transition-all
-                    duration-300
-
-                    md:py-8
+                    outline-none
+                    sm:min-h-[92px]
+                    sm:px-7
+                    sm:py-6
+                    md:px-8
+                    focus-visible:ring-1
+                    focus-visible:ring-cyan-300/40
                   "
                 >
-                  <div className="flex items-center gap-5">
-                    <span
-                      className="
-                        hidden
-                        font-mono
-                        text-[10px]
-                        tracking-[0.2em]
-                        text-cyan-200/25
+                  {/* SUBTLE LIGHT */}
 
+                  <span
+                    className={`
+                      pointer-events-none
+                      absolute
+                      inset-x-6
+                      top-0
+                      h-px
+                      bg-gradient-to-r
+                      from-transparent
+                      via-cyan-200/20
+                      to-transparent
+                      transition-opacity
+                      duration-500
+                      ${
+                        isOpen
+                          ? "opacity-100"
+                          : "opacity-0"
+                      }
+                    `}
+                  />
+
+                  <div
+                    className="
+                      flex
+                      min-w-0
+                      items-center
+                      gap-4
+                      sm:gap-6
+                    "
+                  >
+                    {/* NUMBER */}
+
+                    <span
+                      className={`
+                        hidden
+                        shrink-0
+                        font-mono
+                        text-[9px]
+                        tracking-[0.2em]
+                        transition-colors
+                        duration-300
                         sm:block
-                      "
+
+                        ${
+                          isOpen
+                            ? "text-cyan-200/55"
+                            : "text-white/20"
+                        }
+                      `}
                     >
                       0{index + 1}
                     </span>
 
+                    {/* QUESTION */}
+
                     <span
                       className={`
-                        text-lg
+                        pr-1
+                        text-[15px]
                         font-light
+                        leading-6
                         transition-colors
                         duration-300
-
+                        sm:text-lg
+                        sm:leading-7
                         md:text-xl
 
                         ${
                           isOpen
                             ? "text-white"
-                            : "text-white/65 group-hover:text-cyan-50/90"
+                            : "text-white/70 group-hover:text-white/90"
                         }
                       `}
                     >
@@ -527,11 +386,15 @@ export default function FAQ() {
                     </span>
                   </div>
 
+                  {/* =================================
+                      ICON
+                  ================================= */}
+
                   <span
                     className={`
                       flex
-                      h-11
-                      w-11
+                      h-10
+                      w-10
                       shrink-0
                       items-center
                       justify-center
@@ -539,61 +402,102 @@ export default function FAQ() {
                       border
                       transition-all
                       duration-500
+                      sm:h-11
+                      sm:w-11
 
                       ${
                         isOpen
-                          ? "rotate-45 border-cyan-300/40 bg-cyan-300/[0.10] text-cyan-200 shadow-[0_0_30px_rgba(34,211,238,.10)]"
-                          : "border-cyan-100/[0.10] bg-cyan-100/[0.025] text-white/35 group-hover:border-cyan-200/30 group-hover:bg-cyan-200/[0.05] group-hover:text-cyan-200"
+                          ? `
+                            rotate-45
+                            border-cyan-200/20
+                            bg-cyan-200/[0.07]
+                            text-cyan-100
+                          `
+                          : `
+                            border-white/[0.07]
+                            bg-white/[0.025]
+                            text-white/35
+                            group-hover:border-white/[0.13]
+                            group-hover:text-white/70
+                          `
                       }
                     `}
                   >
                     <Plus
                       size={17}
-                      strokeWidth={1.5}
+                      strokeWidth={1.4}
                     />
                   </span>
                 </button>
 
-                {/* ANSWER */}
+                {/* =================================
+                    ANSWER
+                ================================= */}
 
-                <motion.div
-                  initial={false}
-                  animate={{
-                    height: isOpen ? "auto" : 0,
-                    opacity: isOpen ? 1 : 0,
-                  }}
-                  transition={{
-                    duration: 0.45,
-                    ease,
-                  }}
-                  className="overflow-hidden"
-                >
-                  <div
-                    className="
-                      max-w-2xl
-                      pb-8
-                      pl-0
-                      text-sm
-                      leading-7
-                      text-cyan-50/40
-
-                      sm:pl-9
-                      md:text-base
-                      md:leading-8
-                    "
-                  >
-                    {item.answer}
-                  </div>
-                </motion.div>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{
+                        height: 0,
+                        opacity: 0,
+                      }}
+                      animate={{
+                        height: "auto",
+                        opacity: 1,
+                      }}
+                      exit={{
+                        height: 0,
+                        opacity: 0,
+                      }}
+                      transition={{
+                        duration: 0.42,
+                        ease,
+                      }}
+                      className="overflow-hidden"
+                    >
+                      <div
+                        className="
+                          px-5
+                          pb-7
+                          pt-0
+                          sm:px-7
+                          sm:pb-8
+                          md:px-8
+                        "
+                      >
+                        <div
+                          className="
+                            ml-0
+                            max-w-2xl
+                            border-l
+                            border-cyan-200/[0.10]
+                            pl-4
+                            text-[13px]
+                            leading-6
+                            text-cyan-50/40
+                            sm:ml-[3.25rem]
+                            sm:pl-5
+                            sm:text-sm
+                            sm:leading-7
+                            md:text-base
+                            md:leading-8
+                          "
+                        >
+                          {item.answer}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </motion.div>
             );
           })}
         </div>
       </div>
 
-      {/* =====================================================
-          BOTTOM TRANSITION
-      ===================================================== */}
+      {/* =========================================
+          BOTTOM FADE
+      ========================================= */}
 
       <div
         className="
@@ -601,11 +505,10 @@ export default function FAQ() {
           absolute
           inset-x-0
           bottom-0
-          z-20
-          h-44
+          h-40
           bg-gradient-to-t
           from-[#020F15]
-          via-[#031A21]/80
+          via-[#031A21]/60
           to-transparent
         "
       />

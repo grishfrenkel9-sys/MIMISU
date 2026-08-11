@@ -1,104 +1,92 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 interface SiteLoaderProps {
   onComplete: () => void;
 }
 
-const LOADING_TIME = 3000;
+const LOADING_TIME = 2600;
 
 const loadingMessages = [
   "Подготавливаем пространство",
   "Настраиваем атмосферу",
-  "Загружаем чистую воду",
+  "Загружаем систему",
   "Почти готово",
 ];
 
 export default function SiteLoader({
   onComplete,
 }: SiteLoaderProps) {
-  const [progress, setProgress] =
-    useState(0);
+  const reduceMotion = useReducedMotion();
 
-  const [finished, setFinished] =
-    useState(false);
-
-  const [messageIndex, setMessageIndex] =
-    useState(0);
+  const [progress, setProgress] = useState(0);
+  const [finished, setFinished] = useState(false);
+  const [messageIndex, setMessageIndex] = useState(0);
 
   useEffect(() => {
     const start = performance.now();
 
     let frame = 0;
+    let finishTimeout = 0;
+    let completeTimeout = 0;
 
     const update = (time: number) => {
-      const elapsed =
-        time - start;
+      const elapsed = time - start;
+      const raw = Math.min(elapsed / LOADING_TIME, 1);
 
-      const raw =
-        elapsed / LOADING_TIME;
-
-      const value =
-        Math.min(raw, 1);
-
-      // Плавный прогресс
-      const eased =
-        1 -
-        Math.pow(1 - value, 3);
+      const eased = 1 - Math.pow(1 - raw, 3);
 
       setProgress(eased * 100);
 
       setMessageIndex(
         Math.min(
-          Math.floor(
-            eased *
-              loadingMessages.length
-          ),
-          loadingMessages.length - 1
-        )
+          Math.floor(eased * loadingMessages.length),
+          loadingMessages.length - 1,
+        ),
       );
 
-      if (value < 1) {
-        frame =
-          requestAnimationFrame(
-            update
-          );
-      } else {
-        setTimeout(() => {
-          setFinished(true);
-
-          setTimeout(() => {
-            onComplete();
-          }, 1200);
-        }, 300);
+      if (raw < 1) {
+        frame = requestAnimationFrame(update);
+        return;
       }
+
+      finishTimeout = window.setTimeout(() => {
+        setFinished(true);
+
+        completeTimeout = window.setTimeout(() => {
+          onComplete();
+        }, 900);
+      }, 250);
     };
 
-    frame =
-      requestAnimationFrame(update);
+    frame = requestAnimationFrame(update);
 
     return () => {
       cancelAnimationFrame(frame);
+      window.clearTimeout(finishTimeout);
+      window.clearTimeout(completeTimeout);
     };
   }, [onComplete]);
 
-  // =========================================
-  // FINAL TRANSITION
-  // =========================================
+  const percentage = Math.round(progress);
+
+  /* =====================================================
+     FINAL TRANSITION
+  ===================================================== */
 
   if (finished) {
     return (
       <motion.div
         initial={{
-          scale: 1,
           opacity: 1,
+          scale: 1,
         }}
         animate={{
-          scale: 5,
           opacity: 0,
+          scale: reduceMotion ? 1 : 1.04,
         }}
         transition={{
-          duration: 1.2,
+          duration: reduceMotion ? 0.2 : 0.9,
           ease: [0.76, 0, 0.24, 1],
         }}
         className="
@@ -108,25 +96,23 @@ export default function SiteLoader({
           flex
           items-center
           justify-center
-          bg-[#040404]
+          bg-[#F2F7F6]
         "
       >
-        <div
+        <span
           className="
-            text-[10px]
+            text-[18px]
+            font-light
             uppercase
-            tracking-[0.5em]
-            text-white/30
+            tracking-[0.45em]
+            text-[#173F49]
           "
         >
           MIMISU
-        </div>
+        </span>
       </motion.div>
     );
   }
-
-  const percentage =
-    Math.round(progress);
 
   return (
     <div
@@ -135,54 +121,50 @@ export default function SiteLoader({
         inset-0
         z-[9999]
         overflow-hidden
-        bg-[#040404]
-        text-white
+        bg-[#F2F7F6]
+        text-[#173F49]
       "
     >
-      {/* =================================
-          BACKGROUND GRID
-      ================================= */}
+      {/* =================================================
+          BACKGROUND
+      ================================================= */}
 
       <div
         className="
           pointer-events-none
           absolute
           inset-0
-          opacity-[0.025]
+          opacity-40
         "
         style={{
-          backgroundImage:
-            `
+          backgroundImage: `
             linear-gradient(
-              rgba(255,255,255,.5) 1px,
+              rgba(23,63,73,.045) 1px,
               transparent 1px
             ),
             linear-gradient(
               90deg,
-              rgba(255,255,255,.5) 1px,
+              rgba(23,63,73,.045) 1px,
               transparent 1px
             )
           `,
-          backgroundSize:
-            "80px 80px",
+          backgroundSize: "70px 70px",
         }}
       />
 
-      {/* =================================
-          AMBIENT GLOW
-      ================================= */}
+      {/* Ambient light */}
 
       <motion.div
-        animate={{
-          scale: [1, 1.12, 1],
-          opacity: [
-            0.015,
-            0.035,
-            0.015,
-          ],
-        }}
+        animate={
+          reduceMotion
+            ? undefined
+            : {
+                scale: [1, 1.08, 1],
+                opacity: [0.35, 0.55, 0.35],
+              }
+        }
         transition={{
-          duration: 4,
+          duration: 5,
           repeat: Infinity,
           ease: "easeInOut",
         }}
@@ -191,57 +173,124 @@ export default function SiteLoader({
           absolute
           left-1/2
           top-1/2
-          h-[500px]
-          w-[500px]
+          h-[420px]
+          w-[420px]
           -translate-x-1/2
           -translate-y-1/2
           rounded-full
-          bg-cyan-300
-          blur-[160px]
+          bg-[#BFEFEA]/35
+          blur-[110px]
         "
       />
 
-      {/* =================================
-          TOP
-      ================================= */}
+      {/* Decorative circles */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -right-32
+          top-[18%]
+          h-[360px]
+          w-[360px]
+          rounded-full
+          border
+          border-[#2F6873]/[0.07]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -right-16
+          top-[27%]
+          h-[210px]
+          w-[210px]
+          rounded-full
+          border
+          border-[#2F6873]/[0.06]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -bottom-40
+          -left-32
+          h-[380px]
+          w-[380px]
+          rounded-full
+          bg-white/60
+          blur-[100px]
+        "
+      />
+
+      {/* =================================================
+          TOP BAR
+      ================================================= */}
 
       <div
         className="
           absolute
-          left-8
-          right-8
-          top-8
+          left-5
+          right-5
+          top-5
           flex
           items-center
           justify-between
+
+          sm:left-8
+          sm:right-8
+          sm:top-8
         "
       >
-        <span
+        <div
           className="
-            text-[8px]
-            uppercase
-            tracking-[0.45em]
-            text-white/30
+            flex
+            items-center
+            gap-3
           "
         >
-          ЧИСТАЯ ВОДА
-        </span>
+          <span
+            className="
+              h-1.5
+              w-1.5
+              rounded-full
+              bg-[#2F6873]
+              shadow-[0_0_10px_rgba(47,104,115,.25)]
+            "
+          />
+
+          <span
+            className="
+              text-[8px]
+              font-medium
+              uppercase
+              tracking-[0.35em]
+              text-[#52757B]
+            "
+          >
+            Добро пожаловать
+          </span>
+        </div>
 
         <span
           className="
+            font-mono
             text-[8px]
-            uppercase
-            tracking-[0.45em]
-            text-white/30
+            tracking-[0.25em]
+            text-[#6C898D]
           "
         >
           01 / 01
         </span>
       </div>
 
-      {/* =================================
+      {/* =================================================
           CENTER
-      ================================= */}
+      ================================================= */}
 
       <div
         className="
@@ -249,34 +298,43 @@ export default function SiteLoader({
           left-1/2
           top-1/2
           flex
+          w-full
           -translate-x-1/2
           -translate-y-1/2
           flex-col
           items-center
+          px-6
         "
       >
-        {/* =================================
-            WATER CIRCLE
-        ================================= */}
+        {/* =================================================
+            WATER OBJECT
+        ================================================= */}
 
         <div
           className="
             relative
             flex
-            h-[180px]
-            w-[180px]
+            h-[170px]
+            w-[170px]
             items-center
             justify-center
+
+            sm:h-[190px]
+            sm:w-[190px]
           "
         >
-          {/* OUTER RING */}
+          {/* Outer circle */}
 
           <motion.div
-            animate={{
-              rotate: 360,
-            }}
+            animate={
+              reduceMotion
+                ? undefined
+                : {
+                    rotate: 360,
+                  }
+            }
             transition={{
-              duration: 12,
+              duration: 16,
               repeat: Infinity,
               ease: "linear",
             }}
@@ -285,46 +343,50 @@ export default function SiteLoader({
               inset-0
               rounded-full
               border
-              border-white/10
-              border-t-cyan-200/60
+              border-[#2F6873]/[0.10]
             "
-          />
+          >
+            <span
+              className="
+                absolute
+                left-1/2
+                top-0
+                h-1.5
+                w-1.5
+                -translate-x-1/2
+                rounded-full
+                bg-[#2F6873]/70
+              "
+            />
+          </motion.div>
 
-          {/* SECOND RING */}
-
-          <motion.div
-            animate={{
-              rotate: -360,
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            className="
-              absolute
-              inset-[12px]
-              rounded-full
-              border
-              border-white/[0.05]
-              border-b-cyan-200/40
-            "
-          />
-
-          {/* WATER */}
+          {/* Inner circle */}
 
           <div
             className="
               absolute
-              inset-[30px]
+              inset-[15px]
+              rounded-full
+              border
+              border-[#2F6873]/[0.08]
+            "
+          />
+
+          {/* Water container */}
+
+          <div
+            className="
+              absolute
+              inset-[31px]
               overflow-hidden
               rounded-full
               border
-              border-white/10
-              bg-cyan-200/[0.015]
+              border-[#2F6873]/[0.12]
+              bg-white/45
+              shadow-[0_15px_45px_rgba(23,63,73,.08)]
             "
           >
-            {/* FILL */}
+            {/* Water */}
 
             <motion.div
               className="
@@ -332,29 +394,29 @@ export default function SiteLoader({
                 bottom-0
                 left-0
                 right-0
-                bg-cyan-200/[0.10]
+                bg-[#9DDCD9]/30
               "
               animate={{
                 height: `${progress}%`,
               }}
               transition={{
-                duration: 0.2,
+                duration: 0.18,
                 ease: "linear",
               }}
             />
 
-            {/* WAVE */}
+            {/* Wave */}
 
             <motion.div
-              animate={{
-                x: [
-                  "-15%",
-                  "15%",
-                  "-15%",
-                ],
-              }}
+              animate={
+                reduceMotion
+                  ? undefined
+                  : {
+                      x: ["-12%", "12%", "-12%"],
+                    }
+              }
               transition={{
-                duration: 3,
+                duration: 3.5,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
@@ -362,19 +424,32 @@ export default function SiteLoader({
                 absolute
                 left-[-15%]
                 right-[-15%]
-                h-[20px]
+                h-5
                 rounded-[50%]
                 border-t
-                border-cyan-100/20
+                border-[#2F6873]/20
               "
               style={{
-                bottom:
-                  `calc(${progress}% - 8px)`,
+                bottom: `calc(${progress}% - 8px)`,
               }}
+            />
+
+            {/* Shine */}
+
+            <div
+              className="
+                pointer-events-none
+                absolute
+                inset-0
+                bg-gradient-to-br
+                from-white/50
+                via-transparent
+                to-transparent
+              "
             />
           </div>
 
-          {/* NUMBER */}
+          {/* Percentage */}
 
           <div
             className="
@@ -387,9 +462,11 @@ export default function SiteLoader({
           >
             <span
               className="
-                text-3xl
+                text-[30px]
                 font-light
-                tracking-tight
+                leading-none
+                tracking-[-0.05em]
+                text-[#173F49]
               "
             >
               {percentage}
@@ -397,91 +474,97 @@ export default function SiteLoader({
 
             <span
               className="
-                mt-1
+                mt-2
                 text-[7px]
+                font-medium
                 uppercase
-                tracking-[0.35em]
-                text-white/30
+                tracking-[0.3em]
+                text-[#63858A]
               "
             >
-              процентов
+              загрузка
             </span>
           </div>
         </div>
 
-        {/* =================================
+        {/* =================================================
             BRAND
-        ================================= */}
+        ================================================= */}
 
         <motion.div
           initial={{
             opacity: 0,
-            y: 15,
+            y: 12,
           }}
           animate={{
             opacity: 1,
             y: 0,
           }}
           transition={{
-            duration: 1,
+            duration: reduceMotion ? 0.2 : 0.8,
+            ease: [0.16, 1, 0.3, 1],
           }}
           className="
-            mt-10
+            mt-9
             text-center
           "
         >
           <div
             className="
-              text-[9px]
+              text-[8px]
+              font-medium
               uppercase
-              tracking-[0.6em]
-              text-white/30
+              tracking-[0.5em]
+              text-[#63858A]
             "
           >
-            ГОРНАЯ ВОДА
+            Чистая вода
           </div>
 
           <div
             className="
               mt-3
-              text-2xl
+              text-[25px]
               font-light
-              tracking-[0.25em]
+              uppercase
+              tracking-[0.35em]
+              text-[#173F49]
             "
           >
             MIMISU
           </div>
         </motion.div>
 
-        {/* =================================
+        {/* =================================================
             STATUS
-        ================================= */}
+        ================================================= */}
 
         <div
           className="
-            mt-8
+            mt-7
             flex
+            min-h-[20px]
             items-center
-            gap-3
+            gap-2.5
           "
         >
-          <motion.div
-            animate={{
-              opacity: [
-                0.2,
-                1,
-                0.2,
-              ],
-            }}
+          <motion.span
+            animate={
+              reduceMotion
+                ? undefined
+                : {
+                    opacity: [0.25, 1, 0.25],
+                  }
+            }
             transition={{
               duration: 1.5,
               repeat: Infinity,
             }}
             className="
-              h-1
-              w-1
+              h-1.5
+              w-1.5
               rounded-full
-              bg-cyan-200
+              bg-[#2F6873]
             "
           />
 
@@ -495,80 +578,94 @@ export default function SiteLoader({
               opacity: 1,
               y: 0,
             }}
+            transition={{
+              duration: 0.3,
+            }}
             className="
               text-[8px]
+              font-medium
               uppercase
-              tracking-[0.4em]
-              text-white/25
+              tracking-[0.28em]
+              text-[#63858A]
             "
           >
             {percentage >= 100
-              ? "ГОТОВО"
-              : loadingMessages[
-                  messageIndex
-                ]}
+              ? "Готово"
+              : loadingMessages[messageIndex]}
           </motion.span>
         </div>
       </div>
 
-      {/* =================================
-          BOTTOM LEFT
-      ================================= */}
+      {/* =================================================
+          BOTTOM
+      ================================================= */}
 
       <div
         className="
           absolute
-          bottom-8
-          left-8
-          text-[8px]
-          uppercase
-          tracking-[0.4em]
-          text-white/20
-        "
-      >
-        ПРИРОДНЫЙ ИСТОЧНИК
-      </div>
+          bottom-5
+          left-5
+          right-5
+          flex
+          items-end
+          justify-between
 
-      {/* =================================
-          BOTTOM RIGHT
-      ================================= */}
-
-      <div
-        className="
-          absolute
-          bottom-8
-          right-8
-          text-[8px]
-          uppercase
-          tracking-[0.4em]
-          text-white/20
-        "
-      >
-        2026
-      </div>
-
-      {/* =================================
-          SIDE PROGRESS
-      ================================= */}
-
-      <div
-        className="
-          absolute
-          bottom-1/2
-          right-8
-          h-[120px]
-          w-px
-          translate-y-1/2
-          bg-white/10
+          sm:bottom-8
+          sm:left-8
+          sm:right-8
         "
       >
         <div
+          className="
+            text-[7px]
+            font-medium
+            uppercase
+            tracking-[0.3em]
+            text-[#779397]
+          "
+        >
+          Природный источник
+        </div>
+
+        <div
+          className="
+            text-[7px]
+            font-medium
+            uppercase
+            tracking-[0.3em]
+            text-[#779397]
+          "
+        >
+          2026
+        </div>
+      </div>
+
+      {/* =================================================
+          SIDE PROGRESS
+      ================================================= */}
+
+      <div
+        className="
+          absolute
+          right-5
+          top-1/2
+          hidden
+          h-[110px]
+          w-px
+          -translate-y-1/2
+          bg-[#2F6873]/[0.10]
+
+          sm:right-8
+          sm:block
+        "
+      >
+        <motion.div
           className="
             absolute
             bottom-0
             left-0
             w-full
-            bg-cyan-200/70
+            bg-[#2F6873]/60
           "
           style={{
             height: `${progress}%`,
@@ -579,17 +676,21 @@ export default function SiteLoader({
       <div
         className="
           absolute
-          bottom-1/2
-          right-[23px]
-          translate-y-1/2
+          right-[20px]
+          top-1/2
+          hidden
+          -translate-y-1/2
           -rotate-90
-          text-[7px]
+          text-[6px]
+          font-medium
           uppercase
-          tracking-[0.4em]
-          text-white/20
+          tracking-[0.35em]
+          text-[#779397]
+
+          sm:block
         "
       >
-        ЗАГРУЗКА
+        Загрузка
       </div>
     </div>
   );

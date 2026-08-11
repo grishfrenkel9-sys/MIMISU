@@ -17,8 +17,8 @@ interface BottleState {
 const states: BottleState[] = [
   // HERO
   {
-    x: 3.0,
-    y: -0.7,
+    x: 1.9,
+    y: -0.6,
     z: -1.3,
     rotationX: 0.12,
     rotationY: -0.45,

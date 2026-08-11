@@ -1,6 +1,8 @@
 import {
   motion,
+  useReducedMotion,
   useScroll,
+  useSpring,
   useTransform,
 } from "framer-motion";
 import { useRef } from "react";
@@ -9,378 +11,107 @@ import StoryStep from "./StoryStep";
 import { story } from "./storyData";
 
 export default function BottleStory() {
-  const storyRef = useRef<HTMLElement | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const reduceMotion = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
-    target: storyRef,
-    offset: ["start end", "end start"],
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
+
+  /*
+   * Быстрый отклик без ощущения рывка.
+   */
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 320,
+    damping: 36,
+    mass: 0.12,
   });
 
   const glowY = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    [-100, 0, 100]
-  );
-
-  const glowScale = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    [0.8, 1.1, 0.8]
+    progress,
+    [0, 1],
+    [-60, 60],
   );
 
   return (
     <section
-      ref={storyRef}
+      ref={sectionRef}
       id="story"
       className="
         relative
-        overflow-hidden
-        bg-[#07303A]
+        overflow-visible
+        bg-[#062A32]
         text-white
       "
     >
-      {/* =========================================
-          TOP TRANSITION
-      ========================================= */}
+      {/* =====================================================
+          AMBIENT LIGHT
+      ===================================================== */}
+
+      {!reduceMotion && (
+        <motion.div
+          aria-hidden
+          style={{ y: glowY }}
+          className="
+            pointer-events-none
+            fixed
+            left-1/2
+            top-1/2
+            z-0
+            h-[380px]
+            w-[380px]
+            -translate-x-1/2
+            -translate-y-1/2
+            rounded-full
+            bg-[#6CE0E5]/[0.055]
+            blur-[120px]
+
+            sm:h-[500px]
+            sm:w-[500px]
+
+            lg:h-[650px]
+            lg:w-[650px]
+            lg:blur-[160px]
+          "
+        />
+      )}
+
+      {/* =====================================================
+          GRID
+      ===================================================== */}
 
       <div
-        className="
-          pointer-events-none
-          absolute
-          inset-x-0
-          top-0
-          z-0
-          h-[180px]
-          bg-gradient-to-b
-          from-[#06232B]
-          via-[#06303A]
-          to-[#07303A]
-        "
-      />
-
-      {/* =========================================
-          OCEAN AMBIENT LIGHT
-      ========================================= */}
-
-      <motion.div
-        style={{
-          y: glowY,
-          scale: glowScale,
-        }}
-        className="
-          pointer-events-none
-          absolute
-          left-1/2
-          top-[15%]
-          h-[520px]
-          w-[520px]
-          -translate-x-1/2
-          rounded-full
-          bg-[#1596A8]/[0.12]
-          blur-[150px]
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          -right-[180px]
-          top-[38%]
-          h-[500px]
-          w-[500px]
-          rounded-full
-          bg-[#0B7888]/[0.10]
-          blur-[150px]
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          -left-[180px]
-          top-[65%]
-          h-[500px]
-          w-[500px]
-          rounded-full
-          bg-[#0E6675]/[0.08]
-          blur-[160px]
-        "
-      />
-
-      {/* =========================================
-          SUBTLE GRID
-      ========================================= */}
-
-      <div
+        aria-hidden
         className="
           pointer-events-none
           absolute
           inset-0
-          z-0
-          opacity-[0.025]
+          opacity-[0.018]
         "
         style={{
           backgroundImage: `
             linear-gradient(
-              rgba(102,220,225,.16) 1px,
+              rgba(108,224,229,.22) 1px,
               transparent 1px
             ),
             linear-gradient(
               90deg,
-              rgba(102,220,225,.16) 1px,
+              rgba(108,224,229,.22) 1px,
               transparent 1px
             )
           `,
-          backgroundSize: "140px 140px",
+          backgroundSize: "90px 90px",
           maskImage:
-            "linear-gradient(to bottom, transparent, black 18%, black 82%, transparent)",
+            "linear-gradient(to bottom, transparent, black 8%, black 92%, transparent)",
           WebkitMaskImage:
-            "linear-gradient(to bottom, transparent, black 18%, black 82%, transparent)",
+            "linear-gradient(to bottom, transparent, black 8%, black 92%, transparent)",
         }}
       />
 
-      {/* =========================================
-          HORIZONTAL LINES
-      ========================================= */}
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-x-0
-          top-[18%]
-          h-px
-          bg-gradient-to-r
-          from-transparent
-          via-[#63D5DC]/[0.10]
-          to-transparent
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-x-0
-          top-[58%]
-          h-px
-          bg-gradient-to-r
-          from-transparent
-          via-[#63D5DC]/[0.065]
-          to-transparent
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-x-0
-          top-[84%]
-          h-px
-          bg-gradient-to-r
-          from-transparent
-          via-[#63D5DC]/[0.04]
-          to-transparent
-        "
-      />
-
-      {/* =========================================
-          DIAGONAL WATER LINES
-      ========================================= */}
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          -left-[10%]
-          top-[32%]
-          h-px
-          w-[120%]
-          rotate-[-4deg]
-          bg-gradient-to-r
-          from-transparent
-          via-[#63D5DC]/[0.07]
-          to-transparent
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          -left-[10%]
-          top-[76%]
-          h-px
-          w-[120%]
-          rotate-[2deg]
-          bg-gradient-to-r
-          from-transparent
-          via-[#63D5DC]/[0.055]
-          to-transparent
-        "
-      />
-
-      {/* =========================================
-          ORBIT DETAILS
-      ========================================= */}
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          left-[14%]
-          top-[27%]
-          h-[420px]
-          w-[420px]
-          rounded-full
-          border
-          border-[#63D5DC]/[0.055]
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          left-[calc(14%+34px)]
-          top-[calc(27%+34px)]
-          h-[350px]
-          w-[350px]
-          rounded-full
-          border
-          border-[#63D5DC]/[0.035]
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          right-[8%]
-          top-[48%]
-          h-[300px]
-          w-[300px]
-          rounded-full
-          border
-          border-[#63D5DC]/[0.03]
-        "
-      />
-
-      {/* =========================================
-          MICRO MARKERS
-      ========================================= */}
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          left-[8%]
-          top-[24%]
-          h-1.5
-          w-1.5
-          rounded-full
-          bg-[#6CE0E5]/70
-          shadow-[0_0_16px_rgba(99,213,220,.35)]
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          right-[12%]
-          top-[38%]
-          h-1
-          w-1
-          rounded-full
-          bg-[#6CE0E5]/55
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          right-[22%]
-          bottom-[24%]
-          h-1.5
-          w-1.5
-          rounded-full
-          bg-[#6CE0E5]/40
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          left-[31%]
-          top-[52%]
-          h-1
-          w-1
-          rounded-full
-          bg-[#8BE6E9]/30
-        "
-      />
-
-      {/* =========================================
-          COORDINATE MARKS
-      ========================================= */}
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          left-[7%]
-          top-[24%]
-          h-px
-          w-8
-          bg-[#63D5DC]/30
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          left-[7%]
-          top-[24%]
-          h-8
-          w-px
-          bg-[#63D5DC]/30
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          right-[10%]
-          bottom-[22%]
-          h-px
-          w-8
-          bg-[#63D5DC]/22
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          right-[10%]
-          bottom-[22%]
-          h-8
-          w-px
-          bg-[#63D5DC]/22
-        "
-      />
-
-      {/* =========================================
-          CONTENT
-      ========================================= */}
+      {/* =====================================================
+          INTRO
+      ===================================================== */}
 
       <div
         className="
@@ -388,59 +119,53 @@ export default function BottleStory() {
           z-10
           mx-auto
           w-full
-          max-w-[1250px]
-          px-6
-          pt-28
-          pb-24
+          max-w-[1320px]
+          px-5
+          pb-14
+          pt-24
 
-          md:px-10
-          md:pt-36
-          md:pb-28
+          sm:px-7
+          sm:pb-16
+          sm:pt-28
 
-          xl:px-14
-          xl:pt-44
-          xl:pb-32
+          lg:px-12
+          lg:pb-20
+          lg:pt-36
         "
       >
-        {/* HEADER */}
-
         <motion.div
-          initial={{
-            opacity: 0,
-            y: 35,
-            filter: "blur(8px)",
-          }}
+          initial={
+            reduceMotion
+              ? undefined
+              : {
+                  opacity: 0,
+                  y: 18,
+                }
+          }
           whileInView={{
             opacity: 1,
             y: 0,
-            filter: "blur(0px)",
           }}
           viewport={{
-            once: false,
-            amount: 0.3,
+            once: true,
+            amount: 0.2,
           }}
           transition={{
-            duration: 0.8,
+            duration: reduceMotion ? 0 : 0.55,
             ease: [0.16, 1, 0.3, 1],
           }}
-          className="
-            mb-20
-            max-w-3xl
-            md:mb-24
-          "
+          className="max-w-[760px]"
         >
-          {/* LABEL */}
-
           <div
             className="
               flex
               items-center
               gap-3
               text-[9px]
-              font-medium
+              font-semibold
               uppercase
-              tracking-[0.35em]
-              text-[#74DDE2]/75
+              tracking-[0.3em]
+              text-[#6CE0E5]/70
             "
           >
             <span
@@ -449,125 +174,473 @@ export default function BottleStory() {
                 w-1.5
                 rounded-full
                 bg-[#6CE0E5]
-                shadow-[0_0_14px_rgba(108,224,229,.65)]
+                shadow-[0_0_12px_rgba(108,224,229,.55)]
               "
             />
 
             О бренде
 
-            <span className="h-px w-10 bg-[#6CE0E5]/30" />
+            <span
+              className="
+                h-px
+                w-8
+                bg-[#6CE0E5]/30
+              "
+            />
           </div>
-
-          {/* HEADING */}
 
           <h2
             className="
               mt-6
-              text-[clamp(2.8rem,7vw,6rem)]
+              text-[clamp(2.7rem,8vw,6.5rem)]
               font-light
               leading-[0.9]
-              tracking-[-0.055em]
+              tracking-[-0.06em]
               text-[#F0FFFF]
             "
           >
             Как бутылка
             <br />
 
-            <span className="text-[#A8CDD1]/40">
-              становится контактом
+            <span className="text-[#A8CDD1]/45">
+              становится контактом.
             </span>
           </h2>
 
           <p
             className="
               mt-7
-              max-w-xl
+              max-w-[560px]
               text-sm
-              leading-7
+              leading-6
               text-[#A8CDD1]/65
-              md:text-base
-              md:leading-8
+
+              sm:text-base
+              sm:leading-8
             "
           >
-            MIMISU превращает обычный физический объект
-            в точку контакта между брендом и человеком.
+            Один физический объект проходит несколько
+            стадий — от появления бренда до цифрового
+            действия аудитории.
           </p>
         </motion.div>
+      </div>
 
-        {/* STORY */}
+      {/* =====================================================
+          STORY ENGINE
+      ===================================================== */}
 
-        <div className="relative">
-          {/* Vertical line */}
+      <div
+        className="
+          relative
+          z-10
+          mx-auto
+          w-full
+          max-w-[1320px]
+          px-5
 
+          sm:px-7
+
+          lg:px-12
+        "
+      >
+        {/*
+         * 5 состояний.
+         *
+         * Важно:
+         * родитель НЕ имеет overflow-hidden.
+         *
+         * Sticky живёт внутри этого блока.
+         */}
+        <div
+          className="
+            relative
+            min-h-[300vh]
+
+            sm:min-h-[320vh]
+
+            lg:min-h-[380vh]
+          "
+        >
           <div
             className="
-              pointer-events-none
-              absolute
-              left-3
+              sticky
               top-0
-              bottom-0
-              hidden
-              w-px
-              bg-gradient-to-b
-              from-transparent
-              via-[#63D5DC]/[0.12]
-              to-transparent
-              lg:block
+              flex
+              min-h-screen
+              items-center
             "
-          />
+          >
+            <div
+              className="
+                grid
+                w-full
+                grid-cols-1
+                gap-7
+                py-8
 
-          <div className="space-y-8 md:space-y-12">
-            {story.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{
-                  opacity: 0,
-                  y: 45,
-                  filter: "blur(10px)",
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                  filter: "blur(0px)",
-                }}
-                viewport={{
-                  once: false,
-                  amount: 0.2,
-                }}
-                transition={{
-                  duration: 0.8,
-                  delay: index * 0.05,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
+                sm:gap-10
+                sm:py-12
+
+                lg:grid-cols-[72px_minmax(0,1fr)_minmax(280px,0.62fr)]
+                lg:items-center
+                lg:gap-12
+                lg:py-16
+              "
+            >
+              {/* =================================================
+                  LEFT NUMBERS
+              ================================================= */}
+
+              <div
+                className="
+                  hidden
+                  lg:flex
+                  lg:flex-col
+                  lg:items-center
+                  lg:gap-4
+                "
+              >
+                {story.map((item, index) => {
+                  const start = index / story.length;
+                  const end = (index + 1) / story.length;
+
+                  const opacity = useTransform(
+                    progress,
+                    [
+                      start,
+                      start + 0.02,
+                      end - 0.02,
+                      end,
+                    ],
+                    [0.28, 1, 1, 0.28],
+                  );
+
+                  const scale = useTransform(
+                    progress,
+                    [
+                      start,
+                      start + 0.045,
+                      end - 0.045,
+                      end,
+                    ],
+                    [0.88, 1, 1, 0.88],
+                  );
+
+                  return (
+                    <motion.div
+                      key={item.id}
+                      style={{
+                        opacity,
+                        scale,
+                      }}
+                      className="
+                        flex
+                        h-10
+                        w-10
+                        shrink-0
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        border-[#6CE0E5]/[0.14]
+                        bg-[#6CE0E5]/[0.025]
+                        font-mono
+                        text-[9px]
+                        tracking-[0.15em]
+                        text-[#6CE0E5]/70
+                      "
+                    >
+                      {item.number}
+                    </motion.div>
+                  );
+                })}
+
+                {/* Декоративная линия — БЕЗ progress fill */}
+                <div
+                  className="
+                    mt-1
+                    h-16
+                    w-px
+                    bg-gradient-to-b
+                    from-[#6CE0E5]/20
+                    to-transparent
+                  "
+                />
+              </div>
+
+              {/* =================================================
+                  STORY CARD
+              ================================================= */}
+
+              <div
+                className="
+                  relative
+                  min-h-[380px]
+                  overflow-hidden
+                  rounded-[1.75rem]
+                  border
+                  border-[#6CE0E5]/[0.07]
+                  bg-[#07303A]/[0.42]
+
+                  sm:min-h-[430px]
+                  sm:rounded-[2rem]
+
+                  lg:min-h-[560px]
+                  lg:rounded-[2.5rem]
+                "
               >
                 <StoryStep
-                  number={item.number}
-                  title={item.title}
-                  text={item.text}
+                  story={story}
+                  progress={progress}
                 />
-              </motion.div>
-            ))}
+
+                {/* INNER FRAME */}
+
+                <div
+                  aria-hidden
+                  className="
+                    pointer-events-none
+                    absolute
+                    inset-3
+                    rounded-[1.35rem]
+                    border
+                    border-[#6CE0E5]/[0.035]
+
+                    sm:inset-4
+
+                    lg:inset-6
+                    lg:rounded-[2rem]
+                  "
+                />
+
+                {/* TOP SIGNAL */}
+
+                <div
+                  aria-hidden
+                  className="
+                    pointer-events-none
+                    absolute
+                    left-6
+                    top-6
+                    h-1.5
+                    w-1.5
+                    rounded-full
+                    bg-[#6CE0E5]
+                    shadow-[0_0_12px_rgba(108,224,229,.65)]
+                  "
+                />
+
+                {/* BOTTOM DETAIL */}
+
+                <div
+                  aria-hidden
+                  className="
+                    pointer-events-none
+                    absolute
+                    bottom-7
+                    right-7
+                    h-px
+                    w-12
+                    bg-[#6CE0E5]/20
+                  "
+                />
+              </div>
+
+              {/* =================================================
+                  RIGHT DESCRIPTION
+              ================================================= */}
+
+              <div className="hidden lg:block">
+                <div
+                  className="
+                    mb-7
+                    h-px
+                    w-14
+                    bg-[#6CE0E5]/30
+                  "
+                />
+
+                <p
+                  className="
+                    text-[9px]
+                    uppercase
+                    tracking-[0.3em]
+                    text-[#6CE0E5]/45
+                  "
+                >
+                  Physical → Digital
+                </p>
+
+                <p
+                  className="
+                    mt-5
+                    max-w-[300px]
+                    text-sm
+                    leading-7
+                    text-[#A8CDD1]/35
+                  "
+                >
+                  Каждый этап меняет роль объекта,
+                  превращая физический контакт
+                  в цифровое действие.
+                </p>
+
+                <div
+                  className="
+                    mt-10
+                    flex
+                    items-center
+                    gap-2
+                    text-[8px]
+                    uppercase
+                    tracking-[0.25em]
+                    text-[#6CE0E5]/40
+                  "
+                >
+                  <span
+                    className="
+                      h-1.5
+                      w-1.5
+                      rounded-full
+                      bg-[#6CE0E5]
+                      shadow-[0_0_8px_rgba(108,224,229,.6)]
+                    "
+                  />
+
+                  System active
+                </div>
+              </div>
+
+              {/* =================================================
+                  MOBILE NUMBERS
+              ================================================= */}
+
+              <div
+                className="
+                  flex
+                  items-center
+                  justify-center
+                  gap-2
+                  lg:hidden
+                "
+              >
+                {story.map((item, index) => {
+                  const start = index / story.length;
+                  const end = (index + 1) / story.length;
+
+                  const opacity = useTransform(
+                    progress,
+                    [
+                      start,
+                      start + 0.02,
+                      end - 0.02,
+                      end,
+                    ],
+                    [0.3, 1, 1, 0.3],
+                  );
+
+                  const scale = useTransform(
+                    progress,
+                    [
+                      start,
+                      start + 0.04,
+                      end - 0.04,
+                      end,
+                    ],
+                    [0.9, 1, 1, 0.9],
+                  );
+
+                  return (
+                    <motion.div
+                      key={item.id}
+                      style={{
+                        opacity,
+                        scale,
+                      }}
+                      className="
+                        flex
+                        h-8
+                        min-w-8
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        border-[#6CE0E5]/[0.13]
+                        bg-[#6CE0E5]/[0.025]
+                        px-2
+                        font-mono
+                        text-[8px]
+                        text-[#6CE0E5]/65
+                      "
+                    >
+                      {item.number}
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* =========================================
-          BOTTOM TRANSITION
-      ========================================= */}
+      {/* =====================================================
+          FOOTER
+      ===================================================== */}
 
       <div
         className="
-          pointer-events-none
-          absolute
-          inset-x-0
-          bottom-0
-          z-20
-          h-40
-          bg-gradient-to-t
-          from-[#06232B]
-          to-transparent
+          relative
+          z-10
+          mx-auto
+          max-w-[1320px]
+          px-5
+          pb-20
+          pt-6
+
+          sm:px-7
+
+          lg:px-12
+          lg:pb-28
         "
-      />
+      >
+        <div
+          className="
+            flex
+            flex-col
+            gap-3
+            border-t
+            border-[#6CE0E5]/10
+            pt-5
+
+            sm:flex-row
+            sm:items-center
+            sm:justify-between
+          "
+        >
+          <span
+            className="
+              text-[8px]
+              uppercase
+              tracking-[0.25em]
+              text-[#A8CDD1]/35
+            "
+          >
+            Physical → Digital → Action
+          </span>
+
+          <span
+            className="
+              text-[8px]
+              uppercase
+              tracking-[0.22em]
+              text-[#A8CDD1]/35
+            "
+          >
+            System active
+          </span>
+        </div>
+      </div>
     </section>
   );
 }

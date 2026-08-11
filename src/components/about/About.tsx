@@ -1,49 +1,38 @@
-
-import { motion } from "framer-motion";
-
-const ease = [0.16, 1, 0.3, 1] as const;
+import { motion, useReducedMotion } from "framer-motion";
 
 export default function About() {
+  const reduceMotion = useReducedMotion();
+
+  const steps = [
+    {
+      number: "01",
+      title: "Бренд появляется в реальном мире",
+      text: "Кампания начинается с физического контакта. Бренд выбирает объём размещения и получает присутствие там, где люди уже потребляют воду.",
+    },
+    {
+      number: "02",
+      title: "Контакт происходит естественно",
+      text: "Бутылка оказывается в руках человека без дополнительного рекламного барьера — в кафе, офисе, магазине или городском пространстве.",
+    },
+    {
+      number: "03",
+      title: "Физический контакт становится действием",
+      text: "QR-код переводит человека из офлайн-среды в цифровой канал, где можно измерять переходы, интерес и дальнейшее взаимодействие.",
+    },
+  ];
+
   return (
-    <section
-      id="about"
-      className="
-        relative
-        overflow-hidden
-        bg-[#1A4A55]
-        py-28
-        text-white
-        md:py-36
-        lg:py-44
-      "
-    >
-      {/* BACKGROUND */}
+    <section className="relative overflow-hidden bg-[#0A3B45] text-white">
+      {/* =====================================================
+          BACKGROUND
+      ===================================================== */}
 
       <div
         className="
           pointer-events-none
           absolute
           inset-0
-          bg-gradient-to-b
-          from-[#1A4A55]
-          via-[#1A4A55]
-          to-[#1A4A55]
-        "
-      />
-
-      {/* AMBIENT LIGHT */}
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          -left-[220px]
-          top-[4%]
-          h-[620px]
-          w-[620px]
-          rounded-full
-          bg-cyan-100/[0.06]
-          blur-[190px]
+          bg-[radial-gradient(circle_at_78%_18%,rgba(103,232,249,.10),transparent_34%)]
         "
       />
 
@@ -51,118 +40,13 @@ export default function About() {
         className="
           pointer-events-none
           absolute
-          -right-[240px]
-          top-[30%]
-          h-[560px]
-          w-[560px]
-          rounded-full
-          bg-cyan-100/[0.045]
-          blur-[180px]
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          left-[35%]
-          bottom-[-180px]
-          h-[500px]
-          w-[700px]
-          rounded-full
-          bg-cyan-50/[0.035]
-          blur-[180px]
-        "
-      />
-
-      {/* GRID */}
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-0
-          opacity-[0.025]
-        "
-        style={{
-          backgroundImage: `
-            linear-gradient(
-              rgba(220,250,255,.15) 1px,
-              transparent 1px
-            ),
-            linear-gradient(
-              90deg,
-              rgba(220,250,255,.15) 1px,
-              transparent 1px
-            )
-          `,
-          backgroundSize: "120px 120px",
-          maskImage:
-            "linear-gradient(to bottom, transparent, black 12%, black 88%, transparent)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, transparent, black 12%, black 88%, transparent)",
-        }}
-      />
-
-      {/* HORIZONTAL LINES */}
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-x-0
-          top-[18%]
-          h-px
-          bg-gradient-to-r
-          from-transparent
-          via-cyan-100/[0.08]
-          to-transparent
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          inset-x-0
-          top-[54%]
-          h-px
-          bg-gradient-to-r
-          from-transparent
-          via-cyan-100/[0.05]
-          to-transparent
-        "
-      />
-
-      {/* ORBITS */}
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          -right-[16%]
-          top-[12%]
-          h-[620px]
-          w-[920px]
-          rounded-[50%]
-          border
-          border-cyan-50/[0.04]
-          rotate-[-8deg]
-        "
-      />
-
-      <div
-        className="
-          pointer-events-none
-          absolute
-          -right-[10%]
+          -right-[180px]
           top-[20%]
-          h-[470px]
-          w-[760px]
-          rounded-[50%]
+          h-[420px]
+          w-[420px]
+          rounded-full
           border
-          border-cyan-50/[0.025]
-          rotate-[-8deg]
+          border-cyan-300/[0.08]
         "
       />
 
@@ -170,347 +54,573 @@ export default function About() {
         className="
           pointer-events-none
           absolute
-          left-[7%]
-          top-[26%]
-          h-[300px]
-          w-[300px]
+          -right-[110px]
+          top-[28%]
+          h-[280px]
+          w-[280px]
           rounded-full
           border
-          border-cyan-50/[0.025]
+          border-cyan-300/[0.06]
         "
       />
 
-      {/* CONTENT */}
+      <div
+        className="
+          pointer-events-none
+          absolute
+          bottom-[10%]
+          left-[-180px]
+          h-[360px]
+          w-[360px]
+          rounded-full
+          bg-cyan-300/[0.04]
+          blur-[100px]
+        "
+      />
+
+      {/* =====================================================
+          CONTENT
+      ===================================================== */}
 
       <div
         className="
           relative
           z-10
           mx-auto
-          w-full
-          max-w-[1400px]
-          px-6
+          max-w-[1500px]
+          px-5
+          py-24
+          sm:px-6
+          sm:py-28
           md:px-10
-          xl:px-16
+          md:py-32
+          lg:px-16
+          lg:py-40
         "
       >
-        {/* LABEL */}
+        {/* =================================================
+            HEADER
+        ================================================= */}
 
         <motion.div
-          initial={{
-            opacity: 0,
-            x: -30,
-            filter: "blur(8px)",
-          }}
+          initial={
+            reduceMotion
+              ? undefined
+              : {
+                  opacity: 0,
+                  y: 18,
+                }
+          }
           whileInView={{
             opacity: 1,
-            x: 0,
-            filter: "blur(0px)",
+            y: 0,
           }}
           viewport={{
-            once: false,
-            amount: 0.4,
+            once: true,
+            amount: 0.2,
           }}
           transition={{
-            duration: 0.8,
-            ease,
+            duration: reduceMotion ? 0 : 0.55,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="max-w-[820px]"
+        >
+          <div
+            className="
+              mb-5
+              flex
+              items-center
+              gap-3
+              text-[9px]
+              font-bold
+              uppercase
+              tracking-[0.28em]
+              text-cyan-300/60
+            "
+          >
+            <span
+              className="
+                h-1.5
+                w-1.5
+                rounded-full
+                bg-cyan-300
+                shadow-[0_0_10px_rgba(103,232,249,.45)]
+              "
+            />
+
+            About the system
+          </div>
+
+          <h2
+            className="
+              text-4xl
+              font-semibold
+              leading-[1.04]
+              tracking-[-0.05em]
+              text-white
+              sm:text-5xl
+              md:text-6xl
+            "
+          >
+            Реклама начинается
+            <br />
+
+            <span className="text-cyan-200/45">
+              не с экрана.
+            </span>
+          </h2>
+
+          <p
+            className="
+              mt-7
+              max-w-[650px]
+              text-base
+              leading-7
+              text-white/45
+              md:text-lg
+              md:leading-8
+            "
+          >
+            MIMISU создаёт физическую точку контакта между
+            брендом и человеком. Мы переносим рекламное
+            сообщение из привычной цифровой среды
+            в реальный повседневный контекст.
+          </p>
+        </motion.div>
+
+        {/* =================================================
+            SYSTEM VISUAL
+        ================================================= */}
+
+        <motion.div
+          initial={
+            reduceMotion
+              ? undefined
+              : {
+                  opacity: 0,
+                  y: 24,
+                }
+          }
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.12,
+          }}
+          transition={{
+            duration: reduceMotion ? 0 : 0.65,
+            delay: reduceMotion ? 0 : 0.05,
+            ease: [0.16, 1, 0.3, 1],
           }}
           className="
-            flex
-            items-center
-            gap-4
-            text-[10px]
-            font-medium
-            uppercase
-            tracking-[0.35em]
-            text-cyan-100/80
+            relative
+            mt-16
+            overflow-hidden
+            rounded-[28px]
+            border
+            border-cyan-300/[0.08]
+            bg-white/[0.025]
+            shadow-[0_25px_80px_rgba(0,0,0,.14)]
+            md:mt-20
+            md:rounded-[38px]
           "
         >
-          <span
+          {/* TOP LINE */}
+
+          <div
             className="
+              absolute
+              left-0
+              right-0
+              top-0
               h-px
-              w-10
-              bg-cyan-100/60
+              bg-gradient-to-r
+              from-transparent
+              via-cyan-300/30
+              to-transparent
             "
           />
 
-          Глава 01 // О платформе
+          <div
+            className="
+              grid
+              lg:grid-cols-[0.72fr_1.28fr]
+            "
+          >
+            {/* =================================================
+                LEFT PANEL
+            ================================================= */}
+
+            <div
+              className="
+                relative
+                border-b
+                border-cyan-300/[0.07]
+                p-7
+                sm:p-9
+                lg:border-b-0
+                lg:border-r
+                lg:border-cyan-300/[0.07]
+                lg:p-12
+              "
+            >
+              <div
+                className="
+                  text-[9px]
+                  font-bold
+                  uppercase
+                  tracking-[0.25em]
+                  text-cyan-200/35
+                "
+              >
+                Physical → Digital
+              </div>
+
+              <div className="mt-10">
+                <div
+                  className="
+                    text-[64px]
+                    font-light
+                    leading-none
+                    tracking-[-0.08em]
+                    text-white/90
+                    sm:text-[82px]
+                  "
+                >
+                  01
+                </div>
+
+                <div
+                  className="
+                    mt-5
+                    h-px
+                    w-full
+                    bg-cyan-300/[0.09]
+                  "
+                />
+
+                <p
+                  className="
+                    mt-5
+                    max-w-[310px]
+                    text-sm
+                    leading-6
+                    text-white/35
+                  "
+                >
+                  Физический объект становится
+                  связующим звеном между вниманием
+                  человека и цифровым действием.
+                </p>
+              </div>
+
+              {/* =================================================
+                  SIGNAL VISUAL
+              ================================================= */}
+
+              <div
+                className="
+                  relative
+                  mt-12
+                  h-24
+                  overflow-hidden
+                  rounded-2xl
+                  border
+                  border-cyan-300/[0.07]
+                  bg-cyan-300/[0.02]
+                "
+              >
+                <div
+                  className="
+                    absolute
+                    inset-y-0
+                    left-[20%]
+                    w-px
+                    bg-cyan-300/10
+                  "
+                />
+
+                <div
+                  className="
+                    absolute
+                    inset-y-0
+                    left-[50%]
+                    w-px
+                    bg-cyan-300/20
+                  "
+                />
+
+                <div
+                  className="
+                    absolute
+                    inset-y-0
+                    left-[80%]
+                    w-px
+                    bg-cyan-300/10
+                  "
+                />
+
+                {!reduceMotion && (
+                  <motion.div
+                    animate={{
+                      x: ["-120%", "500%"],
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                    className="
+                      absolute
+                      inset-y-0
+                      left-0
+                      w-16
+                      bg-gradient-to-r
+                      from-transparent
+                      via-cyan-300/[0.10]
+                      to-transparent
+                      will-change-transform
+                    "
+                  />
+                )}
+
+                <div
+                  className="
+                    absolute
+                    inset-0
+                    flex
+                    items-center
+                    justify-center
+                    text-[8px]
+                    font-bold
+                    uppercase
+                    tracking-[0.25em]
+                    text-cyan-200/35
+                  "
+                >
+                  QR / DATA / ACTION
+                </div>
+              </div>
+            </div>
+
+            {/* =================================================
+                RIGHT PANEL
+            ================================================= */}
+
+            <div className="p-7 sm:p-9 lg:p-12">
+              <div
+                className="
+                  mb-8
+                  flex
+                  items-center
+                  justify-between
+                "
+              >
+                <span
+                  className="
+                    text-[9px]
+                    font-bold
+                    uppercase
+                    tracking-[0.25em]
+                    text-cyan-200/35
+                  "
+                >
+                  How it works
+                </span>
+
+                <span
+                  className="
+                    rounded-full
+                    border
+                    border-cyan-300/[0.10]
+                    bg-cyan-300/[0.04]
+                    px-3
+                    py-1.5
+                    text-[8px]
+                    font-bold
+                    uppercase
+                    tracking-[0.18em]
+                    text-cyan-300/55
+                  "
+                >
+                  3 stages
+                </span>
+              </div>
+
+              <div>
+                {steps.map((step, index) => (
+                  <motion.div
+                    key={step.number}
+                    initial={
+                      reduceMotion
+                        ? undefined
+                        : {
+                            opacity: 0,
+                            y: 12,
+                          }
+                    }
+                    whileInView={{
+                      opacity: 1,
+                      y: 0,
+                    }}
+                    viewport={{
+                      once: true,
+                      amount: 0.15,
+                    }}
+                    transition={{
+                      duration: reduceMotion ? 0 : 0.45,
+                      delay: reduceMotion
+                        ? 0
+                        : index * 0.06,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
+                    className="
+                      group
+                      relative
+                      flex
+                      gap-5
+                      border-b
+                      border-cyan-300/[0.07]
+                      py-7
+                      last:border-b-0
+                    "
+                  >
+                    {/* NUMBER */}
+
+                    <div
+                      className="
+                        relative
+                        flex
+                        h-9
+                        w-9
+                        shrink-0
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        border-cyan-300/[0.14]
+                        bg-cyan-300/[0.025]
+                        text-[9px]
+                        font-bold
+                        text-cyan-300/60
+                        transition-transform
+                        duration-300
+                        group-hover:scale-105
+                      "
+                    >
+                      {step.number}
+                    </div>
+
+                    {/* TEXT */}
+
+                    <div>
+                      <h3
+                        className="
+                          text-base
+                          font-semibold
+                          tracking-[-0.02em]
+                          text-white/90
+                          sm:text-lg
+                        "
+                      >
+                        {step.title}
+                      </h3>
+
+                      <p
+                        className="
+                          mt-2
+                          max-w-[520px]
+                          text-sm
+                          leading-6
+                          text-white/35
+                        "
+                      >
+                        {step.text}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
         </motion.div>
 
-        {/* TITLE */}
-
-        <div className="mt-8 overflow-hidden">
-          <motion.h2
-            initial={{
-              opacity: 0,
-              y: 80,
-              filter: "blur(14px)",
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-              filter: "blur(0px)",
-            }}
-            viewport={{
-              once: false,
-              amount: 0.35,
-            }}
-            transition={{
-              duration: 1,
-              ease,
-            }}
-            className="
-              max-w-6xl
-              text-[clamp(3.2rem,7vw,7rem)]
-              font-light
-              leading-[0.9]
-              tracking-[-0.06em]
-            "
-          >
-            Реклама,
-            <br />
-
-            <span className="text-white/40">
-              которую невозможно пролистать.
-            </span>
-          </motion.h2>
-        </div>
-
-        {/* MAIN TEXT */}
-
-        <div
-          className="
-            mt-16
-            grid
-            gap-12
-            lg:grid-cols-[1fr_0.62fr]
-            lg:items-end
-            lg:gap-24
-          "
-        >
-          <motion.p
-            initial={{
-              opacity: 0,
-              y: 35,
-              filter: "blur(8px)",
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-              filter: "blur(0px)",
-            }}
-            viewport={{
-              once: false,
-              amount: 0.3,
-            }}
-            transition={{
-              duration: 0.9,
-              delay: 0.12,
-              ease,
-            }}
-            className="
-              max-w-3xl
-              text-base
-              leading-[1.9]
-              text-[#D8F3F5]
-              md:text-lg
-              md:leading-[1.9]
-            "
-          >
-            MIMISU превращает обычную бутылку воды
-            в физический рекламный носитель — объект,
-            который оказывается рядом с человеком
-            именно тогда, когда его внимание действительно
-            принадлежит моменту.
-          </motion.p>
-
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 30,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{
-              once: false,
-              amount: 0.3,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.25,
-              ease,
-            }}
-            className="
-              border-l
-              border-cyan-100/35
-              bg-white/[0.025]
-              pl-6
-              py-3
-            "
-          >
-            <div
-              className="
-                text-[9px]
-                uppercase
-                tracking-[0.3em]
-                text-cyan-100/80
-              "
-            >
-              Physical contact
-            </div>
-
-            <div
-              className="
-                mt-3
-                text-sm
-                leading-6
-                text-white/65
-              "
-            >
-              Не баннер.
-              <br />
-              Не экран.
-              <br />
-              Реальный объект.
-            </div>
-          </motion.div>
-        </div>
-
-        {/* DIVIDER */}
+        {/* =================================================
+            BOTTOM STATEMENT
+        ================================================= */}
 
         <motion.div
-          initial={{
-            scaleX: 0,
-            opacity: 0,
-          }}
+          initial={
+            reduceMotion
+              ? undefined
+              : {
+                  opacity: 0,
+                  y: 16,
+                }
+          }
           whileInView={{
-            scaleX: 1,
             opacity: 1,
+            y: 0,
           }}
           viewport={{
-            once: false,
-            amount: 0.3,
+            once: true,
+            amount: 0.15,
           }}
           transition={{
-            duration: 1.2,
-            delay: 0.15,
-            ease,
+            duration: reduceMotion ? 0 : 0.55,
+            ease: [0.16, 1, 0.3, 1],
           }}
           className="
-            mt-20
-            h-px
-            w-full
-            origin-left
-            bg-gradient-to-r
-            from-cyan-100/30
-            via-cyan-50/[0.1]
-            to-transparent
-          "
-        />
-
-        {/* FEATURES */}
-
-        <div
-          className="
-            mt-10
-            grid
-            gap-8
-            sm:grid-cols-3
+            mt-12
+            flex
+            flex-col
+            gap-5
+            border-t
+            border-cyan-300/[0.08]
+            pt-8
+            sm:flex-row
+            sm:items-end
+            sm:justify-between
           "
         >
-          {[
-            {
-              number: "01",
-              title: "Физический носитель",
-              text: "Реклама становится частью реального пространства.",
-            },
-            {
-              number: "02",
-              title: "Прямой контакт",
-              text: "Бренд оказывается буквально в руках аудитории.",
-            },
-            {
-              number: "03",
-              title: "Реальное присутствие",
-              text: "Контакт происходит естественно, без пролистывания.",
-            },
-          ].map((item, index) => (
-            <motion.div
-              key={item.number}
-              initial={{
-                opacity: 0,
-                y: 25,
-              }}
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
-              viewport={{
-                once: false,
-                amount: 0.25,
-              }}
-              transition={{
-                duration: 0.7,
-                delay: index * 0.08,
-                ease,
-              }}
-              className="
-                group
-                border
-                border-cyan-50/[0.1]
-                bg-white/[0.025]
-                px-5
-                py-5
-                transition-all
-                duration-500
-                hover:-translate-y-1
-                hover:border-cyan-50/[0.18]
-                hover:bg-white/[0.04]
-              "
-            >
-              <div
-                className="
-                  font-mono
-                  text-[9px]
-                  tracking-[0.25em]
-                  text-cyan-100/55
-                "
-              >
-                {item.number}
-              </div>
+          <p
+            className="
+              max-w-[620px]
+              text-xl
+              font-medium
+              leading-8
+              tracking-[-0.03em]
+              text-white/75
+              md:text-2xl
+            "
+          >
+            Бутылка — это только начало.
+            <br />
 
-              <div
-                className="
-                  mt-3
-                  text-sm
-                  text-white/75
-                  transition-colors
-                  duration-300
-                  group-hover:text-white
-                "
-              >
-                {item.title}
-              </div>
+            <span className="text-white/30">
+              Ценность создаёт взаимодействие вокруг неё.
+            </span>
+          </p>
 
-              <p
-                className="
-                  mt-2
-                  max-w-xs
-                  text-xs
-                  leading-6
-                  text-white/45
-                "
-              >
-                {item.text}
-              </p>
-            </motion.div>
-          ))}
-        </div>
+          <div
+            className="
+              text-[8px]
+              font-bold
+              uppercase
+              tracking-[0.22em]
+              text-cyan-200/30
+            "
+          >
+            MIMISU / 2026
+          </div>
+        </motion.div>
       </div>
 
-      {/* SECTION TRANSITION */}
+      {/* =====================================================
+          ABOUT → FEATURES TRANSITION
+      ===================================================== */}
 
       <div
         className="
@@ -518,11 +628,10 @@ export default function About() {
           absolute
           inset-x-0
           bottom-0
-          z-20
-          h-48
-          bg-gradient-to-t
-          from-[#1A4A55]
-          to-transparent
+          h-24
+          bg-gradient-to-b
+          from-transparent
+          to-[#052830]/30
         "
       />
     </section>

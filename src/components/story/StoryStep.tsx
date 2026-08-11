@@ -1,4 +1,9 @@
-import { motion } from "framer-motion";
+import {
+  motion,
+  MotionValue,
+  useTransform,
+} from "framer-motion";
+
 import {
   Target,
   Palette,
@@ -7,346 +12,306 @@ import {
   BarChart3,
 } from "lucide-react";
 
-interface Props {
+interface StoryItem {
+  id: number;
   number: string;
   title: string;
   text: string;
 }
 
-const icons = {
-  "01": Target,
-  "02": Palette,
-  "03": Factory,
-  "04": MessageCircle,
-  "05": BarChart3,
-};
+interface Props {
+  story: StoryItem[];
+  progress: MotionValue<number>;
+}
 
-const labels = {
-  "01": "STRATEGY",
-  "02": "DESIGN",
-  "03": "PRODUCTION",
-  "04": "CONTACT",
-  "05": "Analytics",
-};
+const icons = [
+  Target,
+  Palette,
+  Factory,
+  MessageCircle,
+  BarChart3,
+];
 
 export default function StoryStep({
-  number,
-  title,
-  text,
+  story,
+  progress,
 }: Props) {
-  const Icon =
-    icons[number as keyof typeof icons] ?? Target;
-
-  const label =
-    labels[number as keyof typeof labels] ?? "ACTIVE";
-
   return (
-    <section
-      className="
-        relative
-        mx-auto
-        flex
-        min-h-[620px]
-        w-full
-        max-w-6xl
-        items-center
-        border-t
-        border-white/[0.07]
-        px-6
-        py-24
+    <div className="absolute inset-0">
+      {story.map((item, index) => {
+        const Icon = icons[index] ?? Target;
 
-        md:px-10
-        lg:min-h-[680px]
-        lg:px-16
-        lg:py-28
-      "
-    >
-      {/* =========================================
-          TOP LABEL
-      ========================================= */}
+        const start = index / story.length;
+        const end = (index + 1) / story.length;
 
-      <div
-        className="
-          absolute
-          right-6
-          top-6
+        /*
+         * Быстрый переход между этапами.
+         */
 
-          rounded-full
-          border
-          border-cyan-300/[0.10]
-          bg-cyan-300/[0.025]
+        const opacity = useTransform(
+          progress,
+          [
+            start,
+            start + 0.025,
+            end - 0.025,
+            end,
+          ],
+          [0, 1, 1, 0],
+        );
 
-          px-4
-          py-2
+        const scale = useTransform(
+          progress,
+          [
+            start,
+            start + 0.04,
+            end - 0.04,
+            end,
+          ],
+          [0.96, 1, 1, 0.98],
+        );
 
-          text-[9px]
-          uppercase
-          tracking-[0.25em]
-          text-white/30
+        const y = useTransform(
+          progress,
+          [
+            start,
+            start + 0.04,
+            end - 0.04,
+            end,
+          ],
+          [18, 0, 0, -12],
+        );
 
-          md:right-10
-          md:top-8
-
-          lg:right-16
-        "
-      >
-        {label}
-      </div>
-
-      {/* =========================================
-          MAIN GRID
-      ========================================= */}
-
-      <div
-        className="
-          grid
-          w-full
-          grid-cols-1
-          items-center
-          gap-14
-
-          md:grid-cols-[minmax(280px,1fr)_minmax(300px,1fr)]
-          md:gap-16
-
-          lg:grid-cols-[1fr_1.1fr]
-          lg:gap-24
-        "
-      >
-        {/* =======================================
-            CYAN ORBIT
-        ======================================= */}
-
-        <div className="relative flex items-center justify-center">
+        return (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: false, amount: 0.5 }}
-            transition={{
-              duration: 0.8,
-              ease: [0.16, 1, 0.3, 1],
+            key={item.id}
+            style={{
+              opacity,
+              scale,
+              y,
             }}
             className="
-              relative
+              absolute
+              inset-0
               flex
-              h-52
-              w-52
+              flex-col
               items-center
               justify-center
+              px-7
+              text-center
 
-              md:h-60
-              md:w-60
+              sm:px-12
+
+              lg:px-16
             "
           >
-            {/* Outer ring */}
+            {/* NUMBER */}
 
             <div
               className="
-                absolute
-                inset-0
-                rounded-full
-                border
-                border-cyan-300/[0.20]
+                font-mono
+                text-[10px]
+                tracking-[0.35em]
+                text-cyan-300/40
               "
-            />
+            >
+              {item.number}
+            </div>
 
-            {/* Middle ring */}
-
-            <div
-              className="
-                absolute
-                inset-6
-                rounded-full
-                border
-                border-cyan-300/[0.15]
-              "
-            />
-
-            {/* Inner ring */}
-
-            <div
-              className="
-                absolute
-                inset-12
-                rounded-full
-                border
-                border-cyan-300/[0.20]
-              "
-            />
-
-            {/* Glow */}
-
-            <div
-              className="
-                absolute
-                h-20
-                w-20
-                rounded-full
-                bg-cyan-300/[0.07]
-                blur-2xl
-              "
-            />
-
-            {/* Core */}
+            {/* DIGITAL VISUAL */}
 
             <div
               className="
                 relative
+                mt-7
                 flex
-                h-12
-                w-12
+                h-28
+                w-28
                 items-center
                 justify-center
-                rounded-full
 
-                border
-                border-cyan-300/[0.20]
+                sm:h-32
+                sm:w-32
 
-                bg-cyan-300/[0.035]
-
-                shadow-[0_0_35px_rgba(103,232,249,.10)]
+                lg:mt-9
+                lg:h-40
+                lg:w-40
               "
             >
-              <Icon
-                size={17}
-                strokeWidth={1.4}
-                className="text-cyan-300/80"
-              />
-            </div>
+              {/* Outer ring */}
 
-            {/* Orbit dot */}
-
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className="
-                absolute
-                inset-0
-              "
-            >
               <div
                 className="
                   absolute
-                  left-1/2
-                  top-0
-                  h-1.5
-                  w-1.5
-                  -translate-x-1/2
+                  inset-0
                   rounded-full
-                  bg-cyan-300
-
-                  shadow-[0_0_10px_rgba(103,232,249,.65)]
+                  border
+                  border-cyan-300/[0.14]
                 "
               />
-            </motion.div>
-          </motion.div>
-        </div>
 
-        {/* =======================================
-            CONTENT
-        ======================================= */}
+              {/* Inner ring */}
 
-        <div className="relative max-w-xl">
-          {/* Number */}
+              <div
+                className="
+                  absolute
+                  inset-5
+                  rounded-full
+                  border
+                  border-cyan-300/[0.08]
 
-          <div
-            className="
-              mb-5
-              font-mono
-              text-[10px]
-              tracking-[0.35em]
-              text-cyan-300/40
-            "
-          >
-            {number}
-          </div>
+                  lg:inset-6
+                "
+              />
 
-          {/* Title */}
+              {/* Glow */}
 
-          <h2
-            className="
-              text-4xl
-              font-light
-              tracking-[-0.03em]
-              text-white
+              <div
+                className="
+                  absolute
+                  h-20
+                  w-20
+                  rounded-full
+                  bg-cyan-300/[0.06]
+                  blur-2xl
 
-              md:text-5xl
+                  lg:h-28
+                  lg:w-28
+                "
+              />
 
-              lg:text-6xl
-            "
-          >
-            {title}
-          </h2>
+              {/* Icon */}
 
-          {/* Accent */}
+              <div
+                className="
+                  relative
+                  flex
+                  h-12
+                  w-12
+                  items-center
+                  justify-center
+                  rounded-full
+                  border
+                  border-cyan-300/[0.18]
+                  bg-[#07303A]
+                  shadow-[0_0_35px_rgba(103,232,249,.08)]
 
-          <div
-            className="
-              mt-7
-              h-px
-              w-14
-              bg-cyan-300/40
-            "
-          />
+                  lg:h-14
+                  lg:w-14
+                "
+              >
+                <Icon
+                  size={18}
+                  strokeWidth={1.3}
+                  className="text-cyan-300/75"
+                />
+              </div>
 
-          {/* Text */}
+              {/* ROTATING SIGNAL */}
 
-          <p
-            className="
-              mt-7
-              max-w-lg
+              <motion.div
+                animate={{
+                  rotate: 360,
+                }}
+                transition={{
+                  duration: 7,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+                className="
+                  pointer-events-none
+                  absolute
+                  inset-0
+                "
+              >
+                <span
+                  className="
+                    absolute
+                    left-1/2
+                    top-0
+                    h-1.5
+                    w-1.5
+                    -translate-x-1/2
+                    rounded-full
+                    bg-cyan-300
+                    shadow-[0_0_10px_rgba(103,232,249,.7)]
+                  "
+                />
+              </motion.div>
+            </div>
 
-              text-sm
-              leading-8
-              text-white/35
+            {/* TITLE */}
 
-              md:text-[15px]
-            "
-          >
-            {text}
-          </p>
-
-          {/* Active */}
-
-          <div
-            className="
-              mt-10
-              inline-flex
-              items-center
-              gap-2
-
-              rounded-full
-              border
-              border-cyan-300/[0.10]
-              bg-cyan-300/[0.025]
-
-              px-4
-              py-2
-
-              text-[9px]
-              uppercase
-              tracking-[0.25em]
-              text-cyan-200/40
-            "
-          >
-            <span
+            <h3
               className="
-                h-1.5
-                w-1.5
-                rounded-full
-                bg-cyan-300
+                mt-8
+                max-w-[650px]
+                text-[clamp(2.2rem,6vw,4.8rem)]
+                font-light
+                leading-[0.92]
+                tracking-[-0.05em]
+                text-white
+              "
+            >
+              {item.title}
+            </h3>
 
-                shadow-[0_0_8px_rgba(103,232,249,.65)]
+            {/* ACCENT */}
+
+            <div
+              className="
+                mt-6
+                h-px
+                w-12
+                bg-cyan-300/40
               "
             />
 
-            Active
-          </div>
-        </div>
-      </div>
-    </section>
+            {/* TEXT */}
+
+            <p
+              className="
+                mt-6
+                max-w-[520px]
+                text-[13px]
+                leading-6
+                text-white/35
+
+                sm:text-sm
+                sm:leading-7
+              "
+            >
+              {item.text}
+            </p>
+
+            {/* STATUS */}
+
+            <div
+              className="
+                mt-7
+                flex
+                items-center
+                gap-2
+                text-[8px]
+                uppercase
+                tracking-[0.25em]
+                text-cyan-200/35
+              "
+            >
+              <span
+                className="
+                  h-1.5
+                  w-1.5
+                  rounded-full
+                  bg-cyan-300
+                  shadow-[0_0_8px_rgba(103,232,249,.65)]
+                "
+              />
+
+              Active
+            </div>
+          </motion.div>
+        );
+      })}
+    </div>
   );
 }
