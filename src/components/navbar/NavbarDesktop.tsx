@@ -1,3 +1,5 @@
+import { useLanguage } from "../../context/LanguageContext";
+
 interface LinkItem {
   title: string;
   id: string;
@@ -12,14 +14,22 @@ export default function NavbarDesktop({
   links,
   scrollTo,
 }: Props) {
+  const { language, setLanguage, t } = useLanguage();
+
   return (
     <div className="hidden items-center gap-7 lg:flex">
-      {/* LOGO */}
+      {/* =========================================
+          LOGO
+      ========================================= */}
 
       <button
         type="button"
         onClick={() => scrollTo("hero")}
-        aria-label="На главную"
+        aria-label={
+          language === "ru"
+            ? "На главную"
+            : "Басты бетке"
+        }
         className="
           group
           relative
@@ -54,10 +64,16 @@ export default function NavbarDesktop({
 
       <div className="h-5 w-px bg-[#092B32]/[0.12]" />
 
-      {/* LINKS */}
+      {/* =========================================
+          LINKS
+      ========================================= */}
 
       <nav
-        aria-label="Основная навигация"
+        aria-label={
+          language === "ru"
+            ? "Основная навигация"
+            : "Негізгі навигация"
+        }
         className="flex items-center gap-6"
       >
         {links.map((link) => (
@@ -101,7 +117,74 @@ export default function NavbarDesktop({
 
       <div className="h-5 w-px bg-[#092B32]/[0.12]" />
 
-      {/* CTA */}
+      {/* =========================================
+          LANGUAGE
+      ========================================= */}
+
+      <div
+        className="
+          flex
+          items-center
+          rounded-full
+          border
+          border-[#092B32]/10
+          bg-white/50
+          p-1
+          backdrop-blur-md
+        "
+      >
+        <button
+          type="button"
+          onClick={() => setLanguage("ru")}
+          aria-pressed={language === "ru"}
+          className={`
+            rounded-full
+            px-3
+            py-1.5
+            text-[9px]
+            font-semibold
+            uppercase
+            tracking-[0.16em]
+            transition-all
+            duration-300
+            ${
+              language === "ru"
+                ? "bg-[#073b4c] text-white shadow-sm"
+                : "text-[#092B32]/45 hover:text-[#092B32]"
+            }
+          `}
+        >
+          RU
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setLanguage("kz")}
+          aria-pressed={language === "kz"}
+          className={`
+            rounded-full
+            px-3
+            py-1.5
+            text-[9px]
+            font-semibold
+            uppercase
+            tracking-[0.16em]
+            transition-all
+            duration-300
+            ${
+              language === "kz"
+                ? "bg-[#073b4c] text-white shadow-sm"
+                : "text-[#092B32]/45 hover:text-[#092B32]"
+            }
+          `}
+        >
+          KZ
+        </button>
+      </div>
+
+      {/* =========================================
+          CTA
+      ========================================= */}
 
       <button
         type="button"
@@ -150,7 +233,7 @@ export default function NavbarDesktop({
         />
 
         <span className="relative z-10">
-          Запустить кампанию
+          {t.hero.button}
         </span>
       </button>
     </div>

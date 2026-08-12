@@ -6,11 +6,15 @@ import HeroScroll from "./HeroScroll";
 import HeroStats from "./HeroStats";
 import HeroTitle from "./HeroTitle";
 
+import { useLanguage } from "../../context/LanguageContext";
+
 interface HeroProps {
   onNavigate: (id: string) => void;
 }
 
 export default function Hero({ onNavigate }: HeroProps) {
+  const { t } = useLanguage();
+
   return (
     <section
       id="hero"
@@ -33,9 +37,10 @@ export default function Hero({ onNavigate }: HeroProps) {
           max-w-[1500px]
           flex-col
           px-5
-          pb-24
-          pt-24
+          pb-16
+          pt-20
           sm:px-6
+          sm:pb-24
           sm:pt-28
           md:px-10
           md:pt-32
@@ -44,22 +49,25 @@ export default function Hero({ onNavigate }: HeroProps) {
           lg:pt-36
         "
       >
+        {/* TOP LABEL */}
+
         <div
           className="
-            mb-7
+            mb-6
             flex
             items-center
             justify-between
-            text-[8px]
+            text-[7px]
             font-semibold
             uppercase
-            tracking-[0.28em]
+            tracking-[0.24em]
             text-[#073b4c]/45
             sm:mb-9
             sm:text-[9px]
+            sm:tracking-[0.28em]
           "
         >
-          <span className="flex items-center gap-3">
+          <span className="flex items-center gap-2.5 sm:gap-3">
             <span
               className="
                 h-1.5
@@ -77,6 +85,8 @@ export default function Hero({ onNavigate }: HeroProps) {
             Digital Water System
           </span>
         </div>
+
+        {/* MAIN GRID */}
 
         <div
           className="
@@ -103,20 +113,19 @@ export default function Hero({ onNavigate }: HeroProps) {
 
             <p
               className="
-                mt-6
+                mt-7
                 max-w-[620px]
-                text-sm
+                text-[13px]
                 font-medium
-                leading-7
+                leading-6
                 text-[#073b4c]/65
                 sm:mt-7
+                sm:text-sm
+                sm:leading-7
                 md:text-[15px]
               "
             >
-              MiMiSU превращает обычную бутылку воды
-              в современный рекламный носитель —
-              с QR-аналитикой, измеримым охватом
-              и прозрачной статистикой.
+              {t.hero.description}
             </p>
 
             <HeroButtons onNavigate={onNavigate} />
@@ -128,31 +137,15 @@ export default function Hero({ onNavigate }: HeroProps) {
             className="
               relative
               z-10
-              mt-2
-              h-[430px]
+              mt-0
+              h-[320px]
+              sm:mt-2
               sm:h-[500px]
               lg:mt-0
               lg:h-[620px]
             "
           >
-            <div
-              className="
-                pointer-events-none
-                absolute
-                left-1/2
-                top-1/2
-                h-[250px]
-                w-[250px]
-                -translate-x-1/2
-                -translate-y-1/2
-                rounded-full
-                bg-cyan-200/40
-                blur-[90px]
-                sm:h-[360px]
-                sm:w-[360px]
-                sm:blur-[120px]
-              "
-            />
+            {/* GLOW */}
 
             <div
               className="
@@ -160,8 +153,29 @@ export default function Hero({ onNavigate }: HeroProps) {
                 absolute
                 left-1/2
                 top-1/2
-                h-[290px]
-                w-[290px]
+                h-[200px]
+                w-[200px]
+                -translate-x-1/2
+                -translate-y-1/2
+                rounded-full
+                bg-cyan-200/40
+                blur-[70px]
+                sm:h-[360px]
+                sm:w-[360px]
+                sm:blur-[120px]
+              "
+            />
+
+            {/* OUTER RING */}
+
+            <div
+              className="
+                pointer-events-none
+                absolute
+                left-1/2
+                top-1/2
+                h-[230px]
+                w-[230px]
                 -translate-x-1/2
                 -translate-y-1/2
                 rounded-full
@@ -172,14 +186,16 @@ export default function Hero({ onNavigate }: HeroProps) {
               "
             />
 
+            {/* INNER RING */}
+
             <div
               className="
                 pointer-events-none
                 absolute
                 left-1/2
                 top-1/2
-                h-[220px]
-                w-[220px]
+                h-[175px]
+                w-[175px]
                 -translate-x-1/2
                 -translate-y-1/2
                 rounded-full
@@ -190,14 +206,16 @@ export default function Hero({ onNavigate }: HeroProps) {
               "
             />
 
+            {/* FEED */}
+
             <div
               className="
                 absolute
                 left-1/2
                 top-1/2
-                h-[300px]
+                h-[250px]
                 w-[calc(100%-20px)]
-                max-w-[460px]
+                max-w-[350px]
                 -translate-x-1/2
                 -translate-y-1/2
                 sm:h-[410px]
@@ -209,43 +227,50 @@ export default function Hero({ onNavigate }: HeroProps) {
               <HeroFeed />
             </div>
 
+            {/* WATER / MEDIA / DATA */}
+
             <div
               className="
                 absolute
-                bottom-[4%]
-                right-[3%]
+                bottom-[2%]
+                right-[2%]
                 rounded-full
                 border
                 border-white/70
                 bg-white/65
-                px-3
-                py-2
-                text-[7px]
+                px-2.5
+                py-1.5
+                text-[6px]
                 font-semibold
                 uppercase
-                tracking-[0.2em]
+                tracking-[0.16em]
                 text-[#073b4c]/50
                 shadow-[0_10px_30px_rgba(7,59,76,.06)]
                 backdrop-blur-xl
                 sm:px-4
+                sm:py-2
                 sm:text-[8px]
+                sm:tracking-[0.2em]
               "
             >
               Water / Media / Data
             </div>
 
+            {/* INDEX */}
+
             <div
               className="
                 absolute
                 left-[3%]
-                top-[9%]
-                flex
+                top-[5%]
+                hidden
                 items-center
                 gap-2
                 text-[8px]
                 uppercase
                 tracking-[0.2em]
                 text-[#073b4c]/35
+                sm:flex
               "
             >
               <span className="h-px w-6 bg-[#073b4c]/20" />
@@ -254,10 +279,14 @@ export default function Hero({ onNavigate }: HeroProps) {
           </div>
         </div>
 
-        <div className="relative z-20">
+        {/* STATS */}
+
+        <div className="relative z-20 mt-4 sm:mt-0">
           <HeroStats />
         </div>
       </div>
+
+      {/* BOTTOM GRADIENT */}
 
       <div
         className="
@@ -266,7 +295,7 @@ export default function Hero({ onNavigate }: HeroProps) {
           inset-x-0
           bottom-0
           z-20
-          h-[100px]
+          h-[80px]
           bg-gradient-to-b
           from-transparent
           to-slate-50

@@ -1,31 +1,61 @@
 import { motion } from "framer-motion";
+import { useLanguage } from "../../context/LanguageContext";
 
-const STATS = [
-  {
-    value: "10M+",
-    title: "Бутылок в месяц",
+const content = {
+  ru: {
+    data: "DATA",
+    stats: [
+      {
+        value: "20К+",
+        title: "Бутылок в месяц",
+      },
+      {
+        value: "15",
+        title: "Регионов",
+      },
+      {
+        value: "98%",
+        title: "Возвратов",
+      },
+      {
+        value: "20",
+        title: "Партнёров",
+      },
+    ],
   },
-  {
-    value: "47",
-    title: "Регионов",
+
+  kz: {
+    data: "DATA",
+    stats: [
+      {
+        value: "20К+",
+        title: "Бөтелке айына",
+      },
+      {
+        value: "15",
+        title: "Өңір",
+      },
+      {
+        value: "98%",
+        title: "Қайтарым",
+      },
+      {
+        value: "20",
+        title: "Серіктес",
+      },
+    ],
   },
-  {
-    value: "98%",
-    title: "Возвратов",
-  },
-  {
-    value: "1.2k",
-    title: "Партнёров",
-  },
-];
+} as const;
 
 function StatCard({
   value,
   title,
+  data,
   index,
 }: {
   value: string;
   title: string;
+  data: string;
   index: number;
 }) {
   return (
@@ -120,7 +150,7 @@ function StatCard({
               sm:text-[8px]
             "
           >
-            DATA
+            {data}
           </span>
         </div>
 
@@ -190,8 +220,13 @@ function StatCard({
 }
 
 export default function HeroStats() {
+  const { language } = useLanguage();
+
+  const { stats, data } = content[language];
+
   return (
     <motion.div
+      key={language}
       initial={{
         opacity: 0,
       }}
@@ -200,7 +235,6 @@ export default function HeroStats() {
       }}
       transition={{
         duration: 0.6,
-        delay: 0.8,
       }}
       className="
         mt-8
@@ -214,11 +248,12 @@ export default function HeroStats() {
         lg:gap-5
       "
     >
-      {STATS.map((item, index) => (
+      {stats.map((item, index) => (
         <StatCard
-          key={item.title}
+          key={`${language}-${item.title}`}
           value={item.value}
           title={item.title}
+          data={data}
           index={index}
         />
       ))}

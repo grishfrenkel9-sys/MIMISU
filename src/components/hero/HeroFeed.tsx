@@ -5,41 +5,85 @@ import {
   MapPinned,
   Eye,
 } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
 
-const cards = [
-  {
-    icon: QrCode,
-    title: "QR Campaign",
-    value: "12 458",
-    label: "SCANS",
-    progress: 78,
+const content = {
+  ru: {
+    cards: [
+      {
+        icon: QrCode,
+        title: "",
+        value: "12 458",
+        label: "СКАНИРОВАНИЙ",
+        progress: 78,
+      },
+      {
+        icon: Eye,
+        title: "",
+        value: "20К",
+        label: "ПОКАЗОВ",
+        progress: 91,
+      },
+      {
+        icon: BarChart3,
+        title: "",
+        value: "7.82%",
+        label: "В РЕАЛЬНОМ ВРЕМЕНИ",
+        progress: 64,
+      },
+      {
+        icon: MapPinned,
+        title: "Покрытие",
+        value: "24",
+        label: "ГОРОДА",
+        progress: 82,
+      },
+    ],
+    live: "LIVE",
   },
-  {
-    icon: Eye,
-    title: "Reach",
-    value: "1.84M",
-    label: "IMPRESSIONS",
-    progress: 91,
+
+  kz: {
+    cards: [
+      {
+        icon: QrCode,
+        title: "QR науқаны",
+        value: "12 458",
+        label: "СКАНЕРЛЕУ",
+        progress: 78,
+      },
+      {
+        icon: Eye,
+        title: "Қамту",
+        value: "20К",
+        label: "КӨРСЕТІЛІМ",
+        progress: 91,
+      },
+      {
+        icon: BarChart3,
+        title: "CTR",
+        value: "7.82%",
+        label: "НАҚТЫ УАҚЫТТА",
+        progress: 64,
+      },
+      {
+        icon: MapPinned,
+        title: "Қамту аймағы",
+        value: "24",
+        label: "ҚАЛА",
+        progress: 82,
+      },
+    ],
+    live: "LIVE",
   },
-  {
-    icon: BarChart3,
-    title: "CTR",
-    value: "7.82%",
-    label: "LIVE",
-    progress: 64,
-  },
-  {
-    icon: MapPinned,
-    title: "Coverage",
-    value: "24",
-    label: "CITIES",
-    progress: 82,
-  },
-];
+} as const;
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function HeroFeed() {
+  const { language } = useLanguage();
+
+  const { cards, live } = content[language];
+
   return (
     <div
       className="
@@ -145,7 +189,7 @@ export default function HeroFeed() {
 
           return (
             <motion.div
-              key={card.title}
+              key={`${language}-${card.title}`}
               initial={{
                 opacity: 0,
                 y: 24,
@@ -307,7 +351,7 @@ export default function HeroFeed() {
                         sm:text-[8px]
                       "
                     >
-                      LIVE
+                      {live}
                     </span>
 
                     <span

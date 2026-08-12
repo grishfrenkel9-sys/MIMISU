@@ -2,63 +2,15 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { Plus } from "lucide-react";
 
-interface FAQItemData {
-  question: string;
-  answer: string;
-}
-
-const faqItems: FAQItemData[] = [
-  {
-    question: "Что такое MIMISU?",
-    answer:
-      "MIMISU — это рекламный формат, который превращает бутылку воды в физическую точку контакта между брендом и человеком.",
-  },
-  {
-    question: "Как работает размещение рекламы?",
-    answer:
-      "Бренд размещается на этикетке бутылки. После производства бутылки распространяются через выбранные каналы и становятся частью повседневного контакта с аудиторией.",
-  },
-  {
-    question: "Какой минимальный тираж?",
-    answer:
-      "Минимальный тираж начинается от 1 000 бутылок. При увеличении тиража стоимость размещения одной бутылки снижается.",
-  },
-  {
-    question: "Можно ли заказать дизайн?",
-    answer:
-      "Да. Мы можем разработать индивидуальный дизайн этикетки с учётом фирменного стиля, цветов и рекламного сообщения бренда.",
-  },
-  {
-    question: "Можно ли организовать распространение?",
-    answer:
-      "Да. При подключении услуги распространения мы берём организацию раздачи на себя: планируем точки, логистику и процесс передачи бутылок аудитории.",
-  },
-  {
-    question: "Можно ли разместить несколько рекламодателей?",
-    answer:
-      "Да. Один тираж может быть разделён между несколькими рекламодателями. Это позволяет распределить стоимость производства между участниками.",
-  },
-  {
-    question: "Как рассчитывается стоимость кампании?",
-    answer:
-      "Стоимость зависит от количества рекламодателей, тиража бутылок и дополнительных услуг. В калькуляторе можно изменить параметры и сразу увидеть предварительный расчёт.",
-  },
-  {
-    question: "Какой охват можно получить?",
-    answer:
-      "Охват зависит от тиража и сценария распространения. В калькуляторе используется предварительная модель прогнозирования, которая помогает оценить потенциальное количество контактов.",
-  },
-  {
-    question: "Можно ли получить коммерческое предложение?",
-    answer:
-      "Да. После предварительного расчёта вы можете связаться с нами, чтобы обсудить задачу, формат размещения и получить персональное коммерческое предложение.",
-  },
-];
+import { useLanguage } from "../../context/LanguageContext";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const { t } = useLanguage();
+
+  const [openIndex, setOpenIndex] =
+    useState<number | null>(null);
 
   return (
     <section
@@ -67,7 +19,7 @@ export default function FAQ() {
         relative
         overflow-hidden
         bg-[#031A21]
-        py-24
+        py-20
         text-white
         sm:py-28
         md:py-36
@@ -84,13 +36,14 @@ export default function FAQ() {
           absolute
           -right-[260px]
           top-[5%]
-          h-[520px]
-          w-[520px]
+          h-[420px]
+          w-[420px]
           rounded-full
           bg-cyan-400/[0.035]
-          blur-[160px]
+          blur-[140px]
           sm:h-[650px]
           sm:w-[650px]
+          sm:blur-[160px]
         "
       />
 
@@ -100,11 +53,14 @@ export default function FAQ() {
           absolute
           -left-[280px]
           bottom-0
-          h-[500px]
-          w-[500px]
+          h-[400px]
+          w-[400px]
           rounded-full
           bg-teal-400/[0.025]
-          blur-[170px]
+          blur-[140px]
+          sm:h-[500px]
+          sm:w-[500px]
+          sm:blur-[170px]
         "
       />
 
@@ -118,11 +74,12 @@ export default function FAQ() {
           absolute
           inset-x-0
           top-0
-          h-40
+          h-32
           bg-gradient-to-b
           from-[#052830]
           via-[#031F27]/60
           to-transparent
+          sm:h-40
         "
       />
 
@@ -137,19 +94,25 @@ export default function FAQ() {
           mx-auto
           w-full
           max-w-[1120px]
-          px-5
+          px-4
           sm:px-8
           md:px-10
           xl:px-14
         "
       >
-        {/* =======================================
+        {/* =========================================
             HEADER
-        ======================================= */}
+        ========================================= */}
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{
+            opacity: 0,
+            y: 24,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
           viewport={{
             once: true,
             amount: 0.2,
@@ -159,7 +122,7 @@ export default function FAQ() {
             ease,
           }}
           className="
-            mb-14
+            mb-10
             sm:mb-16
             md:mb-20
           "
@@ -170,31 +133,36 @@ export default function FAQ() {
             className="
               flex
               items-center
-              gap-3
-              text-[9px]
+              gap-2.5
+              text-[8px]
               font-medium
               uppercase
-              tracking-[0.35em]
+              tracking-[0.3em]
               text-cyan-200/60
+              sm:gap-3
+              sm:text-[9px]
+              sm:tracking-[0.35em]
             "
           >
             <span
               className="
                 h-1.5
                 w-1.5
+                shrink-0
                 rounded-full
                 bg-cyan-300
                 shadow-[0_0_14px_rgba(103,232,249,.6)]
               "
             />
 
-            FAQ
+            {t.faq.label}
 
             <span
               className="
                 h-px
-                w-10
+                w-7
                 bg-cyan-300/20
+                sm:w-10
               "
             />
           </div>
@@ -203,46 +171,51 @@ export default function FAQ() {
 
           <h2
             className="
-              mt-6
+              mt-5
               max-w-4xl
-              text-[clamp(3.2rem,12vw,6rem)]
+              text-[clamp(2.8rem,14vw,6rem)]
               font-light
-              leading-[0.88]
+              leading-[0.9]
               tracking-[-0.065em]
               text-white
+              sm:mt-6
             "
           >
-            Частые
+            {t.faq.title}
+
             <br />
+
             <span className="text-cyan-100/[0.22]">
-              вопросы
+              {t.faq.titleAccent}
             </span>
           </h2>
 
+          {/* DESCRIPTION */}
+
           <p
             className="
-              mt-7
+              mt-5
               max-w-[510px]
-              text-[13px]
-              leading-6
+              text-[12px]
+              leading-5
               text-cyan-50/40
+              sm:mt-7
               sm:text-sm
               sm:leading-7
               md:text-base
               md:leading-8
             "
           >
-            Всё самое важное о формате, размещении рекламы
-            и возможностях MIMISU.
+            {t.faq.description}
           </p>
         </motion.div>
 
-        {/* =======================================
+        {/* =========================================
             FAQ LIST
-        ======================================= */}
+        ========================================= */}
 
         <div className="space-y-2">
-          {faqItems.map((item, index) => {
+          {t.faq.items.map((item, index) => {
             const isOpen = openIndex === index;
 
             return (
@@ -268,7 +241,7 @@ export default function FAQ() {
                 className={`
                   group
                   overflow-hidden
-                  rounded-[22px]
+                  rounded-[18px]
                   border
                   transition-colors
                   duration-500
@@ -290,9 +263,9 @@ export default function FAQ() {
                   }
                 `}
               >
-                {/* =================================
+                {/* =========================================
                     QUESTION
-                ================================= */}
+                ========================================= */}
 
                 <button
                   type="button"
@@ -306,16 +279,17 @@ export default function FAQ() {
                   className="
                     relative
                     flex
-                    min-h-[82px]
+                    min-h-[70px]
                     w-full
                     items-center
                     justify-between
-                    gap-5
-                    px-5
-                    py-5
+                    gap-3
+                    px-4
+                    py-4
                     text-left
                     outline-none
                     sm:min-h-[92px]
+                    sm:gap-5
                     sm:px-7
                     sm:py-6
                     md:px-8
@@ -329,7 +303,7 @@ export default function FAQ() {
                     className={`
                       pointer-events-none
                       absolute
-                      inset-x-6
+                      inset-x-4
                       top-0
                       h-px
                       bg-gradient-to-r
@@ -338,6 +312,8 @@ export default function FAQ() {
                       to-transparent
                       transition-opacity
                       duration-500
+                      sm:inset-x-6
+
                       ${
                         isOpen
                           ? "opacity-100"
@@ -352,8 +328,9 @@ export default function FAQ() {
                     className="
                       flex
                       min-w-0
+                      flex-1
                       items-center
-                      gap-4
+                      gap-3
                       sm:gap-6
                     "
                   >
@@ -377,17 +354,21 @@ export default function FAQ() {
                         }
                       `}
                     >
-                      {String(index + 1).padStart(2, "0")}
+                      {String(index + 1).padStart(
+                        2,
+                        "0"
+                      )}
                     </span>
 
-                    {/* QUESTION */}
+                    {/* QUESTION TEXT */}
 
                     <span
                       className={`
+                        min-w-0
                         pr-1
-                        text-[15px]
+                        text-[14px]
                         font-light
-                        leading-6
+                        leading-[1.45]
                         transition-colors
                         duration-300
                         sm:text-lg
@@ -405,9 +386,9 @@ export default function FAQ() {
                     </span>
                   </div>
 
-                  {/* =================================
+                  {/* =========================================
                       PLUS ICON
-                  ================================= */}
+                  ========================================= */}
 
                   <motion.span
                     animate={{
@@ -419,8 +400,8 @@ export default function FAQ() {
                     }}
                     className={`
                       flex
-                      h-10
-                      w-10
+                      h-9
+                      w-9
                       shrink-0
                       items-center
                       justify-center
@@ -449,15 +430,15 @@ export default function FAQ() {
                     `}
                   >
                     <Plus
-                      size={17}
+                      size={16}
                       strokeWidth={1.4}
                     />
                   </motion.span>
                 </button>
 
-                {/* =================================
+                {/* =========================================
                     ANSWER
-                ================================= */}
+                ========================================= */}
 
                 <AnimatePresence initial={false}>
                   {isOpen && (
@@ -483,8 +464,8 @@ export default function FAQ() {
                     >
                       <div
                         className="
-                          px-5
-                          pb-7
+                          px-4
+                          pb-6
                           pt-0
                           sm:px-7
                           sm:pb-8
@@ -498,8 +479,8 @@ export default function FAQ() {
                             border-l
                             border-cyan-200/[0.10]
                             pl-4
-                            text-[13px]
-                            leading-6
+                            text-[12px]
+                            leading-5
                             text-cyan-50/40
                             sm:ml-[3.25rem]
                             sm:pl-5
@@ -531,11 +512,12 @@ export default function FAQ() {
           absolute
           inset-x-0
           bottom-0
-          h-40
+          h-32
           bg-gradient-to-t
           from-[#020F15]
           via-[#031A21]/60
           to-transparent
+          sm:h-40
         "
       />
     </section>

@@ -1,13 +1,48 @@
 import { useEffect, useState } from "react";
+
 import NavbarDesktop from "./NavbarDesktop";
 import NavbarMobile from "./NavbarMobile";
-import { links } from "./navLinks";
+
+import { useLanguage } from "../../context/LanguageContext";
 
 const SCROLL_THRESHOLD = 30;
 
 export default function Navbar() {
+  const { language, t } = useLanguage();
+
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+
+  /* =========================================
+     NAVIGATION
+  ========================================= */
+
+  const links = [
+    {
+      title: t.nav.about,
+      id: "about",
+    },
+    {
+      title: t.nav.story,
+      id: "story",
+    },
+    {
+      title: t.nav.features,
+      id: "features",
+    },
+    {
+      title: t.nav.calculator,
+      id: "calculator",
+    },
+    {
+      title: t.nav.faq,
+      id: "faq",
+    },
+    {
+      title: t.nav.contacts,
+      id: "contacts",
+    },
+  ];
 
   /* =========================================
      NAVBAR SCROLL STATE
@@ -55,9 +90,6 @@ export default function Navbar() {
 
   const scrollTo = (id: string) => {
     const element = document.getElementById(id);
-
-    console.log("NAV CLICK:", id);
-    console.log("ELEMENT:", element);
 
     if (!element) {
       console.error(`Элемент #${id} не найден`);
@@ -154,18 +186,30 @@ export default function Navbar() {
           lg:px-12
         "
       >
-        <NavbarDesktop
-          links={links}
-          scrollTo={scrollTo}
-        />
+        {/* =========================================
+            DESKTOP
+        ========================================= */}
 
-        {/* MOBILE */}
+        <div className="hidden items-center lg:flex">
+          <NavbarDesktop
+            links={links}
+            scrollTo={scrollTo}
+          />
+        </div>
 
-        <div className="flex items-center lg:hidden">
+        {/* =========================================
+            MOBILE
+        ========================================= */}
+
+        <div className="flex w-full items-center justify-between lg:hidden">
           <button
             type="button"
             onClick={() => scrollTo("hero")}
-            aria-label="На главную"
+            aria-label={
+              language === "ru"
+                ? "На главную"
+                : "Басты бетке"
+            }
             className="
               text-[21px]
               font-light
@@ -180,14 +224,12 @@ export default function Navbar() {
             MIMISU
           </button>
 
-          <div className="ml-4">
-            <NavbarMobile
-              open={open}
-              setOpen={setOpen}
-              links={links}
-              scrollTo={scrollTo}
-            />
-          </div>
+          <NavbarMobile
+            open={open}
+            setOpen={setOpen}
+            links={links}
+            scrollTo={scrollTo}
+          />
         </div>
       </div>
     </header>

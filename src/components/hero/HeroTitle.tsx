@@ -1,25 +1,57 @@
 import { motion } from "framer-motion";
-
-const lines = [
-  {
-    text: "РЕКЛАМНАЯ",
-    className: "text-[#063B4A]",
-  },
-  {
-    text: "СЕТЬ,",
-    className: "text-[#063B4A]",
-  },
-  {
-    text: "КОТОРУЮ",
-    className: "text-[#467783]",
-  },
-  {
-    text: "НЕВОЗМОЖНО",
-    className: "text-[#467783]",
-  },
-];
+import { useLanguage } from "../../context/LanguageContext";
 
 export default function HeroTitle() {
+  const { language } = useLanguage();
+
+  const content = {
+    ru: {
+      lines: [
+        {
+          text: "РЕКЛАМНАЯ",
+          className: "text-[#063B4A]",
+        },
+        {
+          text: "СЕТЬ,",
+          className: "text-[#063B4A]",
+        },
+        {
+          text: "КОТОРУЮ",
+          className: "text-[#467783]",
+        },
+        {
+          text: "НЕВОЗМОЖНО",
+          className: "text-[#467783]",
+        },
+      ],
+      accent: "ПРОЛИСТАТЬ",
+    },
+
+    kz: {
+      lines: [
+        {
+          text: "ЖАРНАМА",
+          className: "text-[#063B4A]",
+        },
+        {
+          text: "ЖЕЛІСІН",
+          className: "text-[#063B4A]",
+        },
+        {
+          text: "ӨТУ",
+          className: "text-[#467783]",
+        },
+        {
+          text: "МҮМКІН ЕМЕС",
+          className: "text-[#467783]",
+        },
+      ],
+      accent: "ЖАЛҒАСТЫРУ",
+    },
+  } as const;
+
+  const { lines, accent } = content[language];
+
   return (
     <motion.h1
       initial={{ opacity: 0 }}
@@ -29,21 +61,22 @@ export default function HeroTitle() {
       }}
       className="
         relative
-        mt-6
+        mt-8
         select-none
         font-black
         uppercase
-        leading-[0.91]
+        leading-[0.94]
         tracking-[-0.055em]
         text-[clamp(3rem,11vw,6.2rem)]
-
+        sm:mt-6
+        sm:leading-[0.91]
         sm:text-[clamp(3.8rem,8vw,6.2rem)]
         lg:text-[clamp(4rem,6vw,6.2rem)]
       "
     >
       {lines.map((line, index) => (
         <motion.div
-          key={line.text}
+          key={`${language}-${line.text}`}
           initial={{
             opacity: 0,
             y: 55,
@@ -67,9 +100,10 @@ export default function HeroTitle() {
         </motion.div>
       ))}
 
-      {/* Accent */}
+      {/* ACCENT */}
 
       <motion.div
+        key={`${language}-${accent}`}
         initial={{
           opacity: 0,
           y: 55,
@@ -85,7 +119,7 @@ export default function HeroTitle() {
         }}
         className="
           relative
-          mt-1
+          mt-3
           w-fit
           bg-gradient-to-r
           from-[#078A9A]
@@ -93,11 +127,12 @@ export default function HeroTitle() {
           to-[#08788A]
           bg-clip-text
           text-transparent
+          sm:mt-1
         "
       >
-        ПРОЛИСТАТЬ
+        {accent}
 
-        {/* Glow */}
+        {/* GLOW */}
 
         <motion.div
           aria-hidden="true"
@@ -125,7 +160,7 @@ export default function HeroTitle() {
         />
       </motion.div>
 
-      {/* Water line */}
+      {/* WATER LINE */}
 
       <motion.div
         initial={{
@@ -142,15 +177,15 @@ export default function HeroTitle() {
           ease: [0.22, 1, 0.36, 1],
         }}
         className="
-          mt-5
+          mt-7
           h-[2px]
-          w-24
+          w-20
           origin-left
           rounded-full
           bg-gradient-to-r
           from-[#0AA6B7]
           to-transparent
-
+          sm:mt-5
           sm:w-28
         "
       />

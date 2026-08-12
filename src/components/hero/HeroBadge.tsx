@@ -1,6 +1,19 @@
 import { motion } from "framer-motion";
+import { useLanguage } from "../../context/LanguageContext";
 
 export default function HeroBadge() {
+  const { language } = useLanguage();
+
+  const title =
+    language === "ru"
+      ? "QR РЕКЛАМНАЯ СЕТЬ"
+      : "QR ЖАРНАМА ЖЕЛІСІ";
+
+  const subtitle =
+    language === "ru"
+      ? "ЦИФРОВАЯ ВОДА"
+      : "ЦИФРЛЫҚ СУ";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -26,6 +39,8 @@ export default function HeroBadge() {
         backdrop-blur-xl
       "
     >
+      {/* STATUS */}
+
       <span
         className="
           flex
@@ -40,6 +55,8 @@ export default function HeroBadge() {
         <span className="h-2 w-2 rounded-full bg-[#0a91a1]" />
       </span>
 
+      {/* TEXT */}
+
       <div className="flex flex-col leading-none">
         <span
           className="
@@ -48,11 +65,10 @@ export default function HeroBadge() {
             uppercase
             tracking-[0.18em]
             text-[#073b4c]
-
             sm:text-[11px]
           "
         >
-          QR AD NETWORK
+          {title}
         </span>
 
         <span
@@ -62,13 +78,14 @@ export default function HeroBadge() {
             uppercase
             tracking-[0.2em]
             text-[#0a8b9b]/70
-
             sm:text-[9px]
           "
         >
-          DIGITAL WATER
+          {subtitle}
         </span>
       </div>
+
+      {/* WATER LINE */}
 
       <div
         className="

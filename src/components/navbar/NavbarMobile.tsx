@@ -1,8 +1,9 @@
 import { Menu, X } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface LinkItem {
-  title: string;
   id: string;
+  title: string;
 }
 
 interface Props {
@@ -18,16 +19,32 @@ export default function NavbarMobile({
   links,
   scrollTo,
 }: Props) {
+  const { language, setLanguage, t } = useLanguage();
+
   const toggleMenu = () => setOpen(!open);
+
+  const toggleLanguage = () => {
+    setLanguage(language === "ru" ? "kz" : "ru");
+  };
 
   return (
     <>
-      {/* MOBILE BUTTON */}
+      {/* =========================================
+          MOBILE BUTTON
+      ========================================= */}
 
       <button
         type="button"
         onClick={toggleMenu}
-        aria-label={open ? "Закрыть меню" : "Открыть меню"}
+        aria-label={
+          open
+            ? language === "ru"
+              ? "Закрыть меню"
+              : "Мәзірді жабу"
+            : language === "ru"
+              ? "Открыть меню"
+              : "Мәзірді ашу"
+        }
         aria-expanded={open}
         className="
           flex
@@ -56,7 +73,9 @@ export default function NavbarMobile({
         )}
       </button>
 
-      {/* MENU */}
+      {/* =========================================
+          MENU
+      ========================================= */}
 
       <div
         className={`
@@ -77,7 +96,11 @@ export default function NavbarMobile({
 
         <button
           type="button"
-          aria-label="Закрыть меню"
+          aria-label={
+            language === "ru"
+              ? "Закрыть меню"
+              : "Мәзірді жабу"
+          }
           onClick={() => setOpen(false)}
           className="
             absolute
@@ -158,6 +181,66 @@ export default function NavbarMobile({
           </nav>
 
           <div className="p-7">
+            {/* =========================================
+                LANGUAGE
+            ========================================= */}
+
+            <button
+              type="button"
+              onClick={toggleLanguage}
+              className="
+                mb-3
+                flex
+                w-full
+                items-center
+                justify-center
+                gap-3
+                rounded-full
+                border
+                border-[#092B32]/10
+                bg-white/50
+                py-3
+                text-[10px]
+                font-medium
+                uppercase
+                tracking-[0.2em]
+                text-[#092B32]/65
+                transition-all
+                duration-300
+                hover:border-[#2F6873]/30
+                hover:bg-[#2F6873]/[0.05]
+                hover:text-[#2F6873]
+              "
+            >
+              <span
+                className={
+                  language === "ru"
+                    ? "text-[#2F6873]"
+                    : "text-[#092B32]/30"
+                }
+              >
+                RU
+              </span>
+
+              <span className="text-[#092B32]/15">
+                /
+              </span>
+
+              <span
+                className={
+                  language === "kz"
+                    ? "text-[#2F6873]"
+                    : "text-[#092B32]/30"
+                }
+              >
+                KZ
+              </span>
+            </button>
+
+            {/* =========================================
+                CTA
+            ========================================= */}
+
             <button
               type="button"
               onClick={() => scrollTo("calculator")}
@@ -184,7 +267,7 @@ export default function NavbarMobile({
                 active:scale-[0.98]
               "
             >
-              <span>Запустить кампанию</span>
+              <span>{t.hero.button}</span>
 
               <span
                 className="

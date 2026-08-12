@@ -2,6 +2,7 @@ import { motion, useReducedMotion } from "framer-motion";
 
 import type { CampaignResult } from "./types";
 import { formatPrice } from "./utils";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface Props {
   result: CampaignResult;
@@ -13,22 +14,23 @@ export default function CalculatorResult({
   result,
 }: Props) {
   const reduceMotion = useReducedMotion();
+  const { t, language } = useLanguage();
 
   const stats = [
     {
-      label: "Стоимость бутылок",
+      label: t.calculator.bottleCost,
       value: formatPrice(result.bottlePrice),
     },
     {
-      label: "Дизайн",
+      label: t.calculator.designCost,
       value: formatPrice(result.designPrice),
     },
     {
-      label: "Раздача",
+      label: t.calculator.distributionCost,
       value: formatPrice(result.distributionPrice),
     },
     {
-      label: "Стоимость для рекламодателя",
+      label: t.calculator.advertiserCost,
       value: formatPrice(result.advertiserBudget),
       accent: true,
     },
@@ -38,7 +40,7 @@ export default function CalculatorResult({
     const phone = "77064111040";
 
     const message =
-      "Здравствуйте! Хочу получить коммерческое предложение по размещению рекламы.";
+      t.calculator.whatsappMessage;
 
     const whatsappUrl =
       `https://wa.me/${phone}?text=${encodeURIComponent(
@@ -129,6 +131,7 @@ export default function CalculatorResult({
       />
 
       <div className="relative z-10">
+
         {/* =========================================
             HEADER
         ========================================= */}
@@ -142,7 +145,7 @@ export default function CalculatorResult({
               text-cyan-300/70
             "
           >
-            Campaign summary
+            {t.calculator.summary}
           </span>
 
           <span
@@ -166,7 +169,7 @@ export default function CalculatorResult({
               "
             />
 
-            Live estimate
+            {t.calculator.liveEstimate}
           </span>
         </div>
 
@@ -183,7 +186,7 @@ export default function CalculatorResult({
               text-white/25
             "
           >
-            Стоимость участия
+            {t.calculator.participationCost}
           </p>
 
           <div
@@ -235,8 +238,7 @@ export default function CalculatorResult({
               text-white/30
             "
           >
-            Стоимость участия одного рекламодателя
-            в выбранной конфигурации.
+            {t.calculator.participationDescription}
           </p>
         </div>
 
@@ -396,7 +398,7 @@ export default function CalculatorResult({
           "
         >
           <span className="relative z-10">
-            Получить коммерческое предложение
+            {t.calculator.commercialOffer}
           </span>
 
           <span
@@ -447,7 +449,9 @@ export default function CalculatorResult({
             "
           />
 
-          Расчёт является предварительным
+          {language === "ru"
+            ? t.calculator.preliminary
+            : t.calculator.preliminary}
         </div>
       </div>
     </div>

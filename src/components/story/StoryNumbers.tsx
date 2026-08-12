@@ -24,7 +24,15 @@ export default function StoryNumbers({
 }: Props) {
   if (mobile) {
     return (
-      <div className="flex items-center justify-center gap-2 lg:hidden">
+      <div
+        className="
+          flex
+          items-center
+          justify-center
+          gap-2.5
+          lg:hidden
+        "
+      >
         {numbers.map((item, index) => {
           const start = index / numbers.length;
           const end = (index + 1) / numbers.length;
@@ -60,18 +68,23 @@ export default function StoryNumbers({
               }}
               className="
                 flex
-                h-8
-                min-w-8
+                h-7
+                w-7
+                shrink-0
                 items-center
                 justify-center
                 rounded-full
                 border
                 border-[#6CE0E5]/[0.13]
                 bg-[#6CE0E5]/[0.025]
-                px-2
                 font-mono
-                text-[8px]
+                text-[7px]
+                tracking-[0.08em]
                 text-[#6CE0E5]/65
+
+                sm:h-8
+                sm:w-8
+                sm:text-[8px]
               "
             >
               {item.number}

@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
+import { useLanguage } from "../../context/LanguageContext";
+
 import type { AdvertiserCount } from "./types";
 import CalculatorConfig from "./CalculatorConfig";
 import CalculatorResult from "./CalculatorResult";
@@ -10,6 +12,7 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function Calculator() {
   const reduceMotion = useReducedMotion();
+  const { t } = useLanguage();
 
   const [advertisers, setAdvertisers] =
     useState<AdvertiserCount>(4);
@@ -45,19 +48,16 @@ export default function Calculator() {
         relative
         overflow-hidden
         bg-[#041E25]
-        py-20
+        py-14
         text-white
 
+        xs:py-16
         sm:py-28
-
         md:py-40
-
         lg:py-48
       "
     >
-      {/* =====================================================
-          TOP TRANSITION
-      ===================================================== */}
+      {/* TOP TRANSITION */}
 
       <div
         className="
@@ -65,8 +65,9 @@ export default function Calculator() {
           absolute
           inset-x-0
           top-0
-          h-[140px]
+          h-[90px]
 
+          xs:h-[110px]
           sm:h-[180px]
 
           bg-gradient-to-b
@@ -76,22 +77,20 @@ export default function Calculator() {
         "
       />
 
-      {/* =====================================================
-          AMBIENT LIGHT
-      ===================================================== */}
+      {/* AMBIENT LIGHT */}
 
       <div
         className="
           pointer-events-none
           absolute
           left-1/2
-          top-[-80px]
-          h-[300px]
-          w-[300px]
+          top-[-60px]
+          h-[220px]
+          w-[220px]
           -translate-x-1/2
           rounded-full
           bg-cyan-400/[0.045]
-          blur-[70px]
+          blur-[55px]
 
           sm:top-[-100px]
           sm:h-[420px]
@@ -108,13 +107,13 @@ export default function Calculator() {
         className="
           pointer-events-none
           absolute
-          -right-[120px]
-          top-[30%]
-          h-[240px]
-          w-[240px]
+          -right-[100px]
+          top-[32%]
+          h-[180px]
+          w-[180px]
           rounded-full
           bg-teal-400/[0.025]
-          blur-[70px]
+          blur-[55px]
 
           sm:-right-[180px]
           sm:h-[420px]
@@ -127,13 +126,13 @@ export default function Calculator() {
         className="
           pointer-events-none
           absolute
-          -left-[120px]
+          -left-[100px]
           bottom-[8%]
-          h-[240px]
-          w-[240px]
+          h-[180px]
+          w-[180px]
           rounded-full
           bg-cyan-500/[0.02]
-          blur-[70px]
+          blur-[55px]
 
           sm:-left-[180px]
           sm:h-[380px]
@@ -142,9 +141,7 @@ export default function Calculator() {
         "
       />
 
-      {/* =====================================================
-          GRID
-      ===================================================== */}
+      {/* GRID */}
 
       <div
         className="
@@ -165,7 +162,7 @@ export default function Calculator() {
               transparent 1px
             )
           `,
-          backgroundSize: "100px 100px",
+          backgroundSize: "80px 80px",
           maskImage:
             "linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)",
           WebkitMaskImage:
@@ -173,9 +170,7 @@ export default function Calculator() {
         }}
       />
 
-      {/* =====================================================
-          HORIZONTAL LINES
-      ===================================================== */}
+      {/* HORIZONTAL LINES */}
 
       <div
         className="
@@ -221,9 +216,7 @@ export default function Calculator() {
         "
       />
 
-      {/* =====================================================
-          MICRO DETAILS
-      ===================================================== */}
+      {/* MICRO DETAILS */}
 
       <div
         className="
@@ -239,7 +232,6 @@ export default function Calculator() {
 
           sm:h-1.5
           sm:w-1.5
-          sm:shadow-[0_0_12px_rgba(103,232,249,.35)]
         "
       />
 
@@ -274,9 +266,7 @@ export default function Calculator() {
         "
       />
 
-      {/* =====================================================
-          CONTENT
-      ===================================================== */}
+      {/* CONTENT */}
 
       <div
         className="
@@ -287,16 +277,13 @@ export default function Calculator() {
           max-w-[1350px]
           px-4
 
+          xs:px-5
           sm:px-7
-
           md:px-10
-
           xl:px-14
         "
       >
-        {/* =================================================
-            HEADER
-        ================================================= */}
+        {/* HEADER */}
 
         <motion.div
           initial={
@@ -325,12 +312,12 @@ export default function Calculator() {
           }}
           className="
             mx-auto
-            mb-12
+            mb-9
             max-w-4xl
             text-center
 
+            xs:mb-11
             sm:mb-16
-
             lg:mb-24
           "
         >
@@ -339,56 +326,60 @@ export default function Calculator() {
               flex
               items-center
               justify-center
-              gap-3
-              text-[8px]
+              gap-2.5
+              text-[7px]
               font-medium
               uppercase
-              tracking-[0.32em]
+              tracking-[0.26em]
               text-cyan-200/70
 
+              xs:gap-3
               sm:gap-4
               sm:text-[9px]
               sm:tracking-[0.4em]
             "
           >
-            <span className="h-px w-6 bg-cyan-200/30 sm:w-10" />
+            <span className="h-px w-5 bg-cyan-200/30 sm:w-10" />
 
-            <span>CAMPAIGN ESTIMATOR</span>
+            <span>{t.calculator.label}</span>
 
-            <span className="h-px w-6 bg-cyan-200/30 sm:w-10" />
+            <span className="h-px w-5 bg-cyan-200/30 sm:w-10" />
           </div>
 
           <h2
             className="
-              mt-5
-              text-[clamp(2.35rem,10vw,5.8rem)]
+              mt-4
+              text-[clamp(2.15rem,11vw,3.8rem)]
               font-light
-              leading-[0.94]
-              tracking-[-0.06em]
+              leading-[0.96]
+              tracking-[-0.065em]
               text-white
 
+              xs:mt-5
               sm:mt-7
               sm:text-[clamp(2.8rem,6vw,5.8rem)]
               sm:tracking-[-0.055em]
             "
           >
-            Рассчитайте стоимость
+            {t.calculator.title}
             <br />
 
             <span className="text-cyan-100/45">
-              вашей кампании
+              {t.calculator.titleAccent}
             </span>
           </h2>
 
           <p
             className="
               mx-auto
-              mt-5
-              max-w-[340px]
-              text-[12px]
-              leading-6
+              mt-4
+              max-w-[310px]
+              text-[11px]
+              leading-5
               text-white/45
 
+              xs:mt-5
+              xs:max-w-[330px]
               sm:mt-7
               sm:max-w-2xl
               sm:text-sm
@@ -398,32 +389,26 @@ export default function Calculator() {
               md:leading-8
             "
           >
-            Настройте параметры размещения
-            и получите мгновенный прогноз
-            стоимости, охвата и эффективности
-            рекламной кампании.
+            {t.calculator.description}
           </p>
         </motion.div>
 
-        {/* =================================================
-            CALCULATOR
-        ================================================= */}
+        {/* CALCULATOR */}
 
         <div
           className="
             grid
             min-w-0
-            gap-5
+            gap-4
 
+            xs:gap-5
             sm:gap-8
 
             lg:grid-cols-2
             lg:gap-10
           "
         >
-          {/* =================================================
-              CONFIG
-          ================================================= */}
+          {/* CONFIG */}
 
           <motion.div
             initial={
@@ -461,8 +446,8 @@ export default function Calculator() {
                 pointer-events-none
                 absolute
                 -left-px
-                top-6
-                h-24
+                top-5
+                h-20
                 w-px
                 bg-gradient-to-b
                 from-cyan-300/60
@@ -480,12 +465,15 @@ export default function Calculator() {
                 min-w-0
                 w-full
                 overflow-hidden
-                rounded-[1.5rem]
+                rounded-[1.25rem]
                 border
                 border-cyan-100/[0.10]
                 bg-[#062730]/90
-                p-4
+                p-3.5
                 shadow-[0_25px_70px_rgba(0,20,25,.15)]
+
+                xs:rounded-[1.4rem]
+                xs:p-4
 
                 sm:rounded-3xl
                 sm:p-6
@@ -538,9 +526,7 @@ export default function Calculator() {
             </div>
           </motion.div>
 
-          {/* =================================================
-              RESULT
-          ================================================= */}
+          {/* RESULT */}
 
           <motion.div
             initial={
@@ -578,10 +564,10 @@ export default function Calculator() {
               className="
                 pointer-events-none
                 absolute
-                inset-6
+                inset-5
                 rounded-full
                 bg-cyan-300/[0.025]
-                blur-[60px]
+                blur-[50px]
 
                 sm:inset-8
                 sm:blur-[70px]
@@ -591,18 +577,21 @@ export default function Calculator() {
             <div
               className="
                 relative
-                min-h-[360px]
+                min-h-[320px]
                 w-full
                 overflow-hidden
-                rounded-[1.5rem]
+                rounded-[1.25rem]
                 border
                 border-cyan-200/[0.14]
                 bg-gradient-to-br
                 from-[#08333D]
                 via-[#062730]
                 to-[#041D24]
-                p-4
+                p-3.5
                 shadow-[0_25px_80px_rgba(0,30,35,.2)]
+
+                xs:min-h-[340px]
+                xs:p-4
 
                 sm:min-h-[420px]
                 sm:rounded-3xl
@@ -634,13 +623,13 @@ export default function Calculator() {
                 className="
                   pointer-events-none
                   absolute
-                  right-[-60px]
-                  top-[-60px]
-                  h-[180px]
-                  w-[180px]
+                  right-[-50px]
+                  top-[-50px]
+                  h-[150px]
+                  w-[150px]
                   rounded-full
                   bg-cyan-300/[0.025]
-                  blur-[50px]
+                  blur-[45px]
 
                   sm:right-[-80px]
                   sm:top-[-80px]
@@ -655,9 +644,7 @@ export default function Calculator() {
           </motion.div>
         </div>
 
-        {/* =================================================
-            NOTE
-        ================================================= */}
+        {/* NOTE */}
 
         <motion.div
           initial={
@@ -683,17 +670,18 @@ export default function Calculator() {
             delay: 0.1,
           }}
           className="
-            mt-7
+            mt-5
             flex
             items-center
             justify-center
-            gap-2
+            gap-1.5
             text-center
-            text-[8px]
+            text-[7px]
             uppercase
-            tracking-[0.18em]
+            tracking-[0.14em]
             text-cyan-100/25
 
+            xs:mt-6
             sm:mt-10
             sm:gap-3
             sm:text-[9px]
@@ -711,19 +699,16 @@ export default function Calculator() {
 
               sm:h-1.5
               sm:w-1.5
-              sm:shadow-[0_0_8px_rgba(34,211,238,.45)]
             "
           />
 
           <span>
-            Расчёт обновляется в реальном времени
+            {t.calculator.updated}
           </span>
         </motion.div>
       </div>
 
-      {/* =====================================================
-          BOTTOM TRANSITION
-      ===================================================== */}
+      {/* BOTTOM TRANSITION */}
 
       <div
         className="
@@ -732,7 +717,7 @@ export default function Calculator() {
           inset-x-0
           bottom-0
           z-20
-          h-[120px]
+          h-[90px]
           bg-gradient-to-t
           from-[#03171D]
           via-[#041E25]/70

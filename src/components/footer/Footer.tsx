@@ -1,8 +1,45 @@
 import { motion } from "framer-motion";
+import { useLanguage } from "../../context/LanguageContext";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function Footer() {
+  const { t } = useLanguage();
+
+  const navigation = [
+    {
+      label: t.nav.about,
+      id: "about",
+    },
+    {
+      label: t.nav.story,
+      id: "story",
+    },
+    {
+      label: t.nav.features,
+      id: "features",
+    },
+    {
+      label: t.nav.calculator,
+      id: "calculator",
+    },
+    {
+      label: t.nav.faq,
+      id: "faq",
+    },
+    {
+      label: t.nav.contacts,
+      id: "contacts",
+    },
+  ];
+
+  const scrollToSection = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   return (
     <footer
       id="contacts"
@@ -13,9 +50,9 @@ export default function Footer() {
         text-white
       "
     >
-      {/* =================================================
+      {/* =========================================
           TOP OCEAN TRANSITION
-      ================================================= */}
+      ========================================= */}
 
       <div
         className="
@@ -23,17 +60,21 @@ export default function Footer() {
           absolute
           inset-x-0
           top-0
-          h-40
+          h-16
           bg-gradient-to-b
           from-[#061F26]
           via-[#04212A]
           to-transparent
+
+          xs:h-20
+          sm:h-32
+          lg:h-40
         "
       />
 
-      {/* =================================================
+      {/* =========================================
           DEEP OCEAN GLOW
-      ================================================= */}
+      ========================================= */}
 
       <div
         className="
@@ -41,12 +82,20 @@ export default function Footer() {
           absolute
           left-1/2
           top-[35%]
-          h-[650px]
-          w-[650px]
+          h-[260px]
+          w-[260px]
           -translate-x-1/2
           rounded-full
           bg-cyan-500/[0.035]
-          blur-[180px]
+          blur-[80px]
+
+          sm:h-[500px]
+          sm:w-[500px]
+          sm:blur-[150px]
+
+          lg:h-[650px]
+          lg:w-[650px]
+          lg:blur-[180px]
         "
       />
 
@@ -54,13 +103,18 @@ export default function Footer() {
         className="
           pointer-events-none
           absolute
-          -left-[220px]
+          -left-[140px]
           top-[45%]
-          h-[500px]
-          w-[500px]
+          h-[260px]
+          w-[260px]
           rounded-full
           bg-sky-500/[0.025]
-          blur-[170px]
+          blur-[90px]
+
+          sm:-left-[220px]
+          sm:h-[500px]
+          sm:w-[500px]
+          sm:blur-[170px]
         "
       />
 
@@ -68,19 +122,24 @@ export default function Footer() {
         className="
           pointer-events-none
           absolute
-          -right-[220px]
+          -right-[140px]
           bottom-[10%]
-          h-[500px]
-          w-[500px]
+          h-[260px]
+          w-[260px]
           rounded-full
           bg-cyan-400/[0.02]
-          blur-[170px]
+          blur-[90px]
+
+          sm:-right-[220px]
+          sm:h-[500px]
+          sm:w-[500px]
+          sm:blur-[170px]
         "
       />
 
-      {/* =================================================
-          OCEAN GRID
-      ================================================= */}
+      {/* =========================================
+          GRID
+      ========================================= */}
 
       <div
         className="
@@ -101,7 +160,7 @@ export default function Footer() {
               transparent 1px
             )
           `,
-          backgroundSize: "120px 120px",
+          backgroundSize: "60px 60px",
           maskImage:
             "linear-gradient(to bottom, transparent, black 20%, black 80%, transparent)",
           WebkitMaskImage:
@@ -109,9 +168,9 @@ export default function Footer() {
         }}
       />
 
-      {/* =================================================
+      {/* =========================================
           TECHNICAL LINES
-      ================================================= */}
+      ========================================= */}
 
       <div
         className="
@@ -143,9 +202,9 @@ export default function Footer() {
         "
       />
 
-      {/* =================================================
+      {/* =========================================
           ORBIT
-      ================================================= */}
+      ========================================= */}
 
       <div
         className="
@@ -179,9 +238,9 @@ export default function Footer() {
         "
       />
 
-      {/* =================================================
+      {/* =========================================
           CONTENT
-      ================================================= */}
+      ========================================= */}
 
       <div
         className="
@@ -189,33 +248,49 @@ export default function Footer() {
           z-10
           mx-auto
           max-w-[1700px]
-          px-8
-          pb-10
-          pt-32
+          px-5
+          pb-6
+          pt-20
+
+          xs:pb-7
+          xs:pt-24
+
+          sm:px-7
+          sm:pb-10
+          sm:pt-32
+
           md:px-12
           md:pb-12
           md:pt-40
+
           lg:px-16
           lg:pb-14
           lg:pt-48
         "
       >
-        {/* =================================================
+        {/* =========================================
             MAIN GRID
-        ================================================= */}
+        ========================================= */}
 
         <div
           className="
             grid
-            gap-16
+            gap-9
+
+            xs:gap-10
+
+            sm:gap-14
+
             md:grid-cols-2
+            md:gap-16
+
             lg:grid-cols-[1.4fr_0.8fr_1fr]
             lg:gap-24
           "
         >
-          {/* =================================================
+          {/* =========================================
               BRAND
-          ================================================= */}
+          ========================================= */}
 
           <motion.div
             initial={{
@@ -237,10 +312,14 @@ export default function Footer() {
           >
             <div
               className="
-                text-5xl
+                text-[2.8rem]
                 font-light
-                tracking-[-0.05em]
+                leading-none
+                tracking-[-0.06em]
                 text-white
+
+                xs:text-[3.2rem]
+                sm:text-5xl
                 md:text-6xl
                 lg:text-7xl
               "
@@ -250,53 +329,60 @@ export default function Footer() {
 
             <div
               className="
-                mt-5
+                mt-3
                 flex
                 items-center
-                gap-3
-                text-[9px]
+                gap-2
+                text-[7px]
                 uppercase
-                tracking-[0.3em]
+                tracking-[0.2em]
                 text-cyan-300/45
+
+                xs:mt-4
+                sm:mt-5
+                sm:gap-3
+                sm:text-[9px]
+                sm:tracking-[0.3em]
               "
             >
               <span
                 className="
                   h-1.5
                   w-1.5
+                  shrink-0
                   rounded-full
                   bg-cyan-300/70
                   shadow-[0_0_12px_rgba(103,232,249,.45)]
                 "
               />
 
-              Physical Advertising Platform
+              {t.footer.platform}
             </div>
 
             <p
               className="
-                mt-7
-                max-w-md
-                text-sm
-                leading-7
+                mt-5
+                max-w-[300px]
+                text-[12px]
+                leading-5
                 text-white/35
+
+                xs:mt-6
+                xs:text-[13px]
+                xs:leading-6
+
+                sm:mt-7
+                sm:max-w-md
+                sm:text-sm
+                sm:leading-7
               "
             >
-              Физический рекламный носитель,
-              который превращает обычную бутылку воды
-              в реальный контакт бренда с аудиторией.
+              {t.footer.description}
             </p>
 
             <motion.button
               type="button"
-              onClick={() => {
-                document
-                  .getElementById("calculator")
-                  ?.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                  });
-              }}
+              onClick={() => scrollToSection("calculator")}
               whileHover={{
                 y: -2,
               }}
@@ -304,34 +390,46 @@ export default function Footer() {
                 scale: 0.98,
               }}
               className="
-                mt-9
+                mt-6
                 inline-flex
+                min-h-[40px]
                 items-center
                 rounded-full
                 border
                 border-cyan-300/20
                 bg-cyan-300/[0.045]
-                px-6
-                py-3
-                text-[10px]
+                px-4
+                py-2
+                text-[8px]
                 uppercase
-                tracking-[0.2em]
+                tracking-[0.16em]
                 text-cyan-100/80
                 transition-all
                 duration-300
+
+                xs:mt-7
+                xs:px-5
+                xs:text-[9px]
+
+                sm:mt-9
+                sm:px-6
+                sm:py-3
+                sm:text-[10px]
+                sm:tracking-[0.2em]
+
                 hover:border-cyan-300/40
                 hover:bg-cyan-300/[0.08]
                 hover:text-cyan-100
                 hover:shadow-[0_0_35px_rgba(34,211,238,.12)]
               "
             >
-              Запустить кампанию
+              {t.footer.campaign}
             </motion.button>
           </motion.div>
 
-          {/* =================================================
+          {/* =========================================
               NAVIGATION
-          ================================================= */}
+          ========================================= */}
 
           <motion.div
             initial={{
@@ -354,35 +452,37 @@ export default function Footer() {
           >
             <p
               className="
-                text-[10px]
+                text-[8px]
                 uppercase
-                tracking-[0.3em]
+                tracking-[0.25em]
                 text-cyan-200/25
+
+                sm:text-[10px]
+                sm:tracking-[0.3em]
               "
             >
-              Навигация
+              {t.footer.navigation}
             </p>
 
-            <nav className="mt-7 flex flex-col gap-4">
-              {[
-                { label: "О платформе", id: "about" },
-                { label: "История", id: "story" },
-                { label: "Возможности", id: "features" },
-                { label: "Калькулятор", id: "calculator" },
-                { label: "FAQ", id: "faq" },
-                { label: "Контакты", id: "contacts" },
-              ].map((link, index) => (
+            <nav
+              className="
+                mt-4
+                flex
+                flex-col
+                gap-2.5
+
+                xs:mt-5
+                xs:gap-3
+
+                sm:mt-7
+                sm:gap-4
+              "
+            >
+              {navigation.map((link, index) => (
                 <motion.button
                   key={link.id}
                   type="button"
-                  onClick={() => {
-                    document
-                      .getElementById(link.id)
-                      ?.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                      });
-                  }}
+                  onClick={() => scrollToSection(link.id)}
                   whileHover={{
                     x: 5,
                   }}
@@ -392,25 +492,33 @@ export default function Footer() {
                   className="
                     group
                     flex
+                    min-h-[22px]
                     w-fit
                     items-center
-                    gap-3
+                    gap-2.5
                     text-left
-                    text-sm
+                    text-[12px]
                     text-white/45
                     transition-colors
                     duration-300
+
+                    xs:text-[13px]
+                    sm:text-sm
+
                     hover:text-cyan-200
                   "
                 >
                   <span
                     className="
                       font-mono
-                      text-[9px]
+                      text-[7px]
                       tracking-widest
                       text-cyan-300/15
                       transition-colors
                       duration-300
+
+                      sm:text-[9px]
+
                       group-hover:text-cyan-300/50
                     "
                   >
@@ -423,9 +531,9 @@ export default function Footer() {
             </nav>
           </motion.div>
 
-          {/* =================================================
+          {/* =========================================
               CONTACTS
-          ================================================= */}
+          ========================================= */}
 
           <motion.div
             initial={{
@@ -448,25 +556,43 @@ export default function Footer() {
           >
             <p
               className="
-                text-[10px]
+                text-[8px]
                 uppercase
-                tracking-[0.3em]
+                tracking-[0.25em]
                 text-cyan-200/25
+
+                sm:text-[10px]
+                sm:tracking-[0.3em]
               "
             >
-              Контакты
+              {t.footer.contacts}
             </p>
 
-            <div className="mt-7 space-y-4">
+            <div
+              className="
+                mt-4
+                space-y-2.5
+
+                xs:mt-5
+                xs:space-y-3
+
+                sm:mt-7
+                sm:space-y-4
+              "
+            >
               <a
                 href="mailto:hello@mimisu.kz"
                 className="
                   block
                   w-fit
-                  text-sm
+                  text-[12px]
                   text-white/45
                   transition-colors
                   duration-300
+
+                  xs:text-[13px]
+                  sm:text-sm
+
                   hover:text-cyan-200
                 "
               >
@@ -478,10 +604,14 @@ export default function Footer() {
                 className="
                   block
                   w-fit
-                  text-sm
+                  text-[12px]
                   text-white/45
                   transition-colors
                   duration-300
+
+                  xs:text-[13px]
+                  sm:text-sm
+
                   hover:text-cyan-200
                 "
               >
@@ -492,33 +622,44 @@ export default function Footer() {
                 className="
                   flex
                   items-center
-                  gap-3
-                  pt-4
-                  text-[10px]
+                  gap-2
+                  pt-2
+                  text-[7px]
                   uppercase
-                  tracking-[0.18em]
+                  tracking-[0.11em]
+                  leading-5
                   text-white/20
+
+                  xs:gap-2.5
+                  xs:pt-3
+                  xs:text-[8px]
+
+                  sm:gap-3
+                  sm:pt-4
+                  sm:text-[10px]
+                  sm:tracking-[0.18em]
                 "
               >
                 <span
                   className="
                     h-1.5
                     w-1.5
+                    shrink-0
                     rounded-full
                     bg-cyan-300/70
                     shadow-[0_0_10px_rgba(34,211,238,.6)]
                   "
                 />
 
-                Работаем по всему Казахстану
+                {t.footer.location}
               </div>
             </div>
           </motion.div>
         </div>
 
-        {/* =================================================
+        {/* =========================================
             DIVIDER
-        ================================================= */}
+        ========================================= */}
 
         <motion.div
           initial={{
@@ -538,7 +679,7 @@ export default function Footer() {
             ease,
           }}
           className="
-            mt-20
+            mt-10
             h-px
             w-full
             origin-left
@@ -546,42 +687,56 @@ export default function Footer() {
             from-cyan-300/[0.12]
             via-white/[0.05]
             to-transparent
+
+            xs:mt-12
+            sm:mt-20
             md:mt-24
           "
         />
 
-        {/* =================================================
+        {/* =========================================
             BOTTOM
-        ================================================= */}
+        ========================================= */}
 
         <div
           className="
             flex
             flex-col
-            gap-5
-            pt-7
-            text-[9px]
+            gap-2.5
+            pt-5
+            text-[7px]
             uppercase
-            tracking-[0.25em]
+            tracking-[0.16em]
+            leading-5
             text-white/20
+
+            xs:gap-3
+            xs:pt-6
+            xs:text-[8px]
+
+            sm:gap-4
+            sm:pt-7
+            sm:text-[9px]
+            sm:tracking-[0.25em]
+
             md:flex-row
             md:items-center
             md:justify-between
           "
         >
-          <span>© 2026 MIMISU</span>
+          <span>{t.footer.copyright}</span>
 
           <span className="text-cyan-200/20">
-            Physical Advertising Platform
+            {t.footer.platform}
           </span>
 
-          <span>Made for Real Contact</span>
+          <span>{t.footer.slogan}</span>
         </div>
       </div>
 
-      {/* =================================================
+      {/* =========================================
           BOTTOM OCEAN FADE
-      ================================================= */}
+      ========================================= */}
 
       <div
         className="
@@ -589,10 +744,12 @@ export default function Footer() {
           absolute
           inset-x-0
           bottom-0
-          h-32
+          h-16
           bg-gradient-to-t
           from-[#020F15]
           to-transparent
+
+          sm:h-32
         "
       />
     </footer>

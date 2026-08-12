@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 
+import { useLanguage } from "../../context/LanguageContext";
+
 import type { AdvertiserCount } from "./types";
 
 interface Props {
@@ -33,6 +35,8 @@ export default function CalculatorConfig({
   onDesignChange,
   onDistributionChange,
 }: Props) {
+  const { t } = useLanguage();
+
   const progress =
     ((quantity - MIN_QUANTITY) /
       (MAX_QUANTITY - MIN_QUANTITY)) *
@@ -40,19 +44,21 @@ export default function CalculatorConfig({
 
   return (
     <div className="space-y-3 sm:space-y-4">
-      {/* =================================
-          ADVERTISERS
-      ================================= */}
+
+      {/* ADVERTISERS */}
 
       <div
         className="
           relative
           overflow-hidden
-          rounded-[1.25rem]
+          rounded-[1.15rem]
           border
           border-cyan-100/[0.06]
           bg-[#0A2027]/70
-          p-4
+          p-3.5
+
+          xs:rounded-[1.25rem]
+          xs:p-4
 
           sm:rounded-3xl
           sm:p-7
@@ -75,56 +81,47 @@ export default function CalculatorConfig({
         />
 
         <div className="relative z-10 min-w-0">
-          {/* HEADER */}
 
-          <div
-            className="
-              flex
-              items-start
-              justify-between
-              gap-3
-            "
-          >
+          <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <p
                 className="
-                  text-[8px]
+                  text-[7px]
                   uppercase
-                  tracking-[0.25em]
+                  tracking-[0.23em]
                   text-cyan-100/25
 
                   sm:text-[10px]
                   sm:tracking-[0.3em]
                 "
               >
-                Параметр 01
+                {t.calculator.parameter} 01
               </p>
 
               <h3
                 className="
-                  mt-1.5
-                  max-w-[210px]
-                  text-[16px]
+                  mt-1
+                  max-w-[190px]
+                  text-[15px]
                   font-light
                   leading-tight
                   text-white
 
+                  xs:text-[16px]
                   sm:mt-2
                   sm:max-w-none
                   sm:text-xl
                 "
               >
-                Количество рекламодателей
+                {t.calculator.advertisers}
               </h3>
             </div>
-
-            {/* CURRENT VALUE */}
 
             <div
               className="
                 flex
-                h-10
-                min-w-11
+                h-9
+                min-w-10
                 shrink-0
                 items-center
                 justify-center
@@ -132,11 +129,13 @@ export default function CalculatorConfig({
                 border
                 border-cyan-200/[0.10]
                 bg-cyan-200/[0.025]
-                px-3
+                px-2.5
                 font-mono
-                text-base
+                text-sm
                 text-cyan-100/80
 
+                xs:h-10
+                xs:min-w-11
                 sm:h-12
                 sm:min-w-16
                 sm:rounded-xl
@@ -148,15 +147,16 @@ export default function CalculatorConfig({
             </div>
           </div>
 
-          {/* ADVERTISER BUTTONS */}
+          {/* BUTTONS */}
 
           <div
             className="
-              mt-5
+              mt-4
               grid
               grid-cols-3
-              gap-2
+              gap-1.5
 
+              xs:gap-2
               sm:mt-8
               sm:gap-3
             "
@@ -179,12 +179,13 @@ export default function CalculatorConfig({
                     min-w-0
                     rounded-lg
                     border
-                    py-3
+                    py-2.5
                     font-mono
                     text-sm
                     transition-[border-color,background-color,color,box-shadow]
                     duration-200
 
+                    xs:py-3
                     sm:rounded-xl
                     sm:py-4
 
@@ -213,50 +214,50 @@ export default function CalculatorConfig({
             })}
           </div>
 
-          {/* LABELS */}
-
           <div
             className="
-              mt-2
+              mt-1.5
               grid
               grid-cols-3
               items-start
-              text-[8px]
+              text-[7px]
               uppercase
-              tracking-[0.12em]
+              tracking-[0.09em]
               text-white/20
 
+              xs:text-[8px]
               sm:mt-3
               sm:text-[10px]
               sm:tracking-[0.2em]
             "
           >
             <span className="text-left">
-              1 рекламодатель
+              {t.calculator.advertiserOne}
             </span>
 
             <span />
 
             <span className="text-right">
-              4 рекламодателя
+              {t.calculator.advertiserFour}
             </span>
           </div>
         </div>
       </div>
 
-      {/* =================================
-          QUANTITY
-      ================================= */}
+      {/* QUANTITY */}
 
       <div
         className="
           relative
           overflow-hidden
-          rounded-[1.25rem]
+          rounded-[1.15rem]
           border
           border-cyan-100/[0.06]
           bg-[#0A2027]/70
-          p-4
+          p-3.5
+
+          xs:rounded-[1.25rem]
+          xs:p-4
 
           sm:rounded-3xl
           sm:p-7
@@ -279,44 +280,37 @@ export default function CalculatorConfig({
         />
 
         <div className="relative z-10 min-w-0">
-          {/* HEADER */}
 
-          <div
-            className="
-              flex
-              items-start
-              justify-between
-              gap-3
-            "
-          >
+          <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <p
                 className="
-                  text-[8px]
+                  text-[7px]
                   uppercase
-                  tracking-[0.25em]
+                  tracking-[0.23em]
                   text-cyan-100/25
 
                   sm:text-[10px]
                   sm:tracking-[0.3em]
                 "
               >
-                Параметр 02
+                {t.calculator.parameter} 02
               </p>
 
               <h3
                 className="
-                  mt-1.5
-                  text-[16px]
+                  mt-1
+                  text-[15px]
                   font-light
                   leading-tight
                   text-white
 
+                  xs:text-[16px]
                   sm:mt-2
                   sm:text-xl
                 "
               >
-                Тираж бутылок
+                {t.calculator.bottles}
               </h3>
             </div>
 
@@ -327,12 +321,14 @@ export default function CalculatorConfig({
                 border
                 border-white/[0.06]
                 bg-white/[0.018]
-                px-2.5
-                py-2
+                px-2
+                py-1.5
                 font-mono
-                text-xs
+                text-[11px]
                 text-white/65
 
+                xs:px-2.5
+                xs:py-2
                 sm:rounded-xl
                 sm:px-4
                 sm:py-3
@@ -345,8 +341,7 @@ export default function CalculatorConfig({
 
           {/* SLIDER */}
 
-          <div className="relative mt-6 h-9 sm:mt-8 sm:h-10">
-            {/* TRACK */}
+          <div className="relative mt-5 h-10 sm:mt-8 sm:h-10">
 
             <div
               className="
@@ -361,8 +356,6 @@ export default function CalculatorConfig({
                 bg-white/[0.08]
               "
             />
-
-            {/* PROGRESS */}
 
             <div
               className="
@@ -381,8 +374,6 @@ export default function CalculatorConfig({
                 width: `${progress}%`,
               }}
             />
-
-            {/* KNOB */}
 
             <div
               className="
@@ -420,7 +411,7 @@ export default function CalculatorConfig({
                   Number(event.target.value)
                 )
               }
-              aria-label="Тираж"
+              aria-label={t.calculator.bottles}
               className="
                 absolute
                 inset-0
@@ -433,16 +424,14 @@ export default function CalculatorConfig({
             />
           </div>
 
-          {/* RANGE LABELS */}
-
           <div
             className="
-              mt-1
+              mt-0
               flex
               justify-between
-              text-[8px]
+              text-[7px]
               uppercase
-              tracking-[0.16em]
+              tracking-[0.13em]
               text-white/20
 
               sm:mt-2
@@ -456,19 +445,20 @@ export default function CalculatorConfig({
         </div>
       </div>
 
-      {/* =================================
-          OPTIONS
-      ================================= */}
+      {/* OPTIONS */}
 
       <div
         className="
           relative
           overflow-hidden
-          rounded-[1.25rem]
+          rounded-[1.15rem]
           border
           border-cyan-100/[0.06]
           bg-[#0A2027]/70
-          p-4
+          p-3.5
+
+          xs:rounded-[1.25rem]
+          xs:p-4
 
           sm:rounded-3xl
           sm:p-7
@@ -493,31 +483,35 @@ export default function CalculatorConfig({
         <div className="relative z-10">
           <p
             className="
-              text-[8px]
+              text-[7px]
               uppercase
-              tracking-[0.25em]
+              tracking-[0.23em]
               text-cyan-100/25
 
               sm:text-[10px]
               sm:tracking-[0.3em]
             "
           >
-            Дополнительные услуги
+            {t.calculator.additional}
           </p>
 
-          <div className="mt-4 space-y-2 sm:mt-6 sm:space-y-3">
+          <div className="mt-3 space-y-2 sm:mt-6 sm:space-y-3">
             <Option
               checked={includeDesign}
               onChange={onDesignChange}
-              title="Разработка дизайна"
-              description="Создание фирменной этикетки"
+              title={t.calculator.design}
+              description={
+                t.calculator.designDescription
+              }
             />
 
             <Option
               checked={includeDistribution}
               onChange={onDistributionChange}
-              title="Распространение"
-              description="Организация размещения и раздачи"
+              title={t.calculator.distribution}
+              description={
+                t.calculator.distributionDescription
+              }
             />
           </div>
         </div>
@@ -525,10 +519,6 @@ export default function CalculatorConfig({
     </div>
   );
 }
-
-/* =================================
-   OPTION
-================================= */
 
 interface OptionProps {
   checked: boolean;
@@ -554,14 +544,17 @@ function Option({
         w-full
         min-w-0
         items-center
-        gap-3
+        gap-2.5
         overflow-hidden
         rounded-xl
         border
-        p-3.5
+        p-3
         text-left
         transition-[border-color,background-color]
         duration-200
+
+        xs:gap-3
+        xs:p-3.5
 
         sm:gap-4
         sm:rounded-2xl
@@ -599,8 +592,6 @@ function Option({
         />
       )}
 
-      {/* CHECKBOX */}
-
       <span
         className={`
           relative
@@ -637,15 +628,14 @@ function Option({
         )}
       </span>
 
-      {/* TEXT */}
-
       <span className="relative z-10 min-w-0 flex-1">
         <span
           className={`
             block
             truncate
-            text-[13px]
+            text-[12px]
 
+            xs:text-[13px]
             sm:text-sm
 
             ${
@@ -663,9 +653,10 @@ function Option({
             mt-0.5
             block
             truncate
-            text-[10px]
+            text-[9px]
             text-white/25
 
+            xs:text-[10px]
             sm:mt-1
             sm:text-xs
           "

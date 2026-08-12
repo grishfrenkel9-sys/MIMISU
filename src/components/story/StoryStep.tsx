@@ -15,9 +15,10 @@ import {
 import type { StoryItem } from "./storyData";
 
 interface Props {
-  story: StoryItem[];
+  story: readonly StoryItem[];
   progress: MotionValue<number>;
   reduceMotion: boolean | null;
+  activeText?: string;
 }
 
 const icons = [
@@ -32,6 +33,7 @@ export default function StoryStep({
   story,
   progress,
   reduceMotion,
+  activeText = "Active",
 }: Props) {
   return (
     <div className="absolute inset-0">
@@ -43,6 +45,7 @@ export default function StoryStep({
           total={story.length}
           progress={progress}
           reduceMotion={reduceMotion}
+          activeText={activeText}
         />
       ))}
     </div>
@@ -55,6 +58,7 @@ interface StoryCardProps {
   total: number;
   progress: MotionValue<number>;
   reduceMotion: boolean | null;
+  activeText: string;
 }
 
 function StoryCard({
@@ -63,6 +67,7 @@ function StoryCard({
   total,
   progress,
   reduceMotion,
+  activeText,
 }: StoryCardProps) {
   const Icon = icons[index] ?? Target;
 
@@ -139,9 +144,7 @@ function StoryCard({
         will-change-transform
       "
     >
-      {/* =====================================================
-          NUMBER
-      ===================================================== */}
+      {/* NUMBER */}
 
       <div
         className="
@@ -158,9 +161,7 @@ function StoryCard({
         {item.number}
       </div>
 
-      {/* =====================================================
-          VISUAL
-      ===================================================== */}
+      {/* VISUAL */}
 
       <div
         className="
@@ -298,9 +299,7 @@ function StoryCard({
         )}
       </div>
 
-      {/* =====================================================
-          TITLE
-      ===================================================== */}
+      {/* TITLE */}
 
       <h3
         className="
@@ -324,9 +323,7 @@ function StoryCard({
         {item.title}
       </h3>
 
-      {/* =====================================================
-          ACCENT
-      ===================================================== */}
+      {/* ACCENT */}
 
       <div
         className="
@@ -341,9 +338,7 @@ function StoryCard({
         "
       />
 
-      {/* =====================================================
-          TEXT
-      ===================================================== */}
+      {/* TEXT */}
 
       <p
         className="
@@ -362,9 +357,7 @@ function StoryCard({
         {item.text}
       </p>
 
-      {/* =====================================================
-          STATUS
-      ===================================================== */}
+      {/* STATUS */}
 
       <div
         className="
@@ -398,7 +391,7 @@ function StoryCard({
           "
         />
 
-        Active
+        {activeText}
       </div>
     </motion.div>
   );

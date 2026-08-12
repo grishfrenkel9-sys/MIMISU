@@ -1,29 +1,14 @@
 import { motion, useReducedMotion } from "framer-motion";
+import { useLanguage } from "../../context/LanguageContext";
 
 import FeatureTimeline from "./FeatureTimeline";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-const systemSteps = [
-  {
-    number: "01",
-    title: "Создаём носитель",
-    text: "Формируем дизайн бутылки под задачу бренда и подготавливаем рекламное размещение.",
-  },
-  {
-    number: "02",
-    title: "Запускаем распространение",
-    text: "Бутылки появляются в точках контакта с аудиторией — там, где бренд действительно может быть замечен.",
-  },
-  {
-    number: "03",
-    title: "Измеряем действие",
-    text: "QR-код переводит физический контакт в цифровой сценарий и позволяет видеть результат кампании.",
-  },
-];
 
 export default function Features() {
   const reduceMotion = useReducedMotion();
+  const { t } = useLanguage();
 
   return (
     <section
@@ -41,13 +26,18 @@ export default function Features() {
         className="
           pointer-events-none
           absolute
-          -right-[18%]
+          -right-[35%]
           top-[8%]
-          h-[420px]
-          w-[420px]
+          h-[300px]
+          w-[300px]
           rounded-full
           bg-cyan-300/[0.045]
-          blur-[100px]
+          blur-[80px]
+
+          sm:-right-[18%]
+          sm:h-[420px]
+          sm:w-[420px]
+          sm:blur-[100px]
         "
       />
 
@@ -55,13 +45,18 @@ export default function Features() {
         className="
           pointer-events-none
           absolute
-          -left-[18%]
+          -left-[30%]
           bottom-[15%]
-          h-[340px]
-          w-[340px]
+          h-[260px]
+          w-[260px]
           rounded-full
           bg-teal-300/[0.03]
-          blur-[100px]
+          blur-[80px]
+
+          sm:-left-[18%]
+          sm:h-[340px]
+          sm:w-[340px]
+          sm:blur-[100px]
         "
       />
 
@@ -86,7 +81,7 @@ export default function Features() {
               transparent 1px
             )
           `,
-          backgroundSize: "100px 100px",
+          backgroundSize: "70px 70px",
           maskImage:
             "linear-gradient(to bottom, transparent, black 15%, black 80%, transparent)",
           WebkitMaskImage:
@@ -102,12 +97,14 @@ export default function Features() {
           absolute
           -right-[280px]
           top-[25%]
+          hidden
           h-[600px]
           w-[900px]
           rotate-[-8deg]
           rounded-[50%]
           border
           border-cyan-200/[0.025]
+          lg:block
         "
       />
 
@@ -119,10 +116,12 @@ export default function Features() {
           absolute
           inset-x-0
           top-0
-          h-32
+          h-24
           bg-gradient-to-b
           from-black/20
           to-transparent
+
+          sm:h-32
         "
       />
 
@@ -136,14 +135,17 @@ export default function Features() {
           w-full
           max-w-[1500px]
           px-5
-          pb-28
-          pt-24
+          pb-20
+          pt-20
+
           sm:px-6
           sm:pb-32
           sm:pt-28
+
           md:px-10
           md:pb-40
           md:pt-36
+
           xl:px-16
           xl:pb-44
           xl:pt-44
@@ -177,62 +179,70 @@ export default function Features() {
             className="
               flex
               items-center
-              gap-3
-              text-[9px]
+              gap-2.5
+              text-[8px]
               font-semibold
               uppercase
-              tracking-[0.28em]
+              tracking-[0.25em]
               text-cyan-200/60
+
+              sm:gap-3
               sm:text-[10px]
+              sm:tracking-[0.28em]
             "
           >
             <span
               className="
                 h-1.5
                 w-1.5
+                shrink-0
                 rounded-full
                 bg-cyan-300
               "
             />
 
-            Система
+            {t.features.label}
           </div>
 
           <h2
             className="
-              mt-6
+              mt-5
               max-w-[1000px]
-              text-[clamp(2.7rem,7vw,6rem)]
+              text-[clamp(2.4rem,11vw,6rem)]
               font-light
-              leading-[0.94]
-              tracking-[-0.055em]
+              leading-[0.92]
+              tracking-[-0.06em]
               text-white
+
+              sm:mt-6
+              sm:text-[clamp(2.7rem,7vw,6rem)]
+              sm:leading-[0.94]
+              sm:tracking-[-0.055em]
             "
           >
-            От идеи
-            <br className="sm:hidden" /> до контакта.
+            {t.features.title}
 
             <span className="block text-cyan-100/35">
-              Всё остальное — система.
+              {t.features.titleAccent}
             </span>
           </h2>
 
           <p
             className="
-              mt-7
+              mt-6
               max-w-[650px]
-              text-[15px]
-              leading-7
+              text-[13px]
+              leading-6
               text-cyan-50/55
+
+              sm:mt-7
               sm:text-base
               sm:leading-8
+
               md:text-lg
             "
           >
-            MIMISU объединяет производство, распространение
-            и цифровую аналитику в один рекламный цикл.
-            Бренд получает не просто размещение,
-            а измеримый путь от показа до действия.
+            {t.features.description}
           </p>
         </motion.div>
 
@@ -240,26 +250,32 @@ export default function Features() {
 
         <div
           className="
-            mt-16
+            mt-12
             flex
             flex-col
-            gap-4
+            gap-3
             border-t
             border-cyan-100/[0.08]
-            pt-5
+            pt-4
+
             sm:mt-20
             sm:flex-row
             sm:items-center
             sm:justify-between
+            sm:gap-4
+            sm:pt-5
           "
         >
           <span
             className="
-              text-[8px]
+              text-[7px]
               font-semibold
               uppercase
-              tracking-[0.28em]
+              tracking-[0.25em]
               text-cyan-100/35
+
+              sm:text-[8px]
+              sm:tracking-[0.28em]
             "
           >
             MIMISU / CAMPAIGN FLOW
@@ -270,10 +286,13 @@ export default function Features() {
               flex
               items-center
               gap-2
-              text-[8px]
+              text-[7px]
               uppercase
-              tracking-[0.2em]
+              tracking-[0.18em]
               text-cyan-100/35
+
+              sm:text-[8px]
+              sm:tracking-[0.2em]
             "
           >
             <span
@@ -285,7 +304,7 @@ export default function Features() {
               "
             />
 
-            Physical → Digital
+            {t.features.physicalDigital}
           </div>
         </div>
 
@@ -294,13 +313,16 @@ export default function Features() {
         <div
           className="
             relative
-            mt-8
+            mt-6
             overflow-hidden
-            rounded-[28px]
+            rounded-[22px]
             border
             border-cyan-100/[0.09]
             bg-white/[0.025]
+
+            sm:mt-8
             sm:rounded-[36px]
+
             md:mt-10
           "
         >
@@ -331,12 +353,15 @@ export default function Features() {
             <div
               className="
                 relative
-                min-h-[300px]
+                min-h-[250px]
                 overflow-hidden
                 border-b
                 border-cyan-100/[0.08]
-                p-6
+                p-5
+
+                sm:min-h-[300px]
                 sm:p-9
+
                 lg:min-h-[620px]
                 lg:border-b-0
                 lg:border-r
@@ -346,41 +371,48 @@ export default function Features() {
               <div className="relative z-10">
                 <div
                   className="
-                    text-[8px]
+                    text-[7px]
                     font-semibold
                     uppercase
-                    tracking-[0.28em]
+                    tracking-[0.25em]
                     text-cyan-100/35
+
+                    sm:text-[8px]
+                    sm:tracking-[0.28em]
                   "
                 >
-                  Campaign engine
+                  {t.features.campaignEngine}
                 </div>
 
-                <div className="mt-8">
+                <div className="mt-6 sm:mt-8">
                   <div
                     className="
-                      text-5xl
+                      text-[2.8rem]
                       font-light
                       tracking-[-0.06em]
                       text-white
-                      sm:text-6xl
+
+                      sm:text-5xl
+                      md:text-6xl
                     "
                   >
-                    ТРИ
+                    {t.features.three}
                   </div>
 
                   <p
                     className="
-                      mt-3
-                      max-w-[220px]
-                      text-sm
-                      leading-6
+                      mt-2
+                      max-w-[210px]
+                      text-[12px]
+                      leading-5
                       text-cyan-50/45
+
+                      sm:mt-3
+                      sm:text-sm
+                      sm:leading-6
                     "
                   >
-                    последовательных этапа,
-                    которые превращают идею
-                    в измеримый контакт.
+                    {t.features.threeDescription}
                   </p>
                 </div>
               </div>
@@ -390,12 +422,14 @@ export default function Features() {
               <div
                 className="
                   absolute
-                  bottom-7
-                  left-6
-                  right-6
+                  bottom-5
+                  left-5
+                  right-5
+
                   sm:bottom-9
                   sm:left-9
                   sm:right-9
+
                   lg:bottom-12
                   lg:left-12
                   lg:right-12
@@ -404,12 +438,15 @@ export default function Features() {
                 <div
                   className="
                     relative
-                    h-28
+                    h-[92px]
                     overflow-hidden
-                    rounded-2xl
+                    rounded-xl
                     border
                     border-cyan-100/[0.08]
                     bg-black/[0.12]
+
+                    sm:h-28
+                    sm:rounded-2xl
                   "
                 >
                   {/* TRACK */}
@@ -417,11 +454,14 @@ export default function Features() {
                   <div
                     className="
                       absolute
-                      left-6
-                      right-6
+                      left-5
+                      right-5
                       top-1/2
                       h-px
                       bg-cyan-100/[0.12]
+
+                      sm:left-6
+                      sm:right-6
                     "
                   />
 
@@ -441,13 +481,16 @@ export default function Features() {
                     >
                       <div
                         className="
-                          h-3
-                          w-3
+                          h-2.5
+                          w-2.5
                           rounded-full
                           border
                           border-cyan-200/50
                           bg-[#052830]
                           shadow-[0_0_12px_rgba(103,232,249,.3)]
+
+                          sm:h-3
+                          sm:w-3
                         "
                       />
                     </div>
@@ -470,12 +513,14 @@ export default function Features() {
                         left-0
                         top-1/2
                         h-px
-                        w-20
+                        w-16
                         -translate-y-1/2
                         bg-gradient-to-r
                         from-transparent
                         via-cyan-300
                         to-transparent
+
+                        sm:w-20
                       "
                     />
                   )}
@@ -483,44 +528,58 @@ export default function Features() {
                   <div
                     className="
                       absolute
-                      bottom-3
-                      left-4
-                      text-[7px]
+                      bottom-2
+                      left-3
+                      text-[6px]
                       uppercase
-                      tracking-[0.2em]
+                      tracking-[0.18em]
                       text-cyan-100/25
+
+                      sm:bottom-3
+                      sm:left-4
+                      sm:text-[7px]
+                      sm:tracking-[0.2em]
                     "
                   >
-                    DESIGN
+                    {t.features.design}
                   </div>
 
                   <div
                     className="
                       absolute
-                      bottom-3
+                      bottom-2
                       left-1/2
                       -translate-x-1/2
-                      text-[7px]
+                      text-[6px]
                       uppercase
-                      tracking-[0.2em]
+                      tracking-[0.18em]
                       text-cyan-100/25
+
+                      sm:bottom-3
+                      sm:text-[7px]
+                      sm:tracking-[0.2em]
                     "
                   >
-                    REACH
+                    {t.features.reach}
                   </div>
 
                   <div
                     className="
                       absolute
-                      bottom-3
-                      right-4
-                      text-[7px]
+                      bottom-2
+                      right-3
+                      text-[6px]
                       uppercase
-                      tracking-[0.2em]
+                      tracking-[0.18em]
                       text-cyan-100/25
+
+                      sm:bottom-3
+                      sm:right-4
+                      sm:text-[7px]
+                      sm:tracking-[0.2em]
                     "
                   >
-                    DATA
+                    {t.features.data}
                   </div>
                 </div>
               </div>
@@ -528,22 +587,34 @@ export default function Features() {
 
             {/* RIGHT SYSTEM */}
 
-            <div className="p-6 sm:p-9 lg:p-12">
+            <div
+              className="
+                p-5
+
+                sm:p-9
+
+                lg:p-12
+              "
+            >
               <div
                 className="
-                  mb-4
-                  text-[8px]
+                  mb-1
+                  text-[7px]
                   font-semibold
                   uppercase
-                  tracking-[0.28em]
+                  tracking-[0.25em]
                   text-cyan-100/30
+
+                  sm:mb-4
+                  sm:text-[8px]
+                  sm:tracking-[0.28em]
                 "
               >
-                How the system moves
+                {t.features.systemFlow}
               </div>
 
               <div>
-                {systemSteps.map((step, index) => (
+                {t.features.systemSteps.map((step, index) => (
                   <motion.div
                     key={step.number}
                     initial={
@@ -571,28 +642,30 @@ export default function Features() {
                       group
                       relative
                       flex
-                      gap-5
+                      gap-4
                       border-b
                       border-cyan-100/[0.07]
-                      py-7
+                      py-6
                       last:border-b-0
+
                       sm:gap-7
                       sm:py-9
                     "
                   >
                     {/* CONNECTOR */}
 
-                    {index < systemSteps.length - 1 && (
+                    {index < t.features.systemSteps.length - 1 && (
                       <div
                         className="
                           absolute
-                          left-[17px]
-                          top-[72px]
+                          left-[15px]
+                          top-[62px]
                           bottom-[-1px]
                           w-px
                           bg-gradient-to-b
                           from-cyan-300/20
                           to-transparent
+
                           sm:left-[21px]
                           sm:top-[82px]
                         "
@@ -606,8 +679,8 @@ export default function Features() {
                         relative
                         z-10
                         flex
-                        h-9
-                        w-9
+                        h-8
+                        w-8
                         shrink-0
                         items-center
                         justify-center
@@ -615,15 +688,17 @@ export default function Features() {
                         border
                         border-cyan-100/[0.12]
                         bg-[#052830]
-                        text-[8px]
+                        text-[7px]
                         font-bold
                         text-cyan-100/45
                         transition-colors
                         duration-300
                         group-hover:border-cyan-300/40
                         group-hover:text-cyan-200
+
                         sm:h-11
                         sm:w-11
+                        sm:text-[8px]
                       "
                     >
                       {step.number}
@@ -634,10 +709,12 @@ export default function Features() {
                     <div className="min-w-0">
                       <h3
                         className="
-                          text-lg
+                          text-[16px]
                           font-medium
+                          leading-tight
                           tracking-[-0.025em]
                           text-white
+
                           sm:text-xl
                         "
                       >
@@ -646,11 +723,13 @@ export default function Features() {
 
                       <p
                         className="
-                          mt-3
+                          mt-2
                           max-w-[560px]
-                          text-sm
-                          leading-6
+                          text-[12px]
+                          leading-5
                           text-cyan-50/42
+
+                          sm:mt-3
                           sm:text-[15px]
                           sm:leading-7
                         "
@@ -667,7 +746,7 @@ export default function Features() {
 
         {/* FEATURE TIMELINE */}
 
-        <div className="mt-12 sm:mt-16">
+        <div className="mt-9 sm:mt-16">
           <FeatureTimeline />
         </div>
 
@@ -695,11 +774,13 @@ export default function Features() {
             ease,
           }}
           className="
-            mt-20
+            mt-14
             border-t
             border-cyan-100/[0.08]
-            pt-8
+            pt-7
+
             sm:mt-24
+            sm:pt-8
             sm:flex
             sm:items-end
             sm:justify-between
@@ -708,30 +789,31 @@ export default function Features() {
           <p
             className="
               max-w-[700px]
-              text-2xl
+              text-[1.65rem]
               font-light
-              leading-tight
-              tracking-[-0.035em]
+              leading-[1.05]
+              tracking-[-0.04em]
               text-white/80
+
               sm:text-3xl
+
               md:text-4xl
             "
           >
-            Каждый этап работает{" "}
-            <span className="text-cyan-100/30">
-              на следующий.
-            </span>
+            {t.features.finalStatement}
           </p>
 
           <div
             className="
-              mt-6
-              text-[8px]
+              mt-5
+              text-[7px]
               font-semibold
               uppercase
               tracking-[0.25em]
               text-cyan-100/25
+
               sm:mt-0
+              sm:text-[8px]
             "
           >
             MIMISU / 2026
@@ -747,10 +829,12 @@ export default function Features() {
           absolute
           inset-x-0
           bottom-0
-          h-40
+          h-28
           bg-gradient-to-b
           from-transparent
           to-[#031A22]
+
+          sm:h-40
         "
       />
     </section>

@@ -1,12 +1,13 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 import FeatureCard from "./FeatureCard";
-import { steps } from "./data";
+import { useLanguage } from "../../context/LanguageContext";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function FeatureTimeline() {
   const reduceMotion = useReducedMotion();
+  const { t } = useLanguage();
 
   return (
     <div className="relative">
@@ -31,7 +32,7 @@ export default function FeatureTimeline() {
       {/* CARDS */}
 
       <div className="relative space-y-5 sm:space-y-6">
-        {steps.map((step, index) => (
+        {t.features.timelineSteps.map((step, index) => (
           <motion.div
             key={step.number}
             initial={
