@@ -27,12 +27,16 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
     );
 
     // =========================================
-    // DEVICE DETECTION
+    // DEVICE
     // =========================================
 
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
+      if (typeof window === "undefined") {
+        return;
+      }
+
       const mediaQuery = window.matchMedia(
         "(max-width: 767px)"
       );
@@ -70,16 +74,20 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
     // =========================================
 
     const oxygenGeometry = useMemo(() => {
-      const geometry = new THREE.SphereGeometry(
-        0.38,
-        isMobile ? 20 : 32,
-        isMobile ? 20 : 32
-      );
+      const segments = isMobile ? 16 : 32;
+
+      const geometry =
+        new THREE.SphereGeometry(
+          0.38,
+          segments,
+          segments
+        );
 
       const position =
         geometry.attributes.position;
 
-      const vertex = new THREE.Vector3();
+      const vertex =
+        new THREE.Vector3();
 
       for (
         let i = 0;
@@ -117,6 +125,7 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
       }
 
       position.needsUpdate = true;
+
       geometry.computeVertexNormals();
 
       return geometry;
@@ -126,174 +135,203 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
     // HYDROGEN GEOMETRY
     // =========================================
 
-    const hydrogenGeometry = useMemo(() => {
-      return new THREE.SphereGeometry(
-        0.205,
-        isMobile ? 14 : 24,
-        isMobile ? 14 : 24
-      );
-    }, [isMobile]);
+    const hydrogenGeometry =
+      useMemo(() => {
+        const segments = isMobile
+          ? 12
+          : 24;
+
+        return new THREE.SphereGeometry(
+          0.205,
+          segments,
+          segments
+        );
+      }, [isMobile]);
 
     // =========================================
     // OXYGEN MATERIAL
     // =========================================
 
-    const oxygenMaterial = useMemo(() => {
-      return new THREE.MeshPhysicalMaterial({
-        color: "#16bfd7",
+    const oxygenMaterial =
+      useMemo(() => {
+        // MOBILE / SAFARI
+        // Much cheaper than MeshPhysicalMaterial.
+        if (isMobile) {
+          return new THREE.MeshStandardMaterial({
+            color: "#16bfd7",
 
-        roughness: isMobile
-          ? 0.12
-          : 0.09,
+            roughness: 0.18,
+            metalness: 0.02,
 
-        metalness: 0.015,
+            transparent: true,
+            opacity: 0.98,
+          });
+        }
 
-        clearcoat: isMobile
-          ? 0.65
-          : 1,
+        // DESKTOP
+        return new THREE.MeshPhysicalMaterial({
+          color: "#16bfd7",
 
-        clearcoatRoughness: 0.025,
+          roughness: 0.09,
+          metalness: 0.015,
 
-        transmission: isMobile
-          ? 0
-          : 0.08,
+          clearcoat: 1,
+          clearcoatRoughness: 0.025,
 
-        thickness: 0.35,
+          transmission: 0.08,
+          thickness: 0.35,
 
-        ior: 1.333,
+          ior: 1.333,
 
-        envMapIntensity: isMobile
-          ? 1.2
-          : 1.8,
+          envMapIntensity: 1.8,
 
-        transparent: true,
-        opacity: 0.98,
-      });
-    }, [isMobile]);
+          transparent: true,
+          opacity: 0.98,
+        });
+      }, [isMobile]);
 
     // =========================================
     // HYDROGEN MATERIAL
     // =========================================
 
-    const hydrogenMaterial = useMemo(() => {
-      return new THREE.MeshPhysicalMaterial({
-        color: "#f2fcff",
+    const hydrogenMaterial =
+      useMemo(() => {
+        // MOBILE / SAFARI
+        if (isMobile) {
+          return new THREE.MeshStandardMaterial({
+            color: "#f2fcff",
 
-        roughness: isMobile
-          ? 0.11
-          : 0.085,
+            roughness: 0.16,
+            metalness: 0.01,
 
-        metalness: 0.01,
+            transparent: true,
+            opacity: 0.96,
+          });
+        }
 
-        clearcoat: isMobile
-          ? 0.65
-          : 1,
+        // DESKTOP
+        return new THREE.MeshPhysicalMaterial({
+          color: "#f2fcff",
 
-        clearcoatRoughness: 0.025,
+          roughness: 0.085,
+          metalness: 0.01,
 
-        transmission: isMobile
-          ? 0
-          : 0.08,
+          clearcoat: 1,
+          clearcoatRoughness: 0.025,
 
-        thickness: 0.22,
+          transmission: 0.08,
+          thickness: 0.22,
 
-        ior: 1.333,
+          ior: 1.333,
 
-        envMapIntensity: isMobile
-          ? 1.1
-          : 1.7,
+          envMapIntensity: 1.7,
 
-        transparent: true,
-        opacity: 0.96,
-      });
-    }, [isMobile]);
+          transparent: true,
+          opacity: 0.96,
+        });
+      }, [isMobile]);
 
     // =========================================
     // OXYGEN GLOW
     // =========================================
 
-    const oxygenGlowMaterial = useMemo(() => {
-      return new THREE.MeshBasicMaterial({
-        color: "#4be8f7",
+    const oxygenGlowMaterial =
+      useMemo(() => {
+        return new THREE.MeshBasicMaterial({
+          color: "#4be8f7",
 
-        transparent: true,
+          transparent: true,
 
-        opacity: isMobile
-          ? 0.025
-          : 0.045,
+          opacity: isMobile
+            ? 0.022
+            : 0.045,
 
-        side: THREE.BackSide,
+          side: THREE.BackSide,
 
-        depthWrite: false,
+          depthWrite: false,
 
-        blending:
-          THREE.AdditiveBlending,
-      });
-    }, [isMobile]);
+          blending:
+            THREE.AdditiveBlending,
+        });
+      }, [isMobile]);
 
     // =========================================
     // HYDROGEN GLOW
     // =========================================
 
-    const hydrogenGlowMaterial = useMemo(() => {
-      return new THREE.MeshBasicMaterial({
-        color: "#d9faff",
+    const hydrogenGlowMaterial =
+      useMemo(() => {
+        return new THREE.MeshBasicMaterial({
+          color: "#d9faff",
 
-        transparent: true,
+          transparent: true,
 
-        opacity: isMobile
-          ? 0.012
-          : 0.022,
+          opacity: isMobile
+            ? 0.01
+            : 0.022,
 
-        side: THREE.BackSide,
+          side: THREE.BackSide,
 
-        depthWrite: false,
+          depthWrite: false,
 
-        blending:
-          THREE.AdditiveBlending,
-      });
-    }, [isMobile]);
+          blending:
+            THREE.AdditiveBlending,
+        });
+      }, [isMobile]);
 
     // =========================================
     // POSITIONS
     // =========================================
 
-    const oxygenPosition = useMemo(
-      () =>
-        new THREE.Vector3(
-          0,
-          0.06,
-          0
-        ),
-      []
-    );
+    const oxygenPosition =
+      useMemo(
+        () =>
+          new THREE.Vector3(
+            0,
+            0.06,
+            0
+          ),
+        []
+      );
 
-    const hydrogenLeft = useMemo(
-      () =>
-        new THREE.Vector3(
-          -0.57,
-          -0.26,
-          0.035
-        ),
-      []
-    );
+    const hydrogenLeft =
+      useMemo(
+        () =>
+          new THREE.Vector3(
+            -0.57,
+            -0.26,
+            0.035
+          ),
+        []
+      );
 
-    const hydrogenRight = useMemo(
-      () =>
-        new THREE.Vector3(
-          0.57,
-          -0.26,
-          -0.015
-        ),
-      []
-    );
+    const hydrogenRight =
+      useMemo(
+        () =>
+          new THREE.Vector3(
+            0.57,
+            -0.26,
+            -0.015
+          ),
+        []
+      );
 
     // =========================================
     // MOLECULE ANIMATION
     // =========================================
+    //
+    // IMPORTANT:
+    // No FPS limiter here.
+    //
+    // The animation runs on every
+    // requestAnimationFrame.
+    //
+    // This keeps the molecule smooth
+    // at 60 FPS when the device can handle it.
+    //
+    // =========================================
 
     const time = useRef(0);
-    const frameAccumulator = useRef(0);
 
     useFrame((_, delta) => {
       if (
@@ -303,51 +341,49 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
         return;
       }
 
-      // Mobile:
-      // molecule animation updates at ~30 FPS
-      // while the main Three.js canvas stays smooth.
-
-      if (isMobile) {
-        frameAccumulator.current += delta;
-
-        if (
-          frameAccumulator.current <
-          1 / 30
-        ) {
-          return;
-        }
-
-        delta =
-          frameAccumulator.current;
-
-        frameAccumulator.current = 0;
-      }
-
-      time.current += Math.min(
+      const dt = Math.min(
         delta,
         0.05
       );
 
-      const t = time.current;
+      time.current += dt;
+
+      const t =
+        time.current;
+
       const current =
         molecule.current;
 
+      // FLOAT
+
       current.position.y =
-        Math.sin(t * 0.72) *
+        Math.sin(
+          t * 0.72
+        ) *
         0.018;
 
+      // MICRO ROTATION
+
       current.rotation.x =
-        Math.sin(t * 0.42) *
+        Math.sin(
+          t * 0.42
+        ) *
         0.012;
 
       current.rotation.z =
-        Math.sin(t * 0.34) *
+        Math.sin(
+          t * 0.34
+        ) *
         0.016;
+
+      // MICRO SCALE
 
       const scale =
         1 +
-        Math.sin(t * 0.8) *
-          0.006;
+        Math.sin(
+          t * 0.8
+        ) *
+        0.006;
 
       current.scale.setScalar(
         scale
@@ -362,7 +398,9 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
       <group ref={group}>
         <group ref={molecule}>
 
-          {/* OXYGEN */}
+          {/* =====================================
+              OXYGEN
+          ===================================== */}
 
           <mesh
             geometry={oxygenGeometry}
@@ -374,11 +412,15 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
             ]}
           />
 
-          {/* OXYGEN AURA */}
+          {/* =====================================
+              OXYGEN AURA
+          ===================================== */}
 
           <mesh
             geometry={oxygenGeometry}
-            material={oxygenGlowMaterial}
+            material={
+              oxygenGlowMaterial
+            }
             position={[
               oxygenPosition.x,
               oxygenPosition.y,
@@ -386,12 +428,14 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
             ]}
             scale={
               isMobile
-                ? 1.05
+                ? 1.045
                 : 1.075
             }
           />
 
-          {/* HYDROGEN LEFT */}
+          {/* =====================================
+              HYDROGEN LEFT
+          ===================================== */}
 
           <mesh
             geometry={hydrogenGeometry}
@@ -403,11 +447,15 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
             ]}
           />
 
-          {/* HYDROGEN LEFT AURA */}
+          {/* =====================================
+              HYDROGEN LEFT AURA
+          ===================================== */}
 
           <mesh
             geometry={hydrogenGeometry}
-            material={hydrogenGlowMaterial}
+            material={
+              hydrogenGlowMaterial
+            }
             position={[
               hydrogenLeft.x,
               hydrogenLeft.y,
@@ -415,12 +463,14 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
             ]}
             scale={
               isMobile
-                ? 1.045
+                ? 1.035
                 : 1.065
             }
           />
 
-          {/* HYDROGEN RIGHT */}
+          {/* =====================================
+              HYDROGEN RIGHT
+          ===================================== */}
 
           <mesh
             geometry={hydrogenGeometry}
@@ -432,11 +482,15 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
             ]}
           />
 
-          {/* HYDROGEN RIGHT AURA */}
+          {/* =====================================
+              HYDROGEN RIGHT AURA
+          ===================================== */}
 
           <mesh
             geometry={hydrogenGeometry}
-            material={hydrogenGlowMaterial}
+            material={
+              hydrogenGlowMaterial
+            }
             position={[
               hydrogenRight.x,
               hydrogenRight.y,
@@ -444,7 +498,7 @@ const Bottle = forwardRef<THREE.Group, BottleProps>(
             ]}
             scale={
               isMobile
-                ? 1.045
+                ? 1.035
                 : 1.065
             }
           />
