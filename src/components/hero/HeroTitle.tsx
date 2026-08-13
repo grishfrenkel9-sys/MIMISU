@@ -4,6 +4,8 @@ import { useLanguage } from "../../context/LanguageContext";
 export default function HeroTitle() {
   const { language } = useLanguage();
 
+  const isKz = language === "kz";
+
   const content = {
     ru: {
       lines: [
@@ -30,23 +32,19 @@ export default function HeroTitle() {
     kz: {
       lines: [
         {
-          text: "ЖАРНАМА",
+          text: "ӨТІП КЕТУ",
           className: "text-[#063B4A]",
-        },
-        {
-          text: "ЖЕЛІСІН",
-          className: "text-[#063B4A]",
-        },
-        {
-          text: "ӨТУ",
-          className: "text-[#467783]",
         },
         {
           text: "МҮМКІН ЕМЕС",
           className: "text-[#467783]",
         },
+        {
+          text: "ЖАРНАМА",
+          className: "text-[#467783]",
+        },
       ],
-      accent: "ЖАЛҒАСТЫРУ",
+      accent: "ЖЕЛІСІ",
     },
   } as const;
 
@@ -59,7 +57,7 @@ export default function HeroTitle() {
       transition={{
         duration: 0.7,
       }}
-      className="
+      className={`
         relative
         mt-8
         select-none
@@ -67,12 +65,16 @@ export default function HeroTitle() {
         uppercase
         leading-[0.94]
         tracking-[-0.055em]
-        text-[clamp(3rem,11vw,6.2rem)]
+
+        ${
+          isKz
+            ? "text-[clamp(2.7rem,10vw,5.7rem)] sm:text-[clamp(3.4rem,7.5vw,5.8rem)] lg:text-[clamp(3.8rem,5.7vw,5.8rem)]"
+            : "text-[clamp(3rem,11vw,6.2rem)] sm:text-[clamp(3.8rem,8vw,6.2rem)] lg:text-[clamp(4rem,6vw,6.2rem)]"
+        }
+
         sm:mt-6
         sm:leading-[0.91]
-        sm:text-[clamp(3.8rem,8vw,6.2rem)]
-        lg:text-[clamp(4rem,6vw,6.2rem)]
-      "
+      `}
     >
       {lines.map((line, index) => (
         <motion.div
@@ -114,7 +116,7 @@ export default function HeroTitle() {
         }}
         transition={{
           duration: 0.85,
-          delay: 0.34,
+          delay: lines.length * 0.08 + 0.08,
           ease: [0.22, 1, 0.36, 1],
         }}
         className="
@@ -127,6 +129,7 @@ export default function HeroTitle() {
           to-[#08788A]
           bg-clip-text
           text-transparent
+
           sm:mt-1
         "
       >
@@ -185,6 +188,7 @@ export default function HeroTitle() {
           bg-gradient-to-r
           from-[#0AA6B7]
           to-transparent
+
           sm:mt-5
           sm:w-28
         "

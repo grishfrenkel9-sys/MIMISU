@@ -18,13 +18,11 @@ export const kz = {
     badgeSubtitle: "ЦИФРЛЫҚ СУ",
 
     titleLines: [
-      "ЖАРНАМА",
-      "ЖЕЛІСІ,",
-      "ОНЫ",
-      "ӨТКІЗІП",
+      "ӨТІП КЕТУ",
+      "МҮМКІН ЕМЕС",
     ],
 
-    titleAccent: "ЖІБЕРУ МҮМКІН ЕМЕС",
+    titleAccent: "ЖАРНАМА ЖЕЛІСІ",
 
     description:
       "MiMiSU кәдімгі су бөтелкесін заманауи жарнама құралына айналдырады — QR-аналитика, өлшенетін қамту және ашық статистика арқылы.",
@@ -315,8 +313,6 @@ export const kz = {
     updated:
       "Есеп нақты уақытта жаңартылады",
 
-    // RESULT
-
     summary: "Campaign summary",
 
     liveEstimate: "Live estimate",
@@ -448,4 +444,4 @@ export const kz = {
 
     slogan: "Нақты байланыс үшін жасалған",
   },
-} as const;
+} as const; 
