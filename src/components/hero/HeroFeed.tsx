@@ -14,14 +14,14 @@ const content = {
         icon: QrCode,
         title: "",
         value: "12 458",
-        label: "СКАНИРОВАНИЙ",
+        label: "SCANNINGS",
         progress: 78,
       },
       {
         icon: Eye,
         title: "",
         value: "20К",
-        label: "ПОКАЗОВ",
+        label: "SHOWS",
         progress: 91,
       },
       {
