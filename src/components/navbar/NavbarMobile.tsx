@@ -21,7 +21,9 @@ export default function NavbarMobile({
 }: Props) {
   const { language, setLanguage, t } = useLanguage();
 
-  const toggleMenu = () => setOpen(!open);
+  const toggleMenu = () => {
+    setOpen(!open);
+  };
 
   const toggleLanguage = () => {
     setLanguage(language === "ru" ? "kz" : "ru");
@@ -29,53 +31,111 @@ export default function NavbarMobile({
 
   return (
     <>
-      {/* =========================================
-          MOBILE BUTTON
-      ========================================= */}
-
-      <button
-        type="button"
-        onClick={toggleMenu}
-        aria-label={
-          open
-            ? language === "ru"
-              ? "Закрыть меню"
-              : "Мәзірді жабу"
-            : language === "ru"
-              ? "Открыть меню"
-              : "Мәзірді ашу"
-        }
-        aria-expanded={open}
+      <div
         className="
           flex
-          h-10
-          w-10
           items-center
-          justify-center
-          rounded-full
-          border
-          border-[#092B32]/15
-          bg-white/70
-          text-[#092B32]
-          backdrop-blur-md
-          transition-all
-          duration-300
-          hover:border-[#2F6873]/40
-          hover:bg-[#2F6873]/[0.06]
-          active:scale-95
+          gap-2
           lg:hidden
         "
       >
-        {open ? (
-          <X size={19} strokeWidth={1.6} />
-        ) : (
-          <Menu size={19} strokeWidth={1.6} />
-        )}
-      </button>
+        <button
+          type="button"
+          onClick={toggleLanguage}
+          aria-label={
+            language === "ru"
+              ? "Переключить на казахский язык"
+              : "Қазақ тіліне ауыстыру"
+          }
+          className="
+            flex
+            h-10
+            items-center
+            gap-1
+            rounded-full
+            border
+            border-[#092B32]/10
+            bg-white/70
+            px-3
+            text-[9px]
+            font-semibold
+            uppercase
+            tracking-[0.16em]
+            text-[#092B32]/55
+            backdrop-blur-md
+            transition-all
+            duration-200
+            active:scale-95
+          "
+        >
+          <span
+            className={
+              language === "ru"
+                ? "text-[#2F6873]"
+                : "text-[#092B32]/30"
+            }
+          >
+            RU
+          </span>
 
-      {/* =========================================
-          MENU
-      ========================================= */}
+          <span className="text-[#092B32]/15">
+            /
+          </span>
+
+          <span
+            className={
+              language === "kz"
+                ? "text-[#2F6873]"
+                : "text-[#092B32]/30"
+            }
+          >
+            KZ
+          </span>
+        </button>
+
+        <button
+          type="button"
+          onClick={toggleMenu}
+          aria-label={
+            open
+              ? language === "ru"
+                ? "Закрыть меню"
+                : "Мәзірді жабу"
+              : language === "ru"
+                ? "Открыть меню"
+                : "Мәзірді ашу"
+          }
+          aria-expanded={open}
+          className="
+            flex
+            h-10
+            w-10
+            items-center
+            justify-center
+            rounded-full
+            border
+            border-[#092B32]/15
+            bg-white/70
+            text-[#092B32]
+            backdrop-blur-md
+            transition-all
+            duration-200
+            active:scale-95
+          "
+        >
+          {open ? (
+            <X
+              size={19}
+              strokeWidth={1.6}
+            />
+          ) : (
+            <Menu
+              size={19}
+              strokeWidth={1.6}
+            />
+          )}
+        </button>
+      </div>
 
       <div
         className={`
@@ -92,8 +152,6 @@ export default function NavbarMobile({
           }
         `}
       >
-        {/* BACKDROP */}
-
         <button
           type="button"
           aria-label={
@@ -111,8 +169,6 @@ export default function NavbarMobile({
             backdrop-blur-md
           "
         />
-
-        {/* PANEL */}
 
         <div
           className={`
@@ -139,7 +195,10 @@ export default function NavbarMobile({
               <button
                 key={link.id}
                 type="button"
-                onClick={() => scrollTo(link.id)}
+                onClick={() => {
+                  scrollTo(link.id);
+                  setOpen(false);
+                }}
                 className="
                   group
                   flex
@@ -174,76 +233,19 @@ export default function NavbarMobile({
                     group-hover:text-[#2F6873]
                   "
                 >
-                  0{index + 1}
+                  {String(index + 1).padStart(2, "0")}
                 </span>
               </button>
             ))}
           </nav>
 
           <div className="p-7">
-            {/* =========================================
-                LANGUAGE
-            ========================================= */}
-
             <button
               type="button"
-              onClick={toggleLanguage}
-              className="
-                mb-3
-                flex
-                w-full
-                items-center
-                justify-center
-                gap-3
-                rounded-full
-                border
-                border-[#092B32]/10
-                bg-white/50
-                py-3
-                text-[10px]
-                font-medium
-                uppercase
-                tracking-[0.2em]
-                text-[#092B32]/65
-                transition-all
-                duration-300
-                hover:border-[#2F6873]/30
-                hover:bg-[#2F6873]/[0.05]
-                hover:text-[#2F6873]
-              "
-            >
-              <span
-                className={
-                  language === "ru"
-                    ? "text-[#2F6873]"
-                    : "text-[#092B32]/30"
-                }
-              >
-                RU
-              </span>
-
-              <span className="text-[#092B32]/15">
-                /
-              </span>
-
-              <span
-                className={
-                  language === "kz"
-                    ? "text-[#2F6873]"
-                    : "text-[#092B32]/30"
-                }
-              >
-                KZ
-              </span>
-            </button>
-
-            {/* =========================================
-                CTA
-            ========================================= */}
-
-            <button
-              type="button"
-              onClick={() => scrollTo("calculator")}
+              onClick={() => {
+                scrollTo("calculator");
+                setOpen(false);
+              }}
               className="
                 flex
                 w-full

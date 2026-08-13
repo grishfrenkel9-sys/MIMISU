@@ -5,7 +5,6 @@ import FeatureTimeline from "./FeatureTimeline";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-
 export default function Features() {
   const reduceMotion = useReducedMotion();
   const { t } = useLanguage();
@@ -353,13 +352,13 @@ export default function Features() {
             <div
               className="
                 relative
-                min-h-[250px]
+                min-h-[300px]
                 overflow-hidden
                 border-b
                 border-cyan-100/[0.08]
                 p-5
 
-                sm:min-h-[300px]
+                sm:min-h-[340px]
                 sm:p-9
 
                 lg:min-h-[620px]
@@ -384,15 +383,26 @@ export default function Features() {
                   {t.features.campaignEngine}
                 </div>
 
-                <div className="mt-6 sm:mt-8">
+                {/* THREE BLOCK */}
+
+                <div
+                  className="
+                    mt-7
+
+                    sm:mt-9
+                  "
+                >
                   <div
                     className="
-                      text-[2.8rem]
+                      text-[clamp(3.2rem,16vw,5rem)]
                       font-light
-                      tracking-[-0.06em]
+                      leading-none
+                      tracking-[-0.07em]
                       text-white
 
                       sm:text-5xl
+                      sm:leading-none
+
                       md:text-6xl
                     "
                   >
@@ -401,15 +411,18 @@ export default function Features() {
 
                   <p
                     className="
-                      mt-2
-                      max-w-[210px]
+                      mt-4
+                      max-w-[230px]
                       text-[12px]
                       leading-5
                       text-cyan-50/45
 
-                      sm:mt-3
+                      sm:mt-4
+                      sm:max-w-[280px]
                       sm:text-sm
                       sm:leading-6
+
+                      lg:max-w-[300px]
                     "
                   >
                     {t.features.threeDescription}

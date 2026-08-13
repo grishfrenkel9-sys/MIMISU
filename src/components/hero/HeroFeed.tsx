@@ -5,6 +5,7 @@ import {
   MapPinned,
   Eye,
 } from "lucide-react";
+
 import { useLanguage } from "../../context/LanguageContext";
 
 const content = {
@@ -12,21 +13,21 @@ const content = {
     cards: [
       {
         icon: QrCode,
-        title: "",
+        title: "QR-кампания",
         value: "12 458",
-        label: "SCANNINGS",
+        label: "СКАНИРОВАНИЙ",
         progress: 78,
       },
       {
         icon: Eye,
-        title: "",
+        title: "Охват",
         value: "20К",
-        label: "SHOWS",
+        label: "ПОКАЗОВ",
         progress: 91,
       },
       {
         icon: BarChart3,
-        title: "",
+        title: "CTR",
         value: "7.82%",
         label: "В РЕАЛЬНОМ ВРЕМЕНИ",
         progress: 64,
@@ -39,6 +40,7 @@ const content = {
         progress: 82,
       },
     ],
+
     live: "LIVE",
   },
 
@@ -73,6 +75,7 @@ const content = {
         progress: 82,
       },
     ],
+
     live: "LIVE",
   },
 } as const;
@@ -275,7 +278,6 @@ export default function HeroFeed() {
               ================================================= */}
 
               <div className="relative z-10">
-
                 {/* HEADER */}
 
                 <div className="flex items-center justify-between">
