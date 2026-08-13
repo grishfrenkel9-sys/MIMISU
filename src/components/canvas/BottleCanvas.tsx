@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 
 import Scene from "./Scene";
@@ -10,28 +9,6 @@ interface BottleCanvasProps {
 export default function BottleCanvas({
   reduceMotion = false,
 }: BottleCanvasProps) {
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    let frame1: number;
-    let frame2: number;
-
-    frame1 = requestAnimationFrame(() => {
-      frame2 = requestAnimationFrame(() => {
-        setReady(true);
-      });
-    });
-
-    return () => {
-      cancelAnimationFrame(frame1);
-      cancelAnimationFrame(frame2);
-    };
-  }, []);
-
-  if (!ready) {
-    return null;
-  }
-
   return (
     <div
       aria-hidden="true"
@@ -56,7 +33,8 @@ export default function BottleCanvas({
         gl={{
           antialias: false,
           alpha: true,
-          powerPreference: "high-performance",
+          powerPreference:
+            "high-performance",
           stencil: false,
           depth: true,
           preserveDrawingBuffer: false,
@@ -70,7 +48,11 @@ export default function BottleCanvas({
           pointerEvents: "none",
         }}
       >
-        <Scene reduceMotion={reduceMotion} />
+        <Scene
+          reduceMotion={
+            reduceMotion
+          }
+        />
       </Canvas>
     </div>
   );
