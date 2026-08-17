@@ -26,10 +26,6 @@ export default function CalculatorResult({
       value: formatPrice(result.designPrice),
     },
     {
-      label: t.calculator.distributionCost,
-      value: formatPrice(result.distributionPrice),
-    },
-    {
       label: t.calculator.advertiserCost,
       value: formatPrice(result.advertiserBudget),
       accent: true,

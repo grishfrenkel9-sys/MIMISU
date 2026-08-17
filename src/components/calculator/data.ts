@@ -7,84 +7,96 @@ export const PRICE_TABLE: Record<
   AdvertiserCount,
   PriceTier[]
 > = {
+  // =========================================
+  // 1 РЕКЛАМОДАТЕЛЬ
+  // =========================================
+
   1: [
     {
       min: 1000,
-      max: 2499,
-      advertiserPrice: 230,
-      bottlePrice: 230,
+      max: 1999,
+      advertiserPrice: 310,
+      bottlePrice: 310,
     },
     {
-      min: 2500,
-      max: 4999,
-      advertiserPrice: 225,
-      bottlePrice: 225,
+      min: 2000,
+      max: 4000,
+      advertiserPrice: 300,
+      bottlePrice: 300,
     },
     {
       min: 5000,
-      max: 7499,
-      advertiserPrice: 215,
-      bottlePrice: 215,
+      max: 7000,
+      advertiserPrice: 290,
+      bottlePrice: 290,
     },
     {
-      min: 7500,
+      min: 8000,
       max: Infinity,
-      advertiserPrice: 200,
-      bottlePrice: 200,
+      advertiserPrice: 280,
+      bottlePrice: 280,
     },
   ],
+
+  // =========================================
+  // 2 РЕКЛАМОДАТЕЛЯ
+  // =========================================
 
   2: [
     {
       min: 1000,
-      max: 2499,
-      advertiserPrice: 140,
-      bottlePrice: 280,
+      max: 1999,
+      advertiserPrice: 175,
+      bottlePrice: 175,
     },
     {
-      min: 2500,
-      max: 4999,
-      advertiserPrice: 137,
-      bottlePrice: 274,
+      min: 2000,
+      max: 4000,
+      advertiserPrice: 170,
+      bottlePrice: 170,
     },
     {
       min: 5000,
-      max: 7499,
-      advertiserPrice: 131,
-      bottlePrice: 262,
+      max: 7000,
+      advertiserPrice: 165,
+      bottlePrice: 165,
     },
     {
-      min: 7500,
+      min: 8000,
       max: Infinity,
-      advertiserPrice: 122,
-      bottlePrice: 244,
+      advertiserPrice: 160,
+      bottlePrice: 160,
     },
   ],
+
+  // =========================================
+  // 4 РЕКЛАМОДАТЕЛЯ
+  // =========================================
 
   4: [
     {
       min: 1000,
-      max: 2499,
-      advertiserPrice: 80,
-      bottlePrice: 320,
+      max: 1999,
+      advertiserPrice: 90,
+      bottlePrice: 90,
     },
     {
-      min: 2500,
-      max: 4999,
-      advertiserPrice: 78,
-      bottlePrice: 312,
+      min: 2000,
+      max: 4000,
+      advertiserPrice: 85,
+      bottlePrice: 85,
     },
     {
       min: 5000,
-      max: 7499,
-      advertiserPrice: 75,
-      bottlePrice: 300,
+      max: 7000,
+      advertiserPrice: 80,
+      bottlePrice: 80,
     },
     {
-      min: 7500,
+      min: 8000,
       max: Infinity,
-      advertiserPrice: 70,
-      bottlePrice: 280,
+      advertiserPrice: 75,
+      bottlePrice: 75,
     },
   ],
 };

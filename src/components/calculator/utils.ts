@@ -5,9 +5,7 @@ import type {
 
 import { PRICE_TABLE } from "./data";
 
-const DESIGN_PRICE = 10_000;
-
-const DISTRIBUTION_PER_1000 = 35_000;
+const DESIGN_PRICE = 9_900;
 
 // =========================================
 // PRICE TIER
@@ -20,11 +18,10 @@ export function getPriceTier(
   const tiers = PRICE_TABLE[advertisers];
 
   return (
-    tiers.find(
-      (tier) =>
-        printRun >= tier.min &&
-        printRun <= tier.max
-    ) ?? tiers[tiers.length - 1]
+    [...tiers]
+      .reverse()
+      .find((tier) => printRun >= tier.min) ??
+    tiers[0]
   );
 }
 
@@ -35,8 +32,7 @@ export function getPriceTier(
 export function calculateCampaign(
   advertisers: AdvertiserCount,
   printRun: number,
-  includeDesign: boolean,
-  includeDistribution: boolean
+  includeDesign: boolean
 ): CampaignResult {
   const tier = getPriceTier(
     printRun,
@@ -59,33 +55,12 @@ export function calculateCampaign(
     : 0;
 
   // =========================================
-  // РАЗДАЧА
-  //
-  // 999   → 0 ₸
-  // 1000  → 35 000 ₸
-  // 1500  → 35 000 ₸
-  // 1999  → 35 000 ₸
-  // 2000  → 70 000 ₸
-  // 2500  → 70 000 ₸
-  // 3000  → 105 000 ₸
-  //
-  // Только полные тысячи.
-  // =========================================
-
-  const distributionPrice =
-    includeDistribution
-      ? Math.floor(printRun / 1000) *
-        DISTRIBUTION_PER_1000
-      : 0;
-
-  // =========================================
   // СТОИМОСТЬ ДЛЯ ОДНОГО РЕКЛАМОДАТЕЛЯ
   // =========================================
 
   const advertiserBudget =
     bottlePrice +
-    designPrice +
-    distributionPrice;
+    designPrice;
 
   // =========================================
   // ОБЩАЯ СТОИМОСТЬ КАМПАНИИ
@@ -129,8 +104,6 @@ export function calculateCampaign(
     bottlePrice,
 
     designPrice,
-
-    distributionPrice,
 
     advertiserBudget,
 

@@ -1,6 +1,66 @@
 @import "tailwindcss";
 
 /* ================================================= */
+/* STEM FONT */
+/* ================================================= */
+
+@font-face {
+  font-family: "Stem";
+  src: url("./assets/fonts/Stem-Thin.woff2") format("woff2");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Stem";
+  src: url("./assets/fonts/Stem-ExtraLight.woff2") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Stem";
+  src: url("./assets/fonts/Stem-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Stem";
+  src: url("./assets/fonts/Stem-SemiLight.woff2") format("woff2");
+  font-weight: 350;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Stem";
+  src: url("./assets/fonts/Stem-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Stem";
+  src: url("./assets/fonts/Stem-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Stem";
+  src: url("./assets/fonts/Stem-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ================================================= */
 /* BASE */
 /* ================================================= */
 
@@ -21,9 +81,140 @@ html {
 body {
   overflow-x: hidden;
   color: white;
+
+  /* По умолчанию KZ / Inter */
   font-family: Inter, sans-serif;
+
+  font-weight: 400;
+  letter-spacing: normal;
+  word-spacing: normal;
+
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* ================================================= */
+/* RU — STEM */
+/* ================================================= */
+
+html.lang-ru body {
+  font-family: "Stem", sans-serif;
+}
+
+/* Вся русская версия — STEM */
+
+html.lang-ru * {
+  font-family: "Stem", sans-serif;
+  font-synthesis: none;
+}
+
+/* ================================================= */
+/* KZ — INTER */
+/* ================================================= */
+
+html.lang-kz body {
+  font-family: Inter, sans-serif;
+}
+
+html.lang-kz * {
+  font-family: Inter, sans-serif;
+  font-synthesis: none;
+}
+
+/* ================================================= */
+/* RU — PARAGRAPHS */
+/* ================================================= */
+
+html.lang-ru p {
+  font-family: "Stem", sans-serif;
+
+  /* Буквы не меняем */
+  letter-spacing: normal;
+
+  /* Слова слегка раздвигаем */
+  word-spacing: 0.03em;
+
+  /* Немного больше воздуха между строками */
+  line-height: 1.5;
+}
+
+/* ================================================= */
+/* KZ — PARAGRAPHS */
+/* ================================================= */
+
+html.lang-kz p {
+  font-family: Inter, sans-serif;
+
+  letter-spacing: normal;
+  word-spacing: normal;
+  line-height: 1.5;
+}
+
+/* ================================================= */
+/* RU — HEADINGS */
+/* ================================================= */
+
+html.lang-ru h1,
+html.lang-ru h2,
+html.lang-ru h3,
+html.lang-ru h4,
+html.lang-ru h5,
+html.lang-ru h6 {
+  font-family: "Stem", sans-serif;
+
+  /* Между буквами ничего не меняем */
+  letter-spacing: normal;
+
+  /* Слова немного раздвинуты */
+  word-spacing: 0.03em;
+
+  /* Строки ближе друг к другу */
+  line-height: 0.95;
+}
+
+/* ================================================= */
+/* KZ — HEADINGS */
+/* ================================================= */
+
+html.lang-kz h1,
+html.lang-kz h2,
+html.lang-kz h3,
+html.lang-kz h4,
+html.lang-kz h5,
+html.lang-kz h6 {
+  font-family: Inter, sans-serif;
+
+  letter-spacing: normal;
+  word-spacing: normal;
+  line-height: 1.1;
+}
+
+/* ================================================= */
+/* RU — FORM ELEMENTS */
+/* ================================================= */
+
+html.lang-ru button,
+html.lang-ru input,
+html.lang-ru textarea,
+html.lang-ru select {
+  font-family: "Stem", sans-serif;
+
+  letter-spacing: normal;
+  word-spacing: 0.03em;
+}
+
+/* ================================================= */
+/* KZ — FORM ELEMENTS */
+/* ================================================= */
+
+html.lang-kz button,
+html.lang-kz input,
+html.lang-kz textarea,
+html.lang-kz select {
+  font-family: Inter, sans-serif;
+
+  letter-spacing: normal;
+  word-spacing: normal;
 }
 
 /* ================================================= */
@@ -72,11 +263,12 @@ body {
   background: rgba(255, 255, 255, 0.1);
 
   outline: none;
-
   cursor: pointer;
 }
 
-/* Chrome / Edge / Opera */
+/* ================================================= */
+/* SLIDER — CHROME / EDGE / OPERA */
+/* ================================================= */
 
 .slider::-webkit-slider-runnable-track {
   height: 4px;
@@ -124,7 +316,9 @@ body {
     0 0 24px rgba(34, 211, 238, 0.55);
 }
 
-/* Firefox */
+/* ================================================= */
+/* SLIDER — FIREFOX */
+/* ================================================= */
 
 .slider::-moz-range-track {
   height: 4px;
@@ -231,7 +425,7 @@ body {
 /* STORY — INNER ORBIT */
 /* ================================================= */
 
- 
+@keyframes story-inner-orbit {
   from {
     transform: rotate(0deg);
   }
@@ -239,7 +433,7 @@ body {
   to {
     transform: rotate(-360deg);
   }
-
+}
 
 /* ================================================= */
 /* FUTURE UTILITY — SOFT PULSE */

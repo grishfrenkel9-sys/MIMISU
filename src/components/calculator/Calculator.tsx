@@ -22,22 +22,17 @@ export default function Calculator() {
   const [includeDesign, setIncludeDesign] =
     useState(false);
 
-  const [includeDistribution, setIncludeDistribution] =
-    useState(false);
-
   const result = useMemo(
     () =>
       calculateCampaign(
         advertisers,
         quantity,
-        includeDesign,
-        includeDistribution
+        includeDesign
       ),
     [
       advertisers,
       quantity,
       includeDesign,
-      includeDistribution,
     ]
   );
 
@@ -507,9 +502,6 @@ export default function Calculator() {
                 advertisers={advertisers}
                 quantity={quantity}
                 includeDesign={includeDesign}
-                includeDistribution={
-                  includeDistribution
-                }
                 onAdvertiserChange={
                   setAdvertisers
                 }
@@ -518,9 +510,6 @@ export default function Calculator() {
                 }
                 onDesignChange={
                   setIncludeDesign
-                }
-                onDistributionChange={
-                  setIncludeDistribution
                 }
               />
             </div>

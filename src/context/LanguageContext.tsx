@@ -1,6 +1,7 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useState,
   type ReactNode,
 } from "react";
@@ -36,6 +37,30 @@ export function LanguageProvider({
 }: LanguageProviderProps) {
   const [language, setLanguage] =
     useState<Language>("ru");
+
+  /* =========================================
+     LANGUAGE CLASS ON HTML
+  ========================================= */
+
+  useEffect(() => {
+    document.documentElement.classList.remove(
+      "lang-ru",
+      "lang-kz"
+    );
+
+    document.documentElement.classList.add(
+      `lang-${language}`
+    );
+
+    document.documentElement.lang = language;
+
+    return () => {
+      document.documentElement.classList.remove(
+        "lang-ru",
+        "lang-kz"
+      );
+    };
+  }, [language]);
 
   const toggleLanguage = () => {
     setLanguage((current) =>

@@ -11,9 +11,7 @@ export interface CampaignResult {
   advertiserPrice: number;
   bottlePrice: number;
   designPrice: number;
-  distributionPrice: number;
   advertiserBudget: number;
-
   totalCampaignCost: number;
   estimatedReach: number;
   qrScans: number;

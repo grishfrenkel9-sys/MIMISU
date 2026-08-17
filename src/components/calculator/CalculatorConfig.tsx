@@ -8,7 +8,6 @@ interface Props {
   advertisers: AdvertiserCount;
   quantity: number;
   includeDesign: boolean;
-  includeDistribution: boolean;
 
   onAdvertiserChange: (
     value: AdvertiserCount
@@ -17,23 +16,19 @@ interface Props {
   onQuantityChange: (value: number) => void;
 
   onDesignChange: (value: boolean) => void;
-
-  onDistributionChange: (value: boolean) => void;
 }
 
 const MIN_QUANTITY = 1000;
 const MAX_QUANTITY = 20000;
-const QUANTITY_STEP = 500;
+const QUANTITY_STEP = 1000;
 
 export default function CalculatorConfig({
   advertisers,
   quantity,
   includeDesign,
-  includeDistribution,
   onAdvertiserChange,
   onQuantityChange,
   onDesignChange,
-  onDistributionChange,
 }: Props) {
   const { t } = useLanguage();
 
@@ -505,14 +500,6 @@ export default function CalculatorConfig({
               }
             />
 
-            <Option
-              checked={includeDistribution}
-              onChange={onDistributionChange}
-              title={t.calculator.distribution}
-              description={
-                t.calculator.distributionDescription
-              }
-            />
           </div>
         </div>
       </div>
